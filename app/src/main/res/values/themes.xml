@@ -1,0 +1,10 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Kasmart_Mobile" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">#007bff</item>
+        <item name="colorPrimaryDark">#0062cc</item>
+        <item name="colorAccent">#444655</item>
+        <!-- Customize your theme here. -->
+    </style>
+</resources>
