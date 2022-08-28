@@ -6,7 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.se.omapi.Session;
 import android.view.Menu;
@@ -88,7 +92,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new DaerahFragment()).commit();
                 break;
             case R.id.nav_desa:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new DesaFragment()).commit();
+                replaceFragment(new DesaFragment());
                 getSupportActionBar().setTitle("Daftar Desa / Kelurahan");
                 break;
             case R.id.nav_potensi:
@@ -111,6 +115,18 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container,fragment);
+        fragmentTransaction.commit();
+    }
+
+//    private void openDesa_Activity() {
+//        Intent intent = new Intent(this, Desa_Activity.class);
+//        startActivity(intent);
+//    }
 
     @Override
     public void onBackPressed() {

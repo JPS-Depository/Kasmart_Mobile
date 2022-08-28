@@ -1,13 +1,15 @@
 package com.jps.kasmart_mobile;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.android.volley.Response;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -27,7 +29,8 @@ public class DesaAdapter extends RecyclerView.Adapter<DesaAdapter.DesaViewHolder
     @Override
     public DesaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.desa_card, parent, false);
-        return new DesaViewHolder(v);
+        DesaViewHolder desaViewHolder = new DesaViewHolder(v);
+        return desaViewHolder;
     }
 
     @Override
@@ -36,28 +39,22 @@ public class DesaAdapter extends RecyclerView.Adapter<DesaAdapter.DesaViewHolder
 
         String namaDesa = currentItem.getNamaDesa();
         String namaKades = currentItem.getNamaKades();
-        int KK = currentItem.getKK();
+        int kK = currentItem.getkK();
         int dusun = currentItem.getDusun();
         int rw = currentItem.getRW();
         int rt = currentItem.getRT();
         int suku = currentItem.getSuku();
         String createdAt = currentItem.getCreatedAt();
         String updatedAt = currentItem.getUpdatedAt();
-
-        holder.mNamaDesa.setText(namaDesa);
         holder.mNamaKades.setText(namaKades);
-        holder.mKK.setText(KK);
-        holder.mDusun.setText(dusun);
-        holder.mRW.setText(rw);
-        holder.mRT.setText(rt);
-        holder.mSuku.setText(suku);
+        holder.mNamaDesa.setText(namaDesa);
+        holder.mkK.setText(String.valueOf(kK));
+        holder.mDusun.setText(String.valueOf(dusun));
+        holder.mRW.setText(String.valueOf(rw));
+        holder.mRT.setText(String.valueOf(rt));
+        holder.mSuku.setText(String.valueOf(suku));
         holder.mCreated_at.setText(createdAt);
         holder.mUpdated_at.setText(updatedAt);
-        //String imageUrl = currentItem.getImageUrl();
-        //String first = currentItem.getFirst();
-
-        //holder.mTextViewGuest.setText(first);
-        //Picasso.get().load(imageUrl).fit().centerInside().into(holder.mGuestImage);
     }
 
     @Override
@@ -66,12 +63,12 @@ public class DesaAdapter extends RecyclerView.Adapter<DesaAdapter.DesaViewHolder
     }
 
     public class DesaViewHolder extends RecyclerView.ViewHolder {
-        public TextView mNamaDesa,mNamaKades,mKK, mDusun, mRW, mRT, mSuku, mCreated_at, mUpdated_at;
+        public TextView mNamaDesa,mNamaKades,mkK, mDusun, mRW, mRT, mSuku, mCreated_at, mUpdated_at;
         public DesaViewHolder(View itemView) {
             super(itemView);
             mNamaDesa = itemView.findViewById(R.id.nama_desa);
             mNamaKades = itemView.findViewById(R.id.nama_kades);
-            mKK = itemView.findViewById(R.id.jumlah_kk);
+            mkK = itemView.findViewById(R.id.jumlah_kk);
             mDusun = itemView.findViewById(R.id.jumlah_dusun);
             mRW = itemView.findViewById(R.id.jumlah_rw);
             mRT = itemView.findViewById(R.id.jumlah_rt);
