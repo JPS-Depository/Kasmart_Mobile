@@ -69,7 +69,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
         if(savedInstanceState == null)
         {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new BeritaFragment()).commit();
+            replaceFragment(new BeritaFragment());
             navigationView.setCheckedItem(R.id.nav_berita);
         }
     }
@@ -78,7 +78,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()){
             case R.id.nav_berita:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new BeritaFragment()).commit();
+                replaceFragment(new BeritaFragment());
                 getSupportActionBar().setTitle("Berita");
                 break;
             case R.id.nav_modal:
@@ -89,7 +89,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new PendampingFragment()).commit();
                 break;
             case R.id.nav_daerah:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new DaerahFragment()).commit();
+                //replaceFragment(new DaerahFragment());
+                getSupportActionBar().setTitle("Daftar Daerah");
                 break;
             case R.id.nav_desa:
                 replaceFragment(new DesaFragment());
@@ -122,11 +123,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         fragmentTransaction.replace(R.id.fragment_container,fragment);
         fragmentTransaction.commit();
     }
-
-//    private void openDesa_Activity() {
-//        Intent intent = new Intent(this, Desa_Activity.class);
-//        startActivity(intent);
-//    }
 
     @Override
     public void onBackPressed() {

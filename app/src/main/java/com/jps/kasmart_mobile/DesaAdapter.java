@@ -1,20 +1,28 @@
 package com.jps.kasmart_mobile;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.FragmentManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class DesaAdapter extends RecyclerView.Adapter<DesaAdapter.DesaViewHolder> {
     private Context mContext;
@@ -63,6 +71,7 @@ public class DesaAdapter extends RecyclerView.Adapter<DesaAdapter.DesaViewHolder
     }
 
     public class DesaViewHolder extends RecyclerView.ViewHolder {
+        public SwipeRefreshLayout swipeRefreshLayout;
         public TextView mNamaDesa,mNamaKades,mkK, mDusun, mRW, mRT, mSuku, mCreated_at, mUpdated_at;
         public DesaViewHolder(View itemView) {
             super(itemView);
@@ -75,6 +84,23 @@ public class DesaAdapter extends RecyclerView.Adapter<DesaAdapter.DesaViewHolder
             mSuku = itemView.findViewById(R.id.jumlah_suku);
             mCreated_at=itemView.findViewById(R.id.tanggal_dibuat);
             mUpdated_at=itemView.findViewById(R.id.tanggal_diupdate);
+
+            itemView.findViewById(R.id.button_edit_desa).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("Button Press","Pressed Edit");
+                }
+            });
+            itemView.findViewById(R.id.button_delete_desa).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("Button Press","Pressed Delete");
+                    FragmentActivity activity = (FragmentActivity) (mContext);
+                    FragmentManager confirmManager = activity.getSupportFragmentManager();
+                    DialogFragment dialog = new ConfirmationDelete();
+                    dialog.show(confirmManager,"Alert");
+                }
+            });
         }
     }
 }
