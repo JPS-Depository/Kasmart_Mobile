@@ -9,11 +9,12 @@ public class DesaItem {
     private int mRT;
     private int mRW;
     private int mSuku;
+    private int mNomor;
     private String mCreated_at;
     private String mUpdated_at;
 
     public DesaItem(int id, String namaDesa, String namaKades,int kK,int dusun, int rt,
-                    int rw, int suku, String createAt, String updateAt){
+                    int rw, int suku,int nomor, String createAt, String updateAt){
         mId = id;
         mNamaDesa = namaDesa;
         mNamaKades = namaKades;
@@ -22,6 +23,7 @@ public class DesaItem {
         mRW = rw;
         mRT = rt;
         mSuku = suku;
+        mNomor = nomor;
         mCreated_at = createAt;
         mUpdated_at = updateAt;
     }
@@ -48,6 +50,7 @@ public class DesaItem {
         return mRT;
     }
     public int getSuku(){ return mSuku;}
+    public int getNomor(){return mNomor;}
     public String getCreatedAt(){ return mCreated_at;}
     public String getUpdatedAt(){ return mUpdated_at;}
 }

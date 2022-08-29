@@ -5,4 +5,14 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
+    <string name="login_title">Kasmart Login</string>
+    <string name="login_button_text">Masuk</string>
+    <string name="isi_berita_default">Isi berita...</string>
+    <string name="penulis_default">Penulis</string>
+    <string name="gambar_berita">Gambar Berita</string>
+    <string name="judul_berita_default">Judul Berita</string>
+    <string name="judul_berita_detail_placeholder">Judul Berita</string>
+    <string name="berita_detail_default_text">Default Text</string>
 </resources>

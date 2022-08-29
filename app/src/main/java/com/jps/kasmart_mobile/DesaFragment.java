@@ -68,10 +68,11 @@ public class DesaFragment extends Fragment {
                         int rt = data.getInt("jumlah_rt");
                         int rw = data.getInt("jumlah_rw");
                         int suku = data.getInt("jumlah_suku");
+                        int nomor = data.getInt("telp_kades");
                         String createAt = data.getString("created_at");
                         String updateAt = data.getString("updated_at");
 
-                        mDesaList.add(new DesaItem(id,namaDesa,namaKades,kK,dusun,rt,rw,suku,createAt,updateAt));
+                        mDesaList.add(new DesaItem(id,namaDesa,namaKades,kK,dusun,rt,rw,suku,nomor,createAt,updateAt));
                     }
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                     desaAdapter = new DesaAdapter(getContext(), mDesaList);

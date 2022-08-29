@@ -37,13 +37,13 @@ public class BeritaFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_berita, container,false);
         mBeritaList = new ArrayList<>();
         mRequestQueue = Volley.newRequestQueue(this.getContext());
-        recyclerView = view.findViewById(R.id.);// insert news card here;
+        recyclerView = view.findViewById(R.id.berita_card);
         ParseJSON();
         return view;
     }
 
     public void ParseJSON(){
-        String url = "http://192.168.100.12/kasmart_mobile/get_desa.php"; // make URL
+        String url = "http://192.168.100.12/kasmart_mobile/get_berita.php";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -57,11 +57,9 @@ public class BeritaFragment extends Fragment {
                         String isiBerita = data.getString("isi_berita");
                         String tanggalBerita = data.getString("tanggal_berita");
                         /*insert data.getImage*/
-                        String createAt = data.getString("created_at");
-                        String updateAt = data.getString("updated_at");
                         String createBy = data.getString("created_by");
 
-                        mBeritaList.add(new BeritaItem(id,judul,isiBerita,tanggalBerita,createAt,updateAt,createBy));
+                        mBeritaList.add(new BeritaItem(id,judul,isiBerita,tanggalBerita,createBy));
                     }
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                     beritaAdapter = new BeritaAdapter(getContext(), mBeritaList);

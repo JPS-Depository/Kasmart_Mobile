@@ -81,7 +81,15 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 replaceFragment(new BeritaFragment());
                 getSupportActionBar().setTitle("Berita");
                 break;
-            case R.id.nav_modal:
+            case R.id.nav_Bulanan_bumdes:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ModalFragment()).commit();
+                getSupportActionBar().setTitle("Modal");
+                break;
+            case R.id.nav_usp_uek:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ModalFragment()).commit();
+                getSupportActionBar().setTitle("Modal");
+                break;
+            case R.id.nav_shu:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ModalFragment()).commit();
                 getSupportActionBar().setTitle("Modal");
                 break;
@@ -89,7 +97,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new PendampingFragment()).commit();
                 break;
             case R.id.nav_daerah:
-                //replaceFragment(new DaerahFragment());
+                replaceFragment(new DaerahFragment());
                 getSupportActionBar().setTitle("Daftar Daerah");
                 break;
             case R.id.nav_desa:
@@ -99,7 +107,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             case R.id.nav_potensi:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new PotensiFragment()).commit();
                 break;
-            case R.id.nav_kegiatan:
+            case R.id.nav_kegiatan_harian:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new KegiatanFragment()).commit();
+                break;
+            case R.id.nav_wajib_bermasa:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new KegiatanFragment()).commit();
                 break;
             case R.id.nav_absen:
@@ -129,7 +140,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         if(drawer.isDrawerOpen(GravityCompat.START)){
             drawer.closeDrawer(GravityCompat.START);
         }else{
-
+            getSupportFragmentManager().popBackStackImmediate();
         }
     }
 

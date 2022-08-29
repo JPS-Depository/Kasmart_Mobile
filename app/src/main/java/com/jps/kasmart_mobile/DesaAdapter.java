@@ -52,8 +52,10 @@ public class DesaAdapter extends RecyclerView.Adapter<DesaAdapter.DesaViewHolder
         int rw = currentItem.getRW();
         int rt = currentItem.getRT();
         int suku = currentItem.getSuku();
+        int nomor = currentItem.getNomor();
         String createdAt = currentItem.getCreatedAt();
         String updatedAt = currentItem.getUpdatedAt();
+
         holder.mNamaKades.setText(namaKades);
         holder.mNamaDesa.setText(namaDesa);
         holder.mkK.setText(String.valueOf(kK));
@@ -61,6 +63,7 @@ public class DesaAdapter extends RecyclerView.Adapter<DesaAdapter.DesaViewHolder
         holder.mRW.setText(String.valueOf(rw));
         holder.mRT.setText(String.valueOf(rt));
         holder.mSuku.setText(String.valueOf(suku));
+        holder.mNomor.setText(String.valueOf(nomor));
         holder.mCreated_at.setText(createdAt);
         holder.mUpdated_at.setText(updatedAt);
     }
@@ -72,7 +75,7 @@ public class DesaAdapter extends RecyclerView.Adapter<DesaAdapter.DesaViewHolder
 
     public class DesaViewHolder extends RecyclerView.ViewHolder {
         public SwipeRefreshLayout swipeRefreshLayout;
-        public TextView mNamaDesa,mNamaKades,mkK, mDusun, mRW, mRT, mSuku, mCreated_at, mUpdated_at;
+        public TextView mNamaDesa,mNamaKades,mkK, mDusun, mRW, mRT, mSuku, mNomor, mCreated_at, mUpdated_at;
         public DesaViewHolder(View itemView) {
             super(itemView);
             mNamaDesa = itemView.findViewById(R.id.nama_desa);
@@ -82,6 +85,7 @@ public class DesaAdapter extends RecyclerView.Adapter<DesaAdapter.DesaViewHolder
             mRW = itemView.findViewById(R.id.jumlah_rw);
             mRT = itemView.findViewById(R.id.jumlah_rt);
             mSuku = itemView.findViewById(R.id.jumlah_suku);
+            mNomor = itemView.findViewById(R.id.nomor_kades);
             mCreated_at=itemView.findViewById(R.id.tanggal_dibuat);
             mUpdated_at=itemView.findViewById(R.id.tanggal_diupdate);
 
