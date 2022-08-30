@@ -21,11 +21,13 @@
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/activity_main_screen.xml" value="0.25677083333333334" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/berita_card.xml" value="0.4" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/berita_detail.xml" value="0.4" />
+        <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/bumdes_card.xml" value="0.4" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/daerah_card.xml" value="0.4" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/desa_card.xml" value="0.5260504201680672" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/fragment_absen.xml" value="0.2625" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/fragment_berita.xml" value="0.16" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/fragment_blank.xml" value="0.15670289855072464" />
+        <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/fragment_bumdes.xml" value="0.1" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/fragment_daerah.xml" value="0.2625" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/fragment_desa.xml" value="0.264" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/fragment_dese.xml" value="0.2625" />
@@ -33,9 +35,13 @@
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/fragment_modal.xml" value="0.25677083333333334" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/fragment_pendamping.xml" value="0.2625" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/fragment_potensi.xml" value="0.2625" />
+        <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/fragment_shu.xml" value="0.1" />
+        <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/fragment_usp_uek.xml" value="0.21105072463768115" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/fragment_visum.xml" value="0.2625" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/nav_header.xml" value="0.25677083333333334" />
+        <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/shu_card.xml" value="0.3333333333333333" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/toolbar.xml" value="0.2557291666666667" />
+        <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/usp_uek_card.xml" value="0.1" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/menu/drawer_menu.xml" value="0.25677083333333334" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/menu/main_menu.xml" value="0.264" />
       </map>

@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="5dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginRight="5dp"
+    android:elevation="8dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="3dp"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/header_shu">
+                <TextView
+                    android:id="@+id/nama_daerah_shu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10sp"
+                    android:text="Nama Daerah"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textStyle="bold"
+                    android:textSize="14sp" />
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/extended_shu">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/linear_extended_shu">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5sp"
+                        android:fontFamily="@font/source_sans_pro"
+                        android:textStyle="bold"
+                        android:textSize="11sp"
+                        android:gravity="right"
+                        android:textColor="@color/black"
+                        android:text="Kegiatan Acara Pembagian SHU :"/>
+                    <TextView
+                        android:id="@+id/pembagian_shu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/source_sans_pro"
+                        android:textSize="11.7sp"
+                        android:text="Nilai penyertaan modal"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/source_sans_pro"
+                        android:textStyle="bold"
+                        android:textSize="11sp"
+                        android:layout_marginEnd="5sp"
+                        android:textColor="@color/black"
+                        android:gravity="right"
+                        android:text="Inventaris :"/>
+                    <TextView
+                        android:id="@+id/inventaris_shu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/source_sans_pro"
+                        android:textSize="11.7sp"
+                        android:text="Nilai piutang"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/source_sans_pro"
+                        android:textStyle="bold"
+                        android:textSize="11sp"
+                        android:layout_marginEnd="5sp"
+                        android:textColor="@color/black"
+                        android:gravity="right"
+                        android:text="Tambahan Modal Usaha :"/>
+                    <TextView
+                        android:id="@+id/tambahan_modal_shu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/source_sans_pro"
+                        android:textSize="11.7sp"
+                        android:text="piutang gaji karyawan"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/source_sans_pro"
+                        android:textStyle="bold"
+                        android:textSize="11sp"
+                        android:layout_marginEnd="5sp"
+                        android:textColor="@color/black"
+                        android:text="Pelatihan Pengembangan Program :"/>
+                    <TextView
+                        android:id="@+id/pelatihan_pengembangan_shu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/source_sans_pro"
+                        android:textSize="11.7sp"
+                        android:text="piutang gaji karya"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/source_sans_pro"
+                        android:textStyle="bold"
+                        android:textSize="11sp"
+                        android:textColor="@color/black"
+                        android:layout_marginEnd="5sp"
+                        android:text="Bantuan Sosial :"/>
+                    <TextView
+                        android:id="@+id/bansos_shu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/source_sans_pro"
+                        android:textSize="11.7sp"
+                        android:text="piutang gaji karya"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/source_sans_pro"
+                        android:textStyle="bold"
+                        android:textSize="11sp"
+                        android:layout_marginEnd="5sp"
+                        android:textColor="@color/black"
+                        android:text="Hadiah Pemanfaat :"/>
+                    <TextView
+                        android:id="@+id/hadiah_pemanfaat_shu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/source_sans_pro"
+                        android:textSize="11.7sp"
+                        android:text="piutang gaji karya"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/source_sans_pro"
+                        android:textStyle="bold"
+                        android:textSize="11sp"
+                        android:textColor="@color/black"
+                        android:layout_marginEnd="5sp"
+                        android:text="PAD ( jika ada ) :"/>
+                    <TextView
+                        android:id="@+id/pad_shu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/source_sans_pro"
+                        android:textSize="11.7sp"
+                        android:text="piutang gaji karya"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/source_sans_pro"
+                        android:textStyle="bold"
+                        android:textSize="11sp"
+                        android:layout_marginEnd="5sp"
+                        android:textColor="@color/black"
+                        android:text="Total Sisa Hasil Usaha:"/>
+                    <TextView
+                        android:id="@+id/total_sisa_hasil_usah_shu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/source_sans_pro"
+                        android:textSize="11.7sp"
+                        android:text="piutang gaji karya"/>
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20sp"
+            android:orientation="horizontal"
+            android:layout_marginTop="5sp"
+            android:gravity="right"
+            android:layout_below="@id/linear_extended_shu">
+            <Button
+                android:id="@+id/button_edit_shu"
+                android:layout_width="40sp"
+                android:layout_height="20sp"
+                android:layout_marginRight="5sp"
+                android:background="@drawable/button"
+                android:text="Edit"
+                android:textColor="@color/white"
+                android:textSize="7sp" />
+            <Button
+                android:id="@+id/button_delete_shu"
+                android:layout_width="40sp"
+                android:layout_height="match_parent"
+                android:background="#D9534F"
+                android:text="Delete"
+                android:textColor="@color/white"
+                android:textSize="7sp" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

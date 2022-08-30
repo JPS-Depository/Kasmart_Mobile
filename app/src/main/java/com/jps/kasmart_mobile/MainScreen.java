@@ -82,16 +82,19 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 getSupportActionBar().setTitle("Berita");
                 break;
             case R.id.nav_Bulanan_bumdes:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ModalFragment()).commit();
-                getSupportActionBar().setTitle("Modal");
+                replaceFragment(new BumdesFragment());
+                getSupportActionBar().setTitle("Pendamping Data BUMDESA");
                 break;
             case R.id.nav_usp_uek:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ModalFragment()).commit();
-                getSupportActionBar().setTitle("Modal");
+                replaceFragment(new USPFragment());
+                getSupportActionBar().setTitle("Data USP dan UEK");
                 break;
             case R.id.nav_shu:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ModalFragment()).commit();
-                getSupportActionBar().setTitle("Modal");
+                replaceFragment(new SHUFragment());
+                getSupportActionBar().setTitle("Data SHU Khusus UEK");
+                break;
+            case R.id.nav_masalah_pendamping:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new PendampingFragment()).commit();
                 break;
             case R.id.nav_pendamping:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new PendampingFragment()).commit();

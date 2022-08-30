@@ -1,0 +1,914 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="5dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginRight="5dp"
+    android:elevation="8dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="3dp"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/header_uek">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10sp">
+                <TextView
+                    android:id="@+id/nama_daerah_uek"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Nama Daerah"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/modal_uek"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:fontFamily="@font/source_sans_pro_bold_italic"
+                    android:textSize="14sp"
+                    android:text="Modal"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textStyle="bold"
+                    android:textSize="11sp"
+                    android:textColor="@color/black"
+                    android:layout_marginEnd="5sp"
+                    android:text="Perguliran ( Orang ) :"/>
+                <TextView
+                    android:id="@+id/perguliran_orang_uek"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textSize="11.7sp"
+                    android:text="Nilai Jenis Usaha"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:text="Perguliran ( Dana )"
+                    android:layout_marginEnd="5sp"
+                    android:textColor="@color/black"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/perguliran_dana_uek"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textSize="11.7sp"
+                    android:text="Nilai sumber dana"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textStyle="bold"
+                    android:textSize="11sp"
+                    android:layout_marginEnd="5sp"
+                    android:textColor="@color/black"
+                    android:text="Sisa Piutang ( Orang ) :"/>
+                <TextView
+                    android:id="@+id/sisa_piutang_orang_uek"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textSize="11.7sp"
+                    android:text="Nilai Tahun Penyertaan modal"/>
+            </LinearLayout>
+        </LinearLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/extended_uek">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/linear_extended_uek">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5sp"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:gravity="right"
+                            android:textColor="@color/black"
+                            android:text="Sisa Piutang ( Dana ) :"/>
+                        <TextView
+                            android:id="@+id/sisa_piutang_dana_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="Nilai penyertaan modal"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:layout_marginEnd="5sp"
+                            android:textColor="@color/black"
+                            android:gravity="right"
+                            android:text="Total Dana Rek UED / USP :"/>
+                        <TextView
+                            android:id="@+id/Total_dana_rek_UED_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="Nilai piutang"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:layout_marginEnd="5sp"
+                            android:textColor="@color/black"
+                            android:gravity="right"
+                            android:text="Total Dana Rek DUD :"/>
+                        <TextView
+                            android:id="@+id/Total_dana_rek_DUD_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karyawan"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:layout_marginEnd="5sp"
+                            android:textColor="@color/black"
+                            android:text="Kas UED :"/>
+                        <TextView
+                            android:id="@+id/kas_UED_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Inventaris :"/>
+                        <TextView
+                            android:id="@+id/inventaris_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:layout_marginEnd="5sp"
+                            android:textColor="@color/black"
+                            android:text="Penghapusan Cadangan :"/>
+                        <TextView
+                            android:id="@+id/penghapusan_cadangan_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Sitaan Jaminan :"/>
+                        <TextView
+                            android:id="@+id/sitaan_jaminan_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:layout_marginEnd="5sp"
+                            android:textColor="@color/black"
+                            android:text="Total Aset :"/>
+                        <TextView
+                            android:id="@+id/total_aset_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Tunggakan ( Orang ) :"/>
+                        <TextView
+                            android:id="@+id/tunggakan_orang_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Tunggakan ( Dana ) :"/>
+                        <TextView
+                            android:id="@+id/tunggakan_dana_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Pengembalian ( Orang ) :"/>
+                        <TextView
+                            android:id="@+id/pengembalian_orang_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Pengembalian ( Dana ) :"/>
+                        <TextView
+                            android:id="@+id/pengembalian_dana_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Persentase Pengembalian :"/>
+                        <TextView
+                            android:id="@+id/persentase_pengembalian_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Dagang ( Orang ) :"/>
+                        <TextView
+                            android:id="@+id/dagang_orang_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Dagang ( Dana ) :"/>
+                        <TextView
+                            android:id="@+id/dagang_dana_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Pertanian ( Orang ) :"/>
+                        <TextView
+                            android:id="@+id/pertanian_orang_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Pertanian ( Dana ) :"/>
+                        <TextView
+                            android:id="@+id/pertanian_dana_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Perkebunan ( Orang ) :"/>
+                        <TextView
+                            android:id="@+id/perkebunan_orang_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Perkebunan ( Dana ) :"/>
+                        <TextView
+                            android:id="@+id/perkebunan_dana_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Perikanan ( Orang ) :"/>
+                        <TextView
+                            android:id="@+id/perikanan_orang_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Perikanan ( Dana ) :"/>
+                        <TextView
+                            android:id="@+id/perikanan_dana_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Peternakan ( Orang ) :"/>
+                        <TextView
+                            android:id="@+id/peternakan_orang_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Peternakan ( Dana ) :"/>
+                        <TextView
+                            android:id="@+id/peternakan_dana_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Industri ( Orang ) :"/>
+                        <TextView
+                            android:id="@+id/industri_orang_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Industri ( Dana ) :"/>
+                        <TextView
+                            android:id="@+id/industri_dana_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Jasa ( Orang ) :"/>
+                        <TextView
+                            android:id="@+id/jasa_orang_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Jasa ( Dana ) :"/>
+                        <TextView
+                            android:id="@+id/jasa_dana_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Total Pinjaman Berdasarkan Jenis Usaha :"/>
+                        <TextView
+                            android:id="@+id/total_pinjaman_jenis_usaha_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="SHU ( RL Gab.bulkum ) :"/>
+                        <TextView
+                            android:id="@+id/SHU_RL_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Penyaluran Masyarakat Kurang Mampu ( Orang ) :"/>
+                        <TextView
+                            android:id="@+id/penyaluran_kurang_mampu_orang_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Penyaluran Masyarakat Kurang Mampu ( Dana ) :"/>
+                        <TextView
+                            android:id="@+id/penyaluran_kurang_mampu_dana_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Pemanfaat lunas yang tidak meminjam ( Orang ) :"/>
+                        <TextView
+                            android:id="@+id/pemanfaat_lunas_orang_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Pemanfaat lunas yang tidak meminjam ( Dana ) :"/>
+                        <TextView
+                            android:id="@+id/pemanfaat_lunas_dana_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Cash Opname :"/>
+                        <TextView
+                            android:id="@+id/cash_opname_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="PADes :"/>
+                        <TextView
+                            android:id="@+id/pades_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Cad.Pengm.Usaha :"/>
+                        <TextView
+                            android:id="@+id/cadangan_pengembangan_usaha_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Laba Bersih :"/>
+                        <TextView
+                            android:id="@+id/laba_bersih_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:layout_marginEnd="5sp"
+                            android:text="Status :"/>
+                        <TextView
+                            android:id="@+id/status_uek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/source_sans_pro"
+                            android:textSize="11.7sp"
+                            android:text="piutang gaji karya"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+        </ScrollView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20sp"
+            android:orientation="horizontal"
+            android:layout_marginTop="5sp"
+            android:gravity="right"
+            android:layout_below="@id/linear_extended_uek">
+            <Button
+                android:id="@+id/button_edit_uek"
+                android:layout_width="40sp"
+                android:layout_height="20sp"
+                android:layout_marginRight="5sp"
+                android:background="@drawable/button"
+                android:text="Edit"
+                android:textColor="@color/white"
+                android:textSize="7sp" />
+            <Button
+                android:id="@+id/button_delete_uek"
+                android:layout_width="40sp"
+                android:layout_height="match_parent"
+                android:background="#D9534F"
+                android:text="Delete"
+                android:textColor="@color/white"
+                android:textSize="7sp" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

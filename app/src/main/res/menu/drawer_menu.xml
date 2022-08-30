@@ -35,6 +35,10 @@
         android:checkableBehavior="single"
         android:id="@+id/group3">
         <item
+            android:id="@+id/nav_masalah_pendamping"
+            android:icon="@drawable/ic_baseline_supervisor_account_24"
+            android:title="Data Masalah Pendampingan" />
+        <item
             android:id="@+id/nav_pendamping"
             android:icon="@drawable/ic_baseline_supervisor_account_24"
             android:title="Data Pendamping" />
