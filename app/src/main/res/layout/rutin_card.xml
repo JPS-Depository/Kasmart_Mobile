@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="40dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_marginBottom="15dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/header_rutin"
+            android:elevation="40dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/nama_kegiatan_rutin"
+                    android:text="Kegiatan"
+                    android:layout_marginEnd="10sp"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tipe_kegiatan_rutin"
+                        android:layout_marginBottom="10sp"
+                        android:layout_marginEnd="10sp"
+                        android:text="Tipe"
+                        android:fontFamily="@font/source_sans_pro"
+                        android:textColor="@color/black"
+                        android:textSize="11sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/realisasi_kegiatan_rutin"
+                        android:layout_marginBottom="10sp"
+                        android:text="Realisasi"
+                        android:fontFamily="@font/source_sans_pro"
+                        android:textColor="@color/black"
+                        android:textSize="11sp" />
+                </LinearLayout>
+            </LinearLayout>
+                <TextView
+                    android:id="@+id/tanggal_rutin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10sp"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="Tanggal Kegiatan"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textStyle="italic"
+                    android:layout_marginEnd="5sp"
+                    android:textSize="11sp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="right">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <Button
+                            android:id="@+id/button_edit_rutin"
+                            android:layout_width="40sp"
+                            android:layout_height="20sp"
+                            android:layout_marginRight="5sp"
+                            android:background="@drawable/button"
+                            android:text="Edit"
+                            android:textColor="@color/white"
+                            android:textSize="7sp" />
+                        <Button
+                            android:id="@+id/button_delete_rutin"
+                            android:layout_width="40sp"
+                            android:layout_height="20sp"
+                            android:background="#D9534F"
+                            android:text="Delete"
+                            android:textColor="@color/white"
+                            android:textSize="7sp" />
+                    </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/pendamping_rutin"
+                        android:layout_marginTop="4sp"
+                        android:layout_gravity="center"
+                        android:text="Pendamping"
+                        android:fontFamily="@font/source_sans_pro"
+                        android:textColor="@color/black"
+                        android:textSize="11sp" />
+                </LinearLayout>
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/extended_rutin">
+            <LinearLayout
+                android:id="@+id/layout_sasaran"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3sp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:layout_marginEnd="5sp"
+                    android:textColor="@color/black"
+                    android:text="Sasaran :"/>
+                <TextView
+                    android:id="@+id/sasaran_rutin"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textSize="12sp"
+                    android:text="Sasaran"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/judul_detail_rutin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout_sasaran"
+                android:fontFamily="@font/source_sans_pro"
+                android:text="Detail"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/avatar_square_blue_512dp"
+                android:contentDescription="Gambar Kegiatan Rutin" />
+
+            <TextView
+                android:id="@+id/isi_detail_rutin"
+                android:layout_width="275dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/judul_detail_rutin"
+                android:layout_marginBottom="10sp"
+                android:fontFamily="@font/source_sans_pro"
+                android:text="Insert Detail Here"
+                android:textSize="12sp"
+                android:textStyle="normal" />
+            <TextView
+                android:id="@+id/header_lokasi_rutin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/isi_detail_rutin"
+                android:text="Lokasi"
+                android:textColor="@color/black"
+                android:fontFamily="@font/source_sans_pro"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/isi_lokasi_rutin"
+                android:layout_width="275dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/header_lokasi_rutin"
+                android:fontFamily="@font/source_sans_pro"
+                android:text="Insert Lokasi Here"
+                android:textSize="12sp"
+                android:textStyle="normal" />
+        </RelativeLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

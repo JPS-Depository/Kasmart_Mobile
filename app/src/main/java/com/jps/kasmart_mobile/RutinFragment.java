@@ -24,26 +24,26 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class PotensiFragment extends Fragment {
+public class RutinFragment extends Fragment {
 
     RecyclerView recyclerView;
-    ArrayList<PotensiItem> mPotensiList;
+    ArrayList<RutinItem> mRutinList;
     RequestQueue mRequestQueue;
-    PotensiAdapter potensiAdapter;
+    RutinAdapter rutinAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_potensi, container,false);
-        mPotensiList = new ArrayList<>();
+        View view = inflater.inflate(R.layout.fragment_rutin, container,false);
+        mRutinList = new ArrayList<>();
         mRequestQueue = Volley.newRequestQueue(this.getContext());
-        recyclerView = view.findViewById(R.id.potensi_card);
+        recyclerView = view.findViewById(R.id.rutin_card);
         ParseJSON();
         return view;
     }
 
     public void ParseJSON(){
-        String url = "http://192.168.100.12/kasmart_mobile/get_potensi.php";
+        String url = "http://192.168.100.12/kasmart_mobile/get_rutin.php";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -52,21 +52,28 @@ public class PotensiFragment extends Fragment {
 
                     for(int i=0;i< jsonArray.length();i++){
                         JSONObject data = jsonArray.getJSONObject(i);
+
                         int id = data.getInt("id");
+                        String tanggalKegiatan = data.getString("tanggal_kegiatan");
+                        String kegiatan = data.getString("kegiatan");
                         String jenis = data.getString("jenis");
-                        String nama  = data.getString("nama");
-                        String sumberDayaAlam = data.getString("sumber_daya_alam");
-                        String sumberDayaManusia = data.getString("sumber_daya_manusia");
-                        String asetDesa = data.getString("aset_desa");
-                        String budayaDesa = data.getString("budaya_desa");
-                        mPotensiList.add(new PotensiItem( id, jenis, nama, sumberDayaAlam,
-                                sumberDayaManusia, asetDesa, budayaDesa));
+                        String lokasi = data.getString("alamat_kegiatan")+" "+
+                                data.getString("Kabupaten")+", "+
+                                data.getString("Kecamatan")+", "+
+                                data.getString("Kelurahan");
+                        String detail = data.getString("detil_kegiatan");
+                        String sasaran = data.getString("sasaran");
+                        String realisasi = data.getString("status");
+                        String createdBy = data.getString("fullname");
+
+                        mRutinList.add(new RutinItem(id, tanggalKegiatan, kegiatan, jenis,
+                                lokasi, detail, sasaran, realisasi, createdBy));
                     }
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    potensiAdapter = new PotensiAdapter(getContext(), mPotensiList);
+                    rutinAdapter = new RutinAdapter(getContext(), mRutinList);
                     recyclerView.setHasFixedSize(true);
-                    recyclerView.setAdapter(potensiAdapter);
-                    potensiAdapter.notifyDataSetChanged();
+                    recyclerView.setAdapter(rutinAdapter);
+                    rutinAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

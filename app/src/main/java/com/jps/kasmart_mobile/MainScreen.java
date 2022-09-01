@@ -94,10 +94,12 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 getSupportActionBar().setTitle("Data SHU Khusus UEK");
                 break;
             case R.id.nav_masalah_pendamping:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new PendampingFragment()).commit();
+                replaceFragment(new MasalahFragment());
+                getSupportActionBar().setTitle("Masalah Pendampingan");
                 break;
             case R.id.nav_pendamping:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new PendampingFragment()).commit();
+                replaceFragment(new PendampingFragment());
+                getSupportActionBar().setTitle("List Pendamping");
                 break;
             case R.id.nav_daerah:
                 replaceFragment(new DaerahFragment());
@@ -108,19 +110,24 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 getSupportActionBar().setTitle("Daftar Desa / Kelurahan");
                 break;
             case R.id.nav_potensi:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new PotensiFragment()).commit();
+                replaceFragment(new PotensiFragment());
+                getSupportActionBar().setTitle("Potensi Daerah");
                 break;
             case R.id.nav_kegiatan_harian:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new KegiatanFragment()).commit();
+                replaceFragment(new RutinFragment());
+                getSupportActionBar().setTitle("Kegiatan Rutin");
                 break;
             case R.id.nav_wajib_bermasa:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new KegiatanFragment()).commit();
+                replaceFragment(new WajibFragment());
+                getSupportActionBar().setTitle("Kegiatan Wajib");
                 break;
             case R.id.nav_absen:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new AbsensiFragment()).commit();
+                replaceFragment(new AbsensiFragment());
+                getSupportActionBar().setTitle("Absensi Kegiatan");
                 break;
             case R.id.nav_visum:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new VisumFragment()).commit();
+                replaceFragment(new VisumFragment());
+                getSupportActionBar().setTitle("Visum Kegiatan");
                 break;
             case R.id.nav_logout:
                 sessionManager.logout();

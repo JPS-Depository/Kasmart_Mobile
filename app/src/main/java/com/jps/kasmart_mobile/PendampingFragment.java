@@ -5,14 +5,99 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class PendampingFragment extends Fragment {
+
+    RecyclerView recyclerView;
+    ArrayList<PendampingItem> mPendampingList;
+    RequestQueue mRequestQueue;
+    PendampingAdapter pendampingAdapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_pendamping,container,false);
+        View view = inflater.inflate(R.layout.fragment_pendamping,container,false);
+        mPendampingList = new ArrayList<>();
+        mRequestQueue = Volley.newRequestQueue(this.getContext());
+        recyclerView = view.findViewById(R.id.pendamping_card);
+        ParseJSON();
+        return view;
+    }
+
+    public void ParseJSON() {
+        String url = "http://192.168.100.12/kasmart_mobile/get_pendamping.php";
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray jsonArray = response.getJSONArray("data");
+
+                    for(int i=0;i< jsonArray.length();i++){
+                        JSONObject data = jsonArray.getJSONObject(i);
+                        int id = data.getInt("id");
+                        String nama = data.getString("fullname");
+                        String telepon =data.getString("nohp");
+                        String alamatTugas = data.getString("alamat_tugas")+
+                                " "+ data.getString("KelurahanTugas")+
+                                " "+ data.getString("KecamatanTugas")+
+                                " "+ data.getString("KabupatenTugas");
+                        String alamatPribadi = data.getString("alamat_pribadi")+
+                                " "+ data.getString("KelurahanPribadi")+
+                                " "+ data.getString("KecamatanPribadi")+
+                                " "+ data.getString("KabupatenPribadi");
+                        String bidang = data.getString("bidang");
+                        String jabatan = data.getString("jabatan");
+                        String noReg = data.getString("noreg");
+                        String email = data.getString("email");
+                        String ktp = data.getString("no_ktp");
+                        String bpjs = data.getString("no_bpjs");
+                        String noRek = data.getString("no_rek");
+                        String npwp = data.getString("npwp");
+                        String statusPernikahan = data.getString("status");
+                        String jenisKelamin = data.getString("jenis_kelamin");
+                        String agama = data.getString("agama");
+
+                        mPendampingList.add(new PendampingItem(id, nama, telepon, alamatTugas, alamatPribadi, bidang,
+                                jabatan, noReg, email, ktp, bpjs, noRek, npwp, statusPernikahan, jenisKelamin, agama));
+                    }
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    pendampingAdapter = new PendampingAdapter(getContext(), mPendampingList);
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setAdapter(pendampingAdapter);
+                    pendampingAdapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mRequestQueue.add(request);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 }

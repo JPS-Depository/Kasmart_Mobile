@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="3dp"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/header_masalah">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10sp"
+                    android:text="Oleh : "
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textStyle="bold"
+                    android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/createby_masalah"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10sp"
+                    android:text="Nama"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textStyle="bold"
+                    android:textSize="14sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right">
+                    <Button
+                        android:id="@+id/button_edit_masalah"
+                        android:layout_width="40sp"
+                        android:layout_height="20sp"
+                        android:layout_marginRight="5sp"
+                        android:background="@drawable/button"
+                        android:text="Edit"
+                        android:textColor="@color/white"
+                        android:textSize="7sp" />
+                    <Button
+                        android:id="@+id/button_delete_masalah"
+                        android:layout_width="40sp"
+                        android:layout_height="20sp"
+                        android:background="#D9534F"
+                        android:text="Delete"
+                        android:textColor="@color/white"
+                        android:textSize="7sp" />
+                </LinearLayout>
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/extended_masalah">
+            <TextView
+                android:id="@+id/masalah_pendamping_text_masalah"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Masalah Pendampingan"
+                android:textColor="@color/black"
+                android:fontFamily="@font/source_sans_pro"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/isi_text_masalah_masalah"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/masalah_pendamping_text_masalah"
+                android:text="Insert Masalah Here"
+                android:textSize="12sp"
+                android:fontFamily="@font/source_sans_pro"
+                android:textStyle="normal"
+                android:layout_marginBottom="10sp"/>
+            <TextView
+                android:id="@+id/header_text_pembinaan_masalah"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/isi_text_masalah_masalah"
+                android:text="Pembinaan Masalah"
+                android:textColor="@color/black"
+                android:fontFamily="@font/source_sans_pro"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/isi_text_pembinaan_masalah"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/header_text_pembinaan_masalah"
+                android:layout_marginBottom="10sp"
+                android:fontFamily="@font/source_sans_pro"
+                android:text="Insert Masalah Here"
+                android:textSize="12sp"
+                android:textStyle="normal" />
+        </RelativeLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

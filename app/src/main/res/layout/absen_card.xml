@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="40dp"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/header_absen"
+            android:elevation="40dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/nama_kegiatan_absen"
+                    android:layout_marginBottom="10sp"
+                    android:text="Kegiatan "
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/tanggal_absen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10sp"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="Tanggal Kegiatan"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textStyle="italic"
+                    android:layout_marginEnd="5sp"
+                    android:textSize="11sp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right">
+                    <Button
+                        android:id="@+id/button_edit_absen"
+                        android:layout_width="40sp"
+                        android:layout_height="20sp"
+                        android:layout_marginRight="5sp"
+                        android:background="@drawable/button"
+                        android:text="Edit"
+                        android:textColor="@color/white"
+                        android:textSize="7sp" />
+                    <Button
+                        android:id="@+id/button_delete_absen"
+                        android:layout_width="40sp"
+                        android:layout_height="20sp"
+                        android:background="#D9534F"
+                        android:text="Delete"
+                        android:textColor="@color/white"
+                        android:textSize="7sp" />
+                </LinearLayout>
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/extended_absen">
+
+            <TextView
+                android:id="@+id/judul_keterangan_absen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/source_sans_pro"
+                android:text="Keterangan"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/isi_keterangan_absensi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/judul_keterangan_absen"
+                android:layout_marginBottom="10sp"
+                android:fontFamily="@font/source_sans_pro"
+                android:text="Insert Keterangan Here"
+                android:textSize="12sp"
+                android:textStyle="normal" />
+            <TextView
+                android:id="@+id/header_lokasi_absen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/isi_keterangan_absensi"
+                android:text="Lokasi"
+                android:textColor="@color/black"
+                android:fontFamily="@font/source_sans_pro"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/isi_lokasi_absen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/header_lokasi_absen"
+                android:layout_marginBottom="10sp"
+                android:fontFamily="@font/source_sans_pro"
+                android:text="Insert Lokasi Here"
+                android:textSize="12sp"
+                android:textStyle="normal" />
+        </RelativeLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

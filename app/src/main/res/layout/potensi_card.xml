@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="3dp"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/header_shu">
+                <TextView
+                    android:id="@+id/tipe_daerah_potensi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10sp"
+                    android:layout_marginEnd="5sp"
+                    android:text="Kecamatan"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textStyle="bold"
+                    android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/nama_daerah_potensi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10sp"
+                    android:text="Nama Daerah"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textStyle="bold"
+                    android:textSize="14sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textStyle="bold"
+                    android:textSize="11sp"
+                    android:layout_marginEnd="5sp"
+                    android:textColor="@color/black"
+                    android:text="Sumber Daya Alam :"/>
+                <TextView
+                    android:id="@+id/sumber_daya_alam_potensi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textSize="11.7sp"
+                    android:text="Sumber Daya Alam"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textStyle="bold"
+                    android:textSize="11sp"
+                    android:layout_marginEnd="5sp"
+                    android:textColor="@color/black"
+                    android:text="Sumber Daya Manusia :"/>
+                <TextView
+                    android:id="@+id/sumber_daya_manusia_potensi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textSize="11.7sp"
+                    android:text="Sumber Daya Manusia"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textStyle="bold"
+                    android:textSize="11sp"
+                    android:layout_marginEnd="5sp"
+                    android:textColor="@color/black"
+                    android:text="Aset Desa :"/>
+                <TextView
+                    android:id="@+id/aset_desa_potensi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textSize="11.7sp"
+                    android:text="Aset Desa"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textStyle="bold"
+                    android:textSize="11sp"
+                    android:layout_marginEnd="5sp"
+                    android:textColor="@color/black"
+                    android:text="Budaya dan Kesenian:"/>
+                <TextView
+                    android:id="@+id/budaya_dan_kesenian_potensi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textSize="11.7sp"
+                    android:text="Budaya dan Kesenian"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20sp"
+            android:orientation="horizontal"
+            android:layout_marginTop="5sp"
+            android:gravity="right">
+            <Button
+                android:id="@+id/button_edit_potensi"
+                android:layout_width="40sp"
+                android:layout_height="20sp"
+                android:layout_marginRight="5sp"
+                android:background="@drawable/button"
+                android:text="Edit"
+                android:textColor="@color/white"
+                android:textSize="7sp" />
+            <Button
+                android:id="@+id/button_delete_potensi"
+                android:layout_width="40sp"
+                android:layout_height="match_parent"
+                android:background="#D9534F"
+                android:text="Delete"
+                android:textColor="@color/white"
+                android:textSize="7sp" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
