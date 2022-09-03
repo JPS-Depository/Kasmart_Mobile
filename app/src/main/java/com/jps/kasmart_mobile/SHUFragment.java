@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class SHUFragment extends Fragment {
 
@@ -30,6 +31,7 @@ public class SHUFragment extends Fragment {
     ArrayList<SHUItem> mSHUList;
     RequestQueue mRequestQueue;
     SHUAdapter shuAdapter;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -38,6 +40,7 @@ public class SHUFragment extends Fragment {
         mSHUList = new ArrayList<>();
         mRequestQueue = Volley.newRequestQueue(this.getContext());
         recyclerView = view.findViewById(R.id.shu_card);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefresh_shu);
         ParseJSON();
         return view;
     }
@@ -68,7 +71,7 @@ public class SHUFragment extends Fragment {
                         bantuanSosial,hadiahPemanfaat,pad,totalSisaUsaha));
                     }
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    shuAdapter = new SHUAdapter(getContext(), mSHUList);
+                    shuAdapter = new SHUAdapter(getContext(), mSHUList, swipeRefreshLayout);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setAdapter(shuAdapter);
                     shuAdapter.notifyDataSetChanged();

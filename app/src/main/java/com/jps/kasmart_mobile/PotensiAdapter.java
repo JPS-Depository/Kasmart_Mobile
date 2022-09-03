@@ -1,6 +1,7 @@
 package com.jps.kasmart_mobile;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,18 +14,22 @@ import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class PotensiAdapter extends RecyclerView.Adapter<PotensiAdapter.PotensiViewHolder> {
     private Context mContext;
     private ArrayList<PotensiItem> mPotensiList;
+    SwipeRefreshLayout swipeRefreshLayout;
 
-    public PotensiAdapter(Context context, ArrayList<PotensiItem> potensiList) {
+    public PotensiAdapter(Context context, ArrayList<PotensiItem> potensiList, SwipeRefreshLayout swipeRefreshLayout) {
         this.mContext = context;
         this.mPotensiList = potensiList;
+        this.swipeRefreshLayout = swipeRefreshLayout;
     }
 
     @NonNull
@@ -39,7 +44,6 @@ public class PotensiAdapter extends RecyclerView.Adapter<PotensiAdapter.PotensiV
     public void onBindViewHolder(@NonNull PotensiViewHolder holder, int position) {
         PotensiItem currentItem = mPotensiList.get(position);
 
-        int id = currentItem.getId();
         String jenis = currentItem.getJenis();
         String nama = currentItem.getNama();
         String sumberDayaAlam = currentItem.getSumberDayaAlam();
@@ -61,7 +65,6 @@ public class PotensiAdapter extends RecyclerView.Adapter<PotensiAdapter.PotensiV
     }
 
     public class PotensiViewHolder extends RecyclerView.ViewHolder {
-        public SwipeRefreshLayout swipeRefreshLayout;
         public TextView mJenis, mNama, mSumberDayaAlam, mSumberDayaManusia, mAsetDesa, mBudayaDesa;
 
         public PotensiViewHolder(View itemView) {
@@ -87,7 +90,27 @@ public class PotensiAdapter extends RecyclerView.Adapter<PotensiAdapter.PotensiV
                     FragmentActivity activity = (FragmentActivity) (mContext);
                     FragmentManager confirmManager = activity.getSupportFragmentManager();
                     DialogFragment dialog = new ConfirmationDelete();
+                    Bundle bundle = new Bundle();
+                    final int id = mPotensiList.get(getAbsoluteAdapterPosition()).getId();
+                    final String menu = "potensi";
+                    bundle.putInt("id",id);
+                    bundle.putString("menu",menu);
+                    dialog.setArguments(bundle);
                     dialog.show(confirmManager,"Alert");
+                    notifyDataSetChanged();
+                }
+            });
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    swipeRefreshLayout.setRefreshing(false);
+                    FragmentActivity activity = (FragmentActivity) (mContext);
+                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    Fragment fragment = new PotensiFragment();
+                    fragmentTransaction.replace(R.id.fragment_container,fragment);
+                    fragmentTransaction.commit();
+                    notifyDataSetChanged();
                 }
             });
         }

@@ -1,6 +1,7 @@
 package com.jps.kasmart_mobile;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +14,10 @@ import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -22,10 +25,12 @@ public class AbsensiAdapter extends RecyclerView.Adapter<AbsensiAdapter.AbsensiV
     private Context mContext;
     private ArrayList<AbsensiItem> mAbsensiList;
     private boolean expandable;
+    public SwipeRefreshLayout swipeRefreshLayout;
 
-    public AbsensiAdapter(Context context, ArrayList<AbsensiItem> absensiList) {
+    public AbsensiAdapter(Context context, ArrayList<AbsensiItem> absensiList,SwipeRefreshLayout swiperefreshlayout) {
         this.mContext = context;
         this.mAbsensiList = absensiList;
+        this.swipeRefreshLayout = swiperefreshlayout;
         this.expandable = false;
     }
 
@@ -62,7 +67,6 @@ public class AbsensiAdapter extends RecyclerView.Adapter<AbsensiAdapter.AbsensiV
     }
 
     public class AbsensiViewHolder extends RecyclerView.ViewHolder {
-        public SwipeRefreshLayout swipeRefreshLayout;
         public TextView mKegiatan, mLokasi, mKeterangan, mTanggalAbsen;
         public LinearLayout linearLayout;
         public RelativeLayout expandableLayout;
@@ -77,6 +81,21 @@ public class AbsensiAdapter extends RecyclerView.Adapter<AbsensiAdapter.AbsensiV
 
             linearLayout = itemView.findViewById(R.id.header_absen);
             expandableLayout = itemView.findViewById(R.id.extended_absen);
+
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    swipeRefreshLayout.setRefreshing(false);
+                    FragmentActivity activity = (FragmentActivity) (mContext);
+                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    Fragment fragment = new AbsensiFragment();
+                    fragmentTransaction.replace(R.id.fragment_container,fragment);
+                    fragmentTransaction.commit();
+                    notifyDataSetChanged();
+
+                }
+            });
 
             linearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -96,11 +115,18 @@ public class AbsensiAdapter extends RecyclerView.Adapter<AbsensiAdapter.AbsensiV
             itemView.findViewById(R.id.button_delete_absen).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("Button Press","Pressed Delete");
                     FragmentActivity activity = (FragmentActivity) (mContext);
                     FragmentManager confirmManager = activity.getSupportFragmentManager();
                     DialogFragment dialog = new ConfirmationDelete();
+                    Bundle bundle = new Bundle();
+                    final int id = mAbsensiList.get(getAbsoluteAdapterPosition()).getId();
+                    final String menu = "absensi";
+                    bundle.putInt("id",id);
+                    Log.d("id", String.valueOf(id));
+                    bundle.putString("menu",menu);
+                    dialog.setArguments(bundle);
                     dialog.show(confirmManager,"Alert");
+                    notifyDataSetChanged();
                 }
             });
         }

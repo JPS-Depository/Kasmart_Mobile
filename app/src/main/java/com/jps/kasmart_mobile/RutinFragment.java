@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class RutinFragment extends Fragment {
 
@@ -30,6 +31,7 @@ public class RutinFragment extends Fragment {
     ArrayList<RutinItem> mRutinList;
     RequestQueue mRequestQueue;
     RutinAdapter rutinAdapter;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -38,6 +40,7 @@ public class RutinFragment extends Fragment {
         mRutinList = new ArrayList<>();
         mRequestQueue = Volley.newRequestQueue(this.getContext());
         recyclerView = view.findViewById(R.id.rutin_card);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefresh_rutin);
         ParseJSON();
         return view;
     }
@@ -70,7 +73,7 @@ public class RutinFragment extends Fragment {
                                 lokasi, detail, sasaran, realisasi, createdBy));
                     }
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    rutinAdapter = new RutinAdapter(getContext(), mRutinList);
+                    rutinAdapter = new RutinAdapter(getContext(), mRutinList, swipeRefreshLayout);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setAdapter(rutinAdapter);
                     rutinAdapter.notifyDataSetChanged();

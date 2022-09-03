@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class BeritaFragment extends Fragment {
 
@@ -30,6 +31,7 @@ public class BeritaFragment extends Fragment {
     ArrayList<BeritaItem> mBeritaList;
     RequestQueue mRequestQueue;
     BeritaAdapter beritaAdapter;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -38,6 +40,7 @@ public class BeritaFragment extends Fragment {
         mBeritaList = new ArrayList<>();
         mRequestQueue = Volley.newRequestQueue(this.getContext());
         recyclerView = view.findViewById(R.id.berita_card);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefresh_Berita);
         ParseJSON();
         return view;
     }
@@ -62,7 +65,7 @@ public class BeritaFragment extends Fragment {
                         mBeritaList.add(new BeritaItem(id,judul,isiBerita,tanggalBerita,createBy));
                     }
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    beritaAdapter = new BeritaAdapter(getContext(), mBeritaList);
+                    beritaAdapter = new BeritaAdapter(getContext(), mBeritaList,swipeRefreshLayout);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setAdapter(beritaAdapter);
                     beritaAdapter.notifyDataSetChanged();

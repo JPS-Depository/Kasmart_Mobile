@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class AbsensiFragment extends Fragment {
 
@@ -30,6 +31,7 @@ public class AbsensiFragment extends Fragment {
     ArrayList<AbsensiItem> mAbsensiList;
     RequestQueue mRequestQueue;
     AbsensiAdapter absensiAdapter;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -38,6 +40,7 @@ public class AbsensiFragment extends Fragment {
         mAbsensiList = new ArrayList<>();
         mRequestQueue = Volley.newRequestQueue(this.getContext());
         recyclerView = view.findViewById(R.id.absen_card);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefresh_absen);
         ParseJSON();
         return view;
     }
@@ -66,7 +69,7 @@ public class AbsensiFragment extends Fragment {
                         mAbsensiList.add(new AbsensiItem(id, kegiatan, lokasi, keterangan, tanggalAbsen));
                     }
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    absensiAdapter = new AbsensiAdapter(getContext(), mAbsensiList);
+                    absensiAdapter = new AbsensiAdapter(getContext(), mAbsensiList, swipeRefreshLayout);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setAdapter(absensiAdapter);
                     absensiAdapter.notifyDataSetChanged();

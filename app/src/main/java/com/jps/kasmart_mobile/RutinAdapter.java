@@ -1,6 +1,7 @@
 package com.jps.kasmart_mobile;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +14,10 @@ import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -22,10 +25,12 @@ public class RutinAdapter extends RecyclerView.Adapter<RutinAdapter.RutinViewHol
     private Context mContext;
     private ArrayList<RutinItem> mRutinList;
     private boolean expandable;
+    public SwipeRefreshLayout swipeRefreshLayout;
 
-    public RutinAdapter(Context context, ArrayList<RutinItem> rutinList) {
+    public RutinAdapter(Context context, ArrayList<RutinItem> rutinList, SwipeRefreshLayout swipeRefreshLayout) {
         this.mContext = context;
         this.mRutinList = rutinList;
+        this.swipeRefreshLayout = swipeRefreshLayout;
         this.expandable = false;
     }
 
@@ -82,7 +87,6 @@ public class RutinAdapter extends RecyclerView.Adapter<RutinAdapter.RutinViewHol
     }
 
     public class RutinViewHolder extends RecyclerView.ViewHolder {
-        public SwipeRefreshLayout swipeRefreshLayout;
         public TextView mId, mTanggalKegiatan, mKegiatan, mJenis, mLokasi, mDetail, mSasaran, mRealisasi, mCreatedBy;
         public LinearLayout linearLayout;
         public RelativeLayout expandableLayout;
@@ -101,6 +105,21 @@ public class RutinAdapter extends RecyclerView.Adapter<RutinAdapter.RutinViewHol
 
             linearLayout = itemView.findViewById(R.id.header_rutin);
             expandableLayout = itemView.findViewById(R.id.extended_rutin);
+
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    swipeRefreshLayout.setRefreshing(false);
+                    FragmentActivity activity = (FragmentActivity) (mContext);
+                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    Fragment fragment = new RutinFragment();
+                    fragmentTransaction.replace(R.id.fragment_container,fragment);
+                    fragmentTransaction.commit();
+                    notifyDataSetChanged();
+
+                }
+            });
 
             linearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -124,7 +143,15 @@ public class RutinAdapter extends RecyclerView.Adapter<RutinAdapter.RutinViewHol
                     FragmentActivity activity = (FragmentActivity) (mContext);
                     FragmentManager confirmManager = activity.getSupportFragmentManager();
                     DialogFragment dialog = new ConfirmationDelete();
+                    Bundle bundle = new Bundle();
+                    final int id = mRutinList.get(getAbsoluteAdapterPosition()).getId();
+                    final String menu = "rutin";
+                    bundle.putInt("id",id);
+                    Log.d("id", String.valueOf(id));
+                    bundle.putString("menu",menu);
+                    dialog.setArguments(bundle);
                     dialog.show(confirmManager,"Alert");
+                    notifyDataSetChanged();
                 }
             });
         }

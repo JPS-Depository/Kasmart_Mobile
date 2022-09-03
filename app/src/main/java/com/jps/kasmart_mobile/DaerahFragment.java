@@ -1,6 +1,7 @@
 package com.jps.kasmart_mobile;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class DaerahFragment extends Fragment {
 
@@ -31,6 +33,7 @@ public class DaerahFragment extends Fragment {
     ArrayList<DaerahItem> mDaerahList;
     RequestQueue mRequestQueue;
     DaerahAdapter daerahAdapter;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -39,6 +42,7 @@ public class DaerahFragment extends Fragment {
         mDaerahList = new ArrayList<>();
         mRequestQueue = Volley.newRequestQueue(this.getContext());
         recyclerView = view.findViewById(R.id.daerah_card);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefresh_daerah);
         ParseJSON();
 
         return view;
@@ -55,6 +59,7 @@ public class DaerahFragment extends Fragment {
                     for(int i=0;i< jsonArray.length();i++){
                         JSONObject data = jsonArray.getJSONObject(i);
                         int id = data.getInt("id");
+                        Log.d("id", String.valueOf(id));
                         String jenis = data.getString("jenis");
                         String kode = data.getString("kode");
                         String nama = data.getString("nama");
@@ -64,7 +69,7 @@ public class DaerahFragment extends Fragment {
                         mDaerahList.add(new DaerahItem(id,jenis,kode,nama,createAt,updateAt));
                     }
                     recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
-                    daerahAdapter = new DaerahAdapter(getContext(), mDaerahList);
+                    daerahAdapter = new DaerahAdapter(getContext(), mDaerahList, swipeRefreshLayout);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setAdapter(daerahAdapter);
                     daerahAdapter.notifyDataSetChanged();

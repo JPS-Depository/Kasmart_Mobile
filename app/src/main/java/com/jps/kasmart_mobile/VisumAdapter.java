@@ -1,6 +1,7 @@
 package com.jps.kasmart_mobile;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,18 +12,22 @@ import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class VisumAdapter extends RecyclerView.Adapter<VisumAdapter.VisumViewHolder> {
     private Context mContext;
     private ArrayList<VisumItem> mVisumList;
+    public SwipeRefreshLayout swipeRefreshLayout;
 
-    public VisumAdapter(Context context, ArrayList<VisumItem> visumList) {
+    public VisumAdapter(Context context, ArrayList<VisumItem> visumList, SwipeRefreshLayout swipeRefreshLayout) {
         this.mContext = context;
         this.mVisumList = visumList;
+        this.swipeRefreshLayout = swipeRefreshLayout;
     }
 
     @NonNull
@@ -61,7 +66,6 @@ public class VisumAdapter extends RecyclerView.Adapter<VisumAdapter.VisumViewHol
     }
 
     public class VisumViewHolder extends RecyclerView.ViewHolder {
-        public SwipeRefreshLayout swipeRefreshLayout;
         public TextView mId, mKegiatan, mTanggalVisum, mTanggalKegiatan, mKabupaten, mKecamatan, mKelDes, mHasilKegiatan;
 
         public VisumViewHolder(View itemView) {
@@ -74,6 +78,20 @@ public class VisumAdapter extends RecyclerView.Adapter<VisumAdapter.VisumViewHol
             mKecamatan = itemView.findViewById(R.id.kecamatan_kegiatan_visum);
             mKelDes = itemView.findViewById(R.id.kelurahan_desa_visum);
             mHasilKegiatan = itemView.findViewById(R.id.hasil_kegiatan_visum);
+
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    swipeRefreshLayout.setRefreshing(false);
+                    FragmentActivity activity = (FragmentActivity) (mContext);
+                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    Fragment fragment = new VisumFragment();
+                    fragmentTransaction.replace(R.id.fragment_container,fragment);
+                    fragmentTransaction.commit();
+                    notifyDataSetChanged();
+                }
+            });
 
             itemView.findViewById(R.id.button_edit_visum).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -88,7 +106,15 @@ public class VisumAdapter extends RecyclerView.Adapter<VisumAdapter.VisumViewHol
                     FragmentActivity activity = (FragmentActivity) (mContext);
                     FragmentManager confirmManager = activity.getSupportFragmentManager();
                     DialogFragment dialog = new ConfirmationDelete();
+                    Bundle bundle = new Bundle();
+                    final int id = mVisumList.get(getAbsoluteAdapterPosition()).getId();
+                    final String menu = "visum";
+                    bundle.putInt("id",id);
+                    Log.d("id", String.valueOf(id));
+                    bundle.putString("menu",menu);
+                    dialog.setArguments(bundle);
                     dialog.show(confirmManager,"Alert");
+                    notifyDataSetChanged();
                 }
             });
         }

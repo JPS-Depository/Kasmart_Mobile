@@ -1,6 +1,7 @@
 package com.jps.kasmart_mobile;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +14,10 @@ import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -22,10 +25,12 @@ public class WajibAdapter extends RecyclerView.Adapter<WajibAdapter.WajibViewHol
     private Context mContext;
     private ArrayList<WajibItem> mWajibList;
     private boolean expandable;
+    public SwipeRefreshLayout swipeRefreshLayout;
 
-    public WajibAdapter(Context context, ArrayList<WajibItem> wajibList) {
+    public WajibAdapter(Context context, ArrayList<WajibItem> wajibList, SwipeRefreshLayout swipeRefreshLayout) {
         this.mContext = context;
         this.mWajibList = wajibList;
+        this.swipeRefreshLayout = swipeRefreshLayout;
         this.expandable = false;
     }
 
@@ -82,7 +87,6 @@ public class WajibAdapter extends RecyclerView.Adapter<WajibAdapter.WajibViewHol
     }
 
     public class WajibViewHolder extends RecyclerView.ViewHolder {
-        public SwipeRefreshLayout swipeRefreshLayout;
         public TextView mId, mTanggalKegiatan, mKegiatan, mJenis, mLokasi, mDetail, mSasaran, mRealisasi, mCreatedBy;
         public LinearLayout linearLayout;
         public RelativeLayout expandableLayout;
@@ -111,6 +115,21 @@ public class WajibAdapter extends RecyclerView.Adapter<WajibAdapter.WajibViewHol
                 }
             });
 
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    swipeRefreshLayout.setRefreshing(false);
+                    FragmentActivity activity = (FragmentActivity) (mContext);
+                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    Fragment fragment = new WajibFragment();
+                    fragmentTransaction.replace(R.id.fragment_container,fragment);
+                    fragmentTransaction.commit();
+                    notifyDataSetChanged();
+
+                }
+            });
+
             itemView.findViewById(R.id.button_edit_wajib).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -124,7 +143,15 @@ public class WajibAdapter extends RecyclerView.Adapter<WajibAdapter.WajibViewHol
                     FragmentActivity activity = (FragmentActivity) (mContext);
                     FragmentManager confirmManager = activity.getSupportFragmentManager();
                     DialogFragment dialog = new ConfirmationDelete();
+                    Bundle bundle = new Bundle();
+                    final int id = mWajibList.get(getAbsoluteAdapterPosition()).getId();
+                    final String menu = "wajib";
+                    bundle.putInt("id",id);
+                    Log.d("id", String.valueOf(id));
+                    bundle.putString("menu",menu);
+                    dialog.setArguments(bundle);
                     dialog.show(confirmManager,"Alert");
+                    notifyDataSetChanged();
                 }
             });
         }

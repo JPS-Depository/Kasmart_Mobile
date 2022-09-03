@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class MasalahFragment extends Fragment {
 
@@ -30,6 +31,7 @@ public class MasalahFragment extends Fragment {
     ArrayList<MasalahItem> mMasalahList;
     RequestQueue mRequestQueue;
     MasalahAdapter masalahAdapter;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -38,6 +40,7 @@ public class MasalahFragment extends Fragment {
         mMasalahList = new ArrayList<>();
         mRequestQueue = Volley.newRequestQueue(this.getContext());
         recyclerView = view.findViewById(R.id.masalah_card);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefresh_masalah);
         ParseJSON();
         return view;
     }
@@ -59,7 +62,7 @@ public class MasalahFragment extends Fragment {
                         mMasalahList.add(new MasalahItem(id, masalah, pembinaan, createdBy));
                     }
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    masalahAdapter = new MasalahAdapter(getContext(), mMasalahList);
+                    masalahAdapter = new MasalahAdapter(getContext(), mMasalahList, swipeRefreshLayout);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setAdapter(masalahAdapter);
                     masalahAdapter.notifyDataSetChanged();

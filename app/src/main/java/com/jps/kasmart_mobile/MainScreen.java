@@ -9,6 +9,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,8 +31,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
     private DrawerLayout drawer;
     SessionManager sessionManager;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

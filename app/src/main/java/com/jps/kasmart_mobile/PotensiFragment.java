@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class PotensiFragment extends Fragment {
 
@@ -30,6 +31,7 @@ public class PotensiFragment extends Fragment {
     ArrayList<PotensiItem> mPotensiList;
     RequestQueue mRequestQueue;
     PotensiAdapter potensiAdapter;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -38,6 +40,7 @@ public class PotensiFragment extends Fragment {
         mPotensiList = new ArrayList<>();
         mRequestQueue = Volley.newRequestQueue(this.getContext());
         recyclerView = view.findViewById(R.id.potensi_card);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefresh_potensi);
         ParseJSON();
         return view;
     }
@@ -63,7 +66,7 @@ public class PotensiFragment extends Fragment {
                                 sumberDayaManusia, asetDesa, budayaDesa));
                     }
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    potensiAdapter = new PotensiAdapter(getContext(), mPotensiList);
+                    potensiAdapter = new PotensiAdapter(getContext(), mPotensiList, swipeRefreshLayout);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setAdapter(potensiAdapter);
                     potensiAdapter.notifyDataSetChanged();

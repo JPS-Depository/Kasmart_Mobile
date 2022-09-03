@@ -22,12 +22,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaViewHolder> {
     private Context mContext;
     private ArrayList<BeritaItem> mBeritaList;
-    String judul, isi_berita, tanggal_berita, createdAt, updatedAt, createdBy;
-    BeritaItem currentItem;
+    public SwipeRefreshLayout swipeRefreshLayout;
     Bundle bundle;
 
-    public BeritaAdapter(Context context, ArrayList<BeritaItem> beritaList) {
+    public BeritaAdapter(Context context, ArrayList<BeritaItem> beritaList, SwipeRefreshLayout swipeRefreshLayout) {
         this.mContext = context;
+        this.swipeRefreshLayout = swipeRefreshLayout;
         this.mBeritaList = beritaList;
     }
 
@@ -41,7 +41,8 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
 
     @Override
     public void onBindViewHolder(@NonNull BeritaViewHolder holder, int position) {
-        currentItem = mBeritaList.get(position);
+        String judul, isi_berita, tanggal_berita, createdAt, updatedAt, createdBy;
+        BeritaItem currentItem = mBeritaList.get(position);
 
         judul = currentItem.getJudul();
         isi_berita = currentItem.getIsiBerita();
@@ -56,14 +57,13 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentItem = mBeritaList.get(position);
                 bundle = new Bundle();
 
+                bundle.putInt("id",currentItem.getId());
                 bundle.putString("judul",currentItem.getJudul());
                 bundle.putString("isi berita", currentItem.getIsiBerita());
                 bundle.putString("tanggal_berita", currentItem.getTanggalBerita());
                 bundle.putString("createdBy", currentItem.getCreatedBy());
-
 
                 FragmentActivity activity = (FragmentActivity) (mContext);
                 FragmentManager detailManager = activity.getSupportFragmentManager();
@@ -74,6 +74,31 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
                 fragmentTransaction.addToBackStack(null).commit();
             }
         });
+
+        holder.itemView.findViewById(R.id.button_edit_berita).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Button Press","Pressed Edit");
+            }
+        });
+        holder.itemView.findViewById(R.id.button_delete_berita).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Button Press","Pressed Delete");
+                FragmentActivity activity = (FragmentActivity) (mContext);
+                FragmentManager confirmManager = activity.getSupportFragmentManager();
+                DialogFragment dialog = new ConfirmationDelete();
+                Bundle bundle = new Bundle();
+                final int id = mBeritaList.get(holder.getAbsoluteAdapterPosition()).getId();
+                final String menu = "berita";
+                Log.d("id", String.valueOf(id));
+                bundle.putInt("id",id);
+                bundle.putString("menu",menu);
+                dialog.setArguments(bundle);
+                dialog.show(confirmManager,"Alert");
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
@@ -82,7 +107,6 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
     }
 
     public class BeritaViewHolder extends RecyclerView.ViewHolder {
-        public SwipeRefreshLayout swipeRefreshLayout;
         public TextView mJudul, mIsiBerita;
         /*image declaration*/
 
@@ -91,6 +115,21 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
             mJudul = itemView.findViewById(R.id.judul_berita);
             mIsiBerita = itemView.findViewById(R.id.isi_berita);
             /*item id for image*/
+
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    swipeRefreshLayout.setRefreshing(false);
+
+                    FragmentActivity activity = (FragmentActivity) (mContext);
+                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    Fragment fragment = new BeritaFragment();
+                    fragmentTransaction.replace(R.id.fragment_container,fragment);
+                    fragmentTransaction.commit();
+                    notifyDataSetChanged();
+                }
+            });
         }
     }
 }

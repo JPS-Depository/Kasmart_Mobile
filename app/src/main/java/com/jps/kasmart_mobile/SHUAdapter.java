@@ -25,10 +25,12 @@ public class SHUAdapter extends RecyclerView.Adapter<SHUAdapter.SHUViewHolder> {
     private Context mContext;
     private ArrayList<SHUItem> mSHUList;
     private boolean expandable;
+    public SwipeRefreshLayout swipeRefreshLayout;
 
-    public SHUAdapter(Context context, ArrayList<SHUItem> shuList) {
+    public SHUAdapter(Context context, ArrayList<SHUItem> shuList, SwipeRefreshLayout swipeRefreshLayout) {
         this.mContext = context;
         this.mSHUList = shuList;
+        this.swipeRefreshLayout = swipeRefreshLayout;
         this.expandable = false;
     }
 
@@ -75,7 +77,6 @@ public class SHUAdapter extends RecyclerView.Adapter<SHUAdapter.SHUViewHolder> {
     }
 
     public class SHUViewHolder extends RecyclerView.ViewHolder {
-        public SwipeRefreshLayout swipeRefreshLayout;
         public TextView mNamaDaerah, mPembagianShu, mInventaris, mTambahanModal, mPelatihanPengembangan,
         mBantuanSosial, mHadiahPemanfaat, mPad, mTotalSisaUsaha;
 
@@ -97,6 +98,21 @@ public class SHUAdapter extends RecyclerView.Adapter<SHUAdapter.SHUViewHolder> {
 
             linearLayout = itemView.findViewById(R.id.header_shu);
             expandableLayout = itemView.findViewById(R.id.extended_shu);
+
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    swipeRefreshLayout.setRefreshing(false);
+                    FragmentActivity activity = (FragmentActivity) (mContext);
+                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    Fragment fragment = new SHUFragment();
+                    fragmentTransaction.replace(R.id.fragment_container,fragment);
+                    fragmentTransaction.commit();
+                    notifyDataSetChanged();
+
+                }
+            });
 
             linearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override

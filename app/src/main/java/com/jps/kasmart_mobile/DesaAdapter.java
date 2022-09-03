@@ -2,6 +2,7 @@ package com.jps.kasmart_mobile;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,9 @@ import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.fragment.app.FragmentManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -27,10 +30,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 public class DesaAdapter extends RecyclerView.Adapter<DesaAdapter.DesaViewHolder> {
     private Context mContext;
     private ArrayList<DesaItem> mDesaList;
+    public SwipeRefreshLayout swipeRefreshLayout;
 
-    public DesaAdapter(Context context, ArrayList<DesaItem> desaList) {
+    public DesaAdapter(Context context, ArrayList<DesaItem> desaList, SwipeRefreshLayout swipeRefreshLayout) {
         this.mContext = context;
         this.mDesaList = desaList;
+        this.swipeRefreshLayout = swipeRefreshLayout;
     }
 
     @NonNull
@@ -74,7 +79,6 @@ public class DesaAdapter extends RecyclerView.Adapter<DesaAdapter.DesaViewHolder
     }
 
     public class DesaViewHolder extends RecyclerView.ViewHolder {
-        public SwipeRefreshLayout swipeRefreshLayout;
         public TextView mNamaDesa,mNamaKades,mkK, mDusun, mRW, mRT, mSuku, mNomor, mCreated_at, mUpdated_at;
         public DesaViewHolder(View itemView) {
             super(itemView);
@@ -89,6 +93,19 @@ public class DesaAdapter extends RecyclerView.Adapter<DesaAdapter.DesaViewHolder
             mCreated_at=itemView.findViewById(R.id.tanggal_dibuat);
             mUpdated_at=itemView.findViewById(R.id.tanggal_diupdate);
 
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    swipeRefreshLayout.setRefreshing(false);
+                    FragmentActivity activity = (FragmentActivity) (mContext);
+                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    Fragment fragment = new DesaFragment();
+                    fragmentTransaction.replace(R.id.fragment_container,fragment);
+                    fragmentTransaction.commit();
+                    notifyDataSetChanged();
+                }
+            });
             itemView.findViewById(R.id.button_edit_desa).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -102,7 +119,15 @@ public class DesaAdapter extends RecyclerView.Adapter<DesaAdapter.DesaViewHolder
                     FragmentActivity activity = (FragmentActivity) (mContext);
                     FragmentManager confirmManager = activity.getSupportFragmentManager();
                     DialogFragment dialog = new ConfirmationDelete();
+                    Bundle bundle = new Bundle();
+                    final int id = mDesaList.get(getAbsoluteAdapterPosition()).getId();
+                    final String menu = "desa";
+                    bundle.putInt("id",id);
+                    Log.d("id", String.valueOf(id));
+                    bundle.putString("menu",menu);
+                    dialog.setArguments(bundle);
                     dialog.show(confirmManager,"Alert");
+                    notifyDataSetChanged();
                 }
             });
         }

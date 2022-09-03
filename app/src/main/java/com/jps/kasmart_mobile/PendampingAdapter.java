@@ -2,6 +2,7 @@ package com.jps.kasmart_mobile;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +15,10 @@ import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -23,10 +26,12 @@ public class PendampingAdapter extends RecyclerView.Adapter<PendampingAdapter.Pe
     private Context mContext;
     private ArrayList<PendampingItem> mPendampingList;
     private boolean expandable;
+    public SwipeRefreshLayout swipeRefreshLayout;
 
-    public PendampingAdapter(Context context, ArrayList<PendampingItem> pendampingList) {
+    public PendampingAdapter(Context context, ArrayList<PendampingItem> pendampingList, SwipeRefreshLayout swipeRefreshLayout) {
         this.mContext = context;
         this.mPendampingList = pendampingList;
+        this.swipeRefreshLayout =swipeRefreshLayout;
         this.expandable = false;
     }
 
@@ -86,7 +91,6 @@ public class PendampingAdapter extends RecyclerView.Adapter<PendampingAdapter.Pe
     }
 
     public class PendampingViewHolder extends RecyclerView.ViewHolder {
-        public SwipeRefreshLayout swipeRefreshLayout;
         public TextView mNama, mTelepon, mAlamatTugas, mAlamatPribadi, mBidang, mJabatan, mNoReg, mEmail, mKTP,
         mBPJS, mNoRek, mNpwp, mStatusPernikahan, mJenisKelamin, mAgama;
         public LinearLayout linearLayout;
@@ -121,7 +125,20 @@ public class PendampingAdapter extends RecyclerView.Adapter<PendampingAdapter.Pe
                     notifyDataSetChanged();
                 }
             });
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    swipeRefreshLayout.setRefreshing(false);
+                    FragmentActivity activity = (FragmentActivity) (mContext);
+                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    Fragment fragment = new PendampingFragment();
+                    fragmentTransaction.replace(R.id.fragment_container,fragment);
+                    fragmentTransaction.commit();
+                    notifyDataSetChanged();
 
+                }
+            });
             itemView.findViewById(R.id.button_edit_pendamping).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -135,7 +152,15 @@ public class PendampingAdapter extends RecyclerView.Adapter<PendampingAdapter.Pe
                     FragmentActivity activity = (FragmentActivity) (mContext);
                     FragmentManager confirmManager = activity.getSupportFragmentManager();
                     DialogFragment dialog = new ConfirmationDelete();
+                    Bundle bundle = new Bundle();
+                    final int id = mPendampingList.get(getAbsoluteAdapterPosition()).getId();
+                    final String menu = "pendamping";
+                    bundle.putInt("id",id);
+                    Log.d("id", String.valueOf(id));
+                    bundle.putString("menu",menu);
+                    dialog.setArguments(bundle);
                     dialog.show(confirmManager,"Alert");
+                    notifyDataSetChanged();
                 }
             });
         }

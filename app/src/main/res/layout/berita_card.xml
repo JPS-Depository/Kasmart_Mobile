@@ -41,24 +41,49 @@
                         android:fontFamily="@font/source_sans_pro"
                         android:text="@string/judul_berita_default"
                         android:textColor="#000"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
                 <TextView
                     android:id="@+id/isi_berita"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:textSize="11sp"
                     android:maxLines= "2"
                     android:ellipsize="end"
                     android:text="@string/isi_berita_default"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:layout_marginTop="5sp">
+                    <Button
+                        android:id="@+id/button_edit_berita"
+                        android:layout_width="40sp"
+                        android:layout_height="20sp"
+                        android:layout_marginRight="5sp"
+                        android:background="@drawable/button"
+                        android:text="Edit"
+                        android:textColor="@color/white"
+                        android:textSize="7sp" />
+                    <Button
+                        android:id="@+id/button_delete_berita"
+                        android:layout_width="40sp"
+                        android:layout_height="20sp"
+                        android:background="#D9534F"
+                        android:text="Delete"
+                        android:textColor="@color/white"
+                        android:textSize="7sp" />
+                </LinearLayout>
             </LinearLayout>
             <ImageView
                 android:layout_width="89dp"
                 android:layout_height="match_parent"
                 android:background="@mipmap/ic_launcher"
                 android:contentDescription="@string/gambar_berita" />
+
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

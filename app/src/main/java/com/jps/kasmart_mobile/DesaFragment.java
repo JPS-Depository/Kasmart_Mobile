@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,6 +38,7 @@ public class DesaFragment extends Fragment {
     ArrayList<DesaItem> mDesaList;
     RequestQueue mRequestQueue;
     DesaAdapter desaAdapter;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -46,6 +48,7 @@ public class DesaFragment extends Fragment {
         mDesaList = new ArrayList<>();
         mRequestQueue = Volley.newRequestQueue(this.getContext());
         recyclerView = view.findViewById(R.id.desa_card);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefresh_Desa);
         ParseJSON();
         return view;
     }
@@ -75,7 +78,7 @@ public class DesaFragment extends Fragment {
                         mDesaList.add(new DesaItem(id,namaDesa,namaKades,kK,dusun,rt,rw,suku,nomor,createAt,updateAt));
                     }
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    desaAdapter = new DesaAdapter(getContext(), mDesaList);
+                    desaAdapter = new DesaAdapter(getContext(), mDesaList, swipeRefreshLayout);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setAdapter(desaAdapter);
                     desaAdapter.notifyDataSetChanged();

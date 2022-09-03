@@ -13,8 +13,10 @@ import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -22,10 +24,12 @@ public class USPAdapter extends RecyclerView.Adapter<USPAdapter.USPViewHolder> {
     private Context mContext;
     private ArrayList<USPItem> mUSPList;
     private boolean expandable;
+    public SwipeRefreshLayout swipeRefreshLayout;
 
-    public USPAdapter(Context context, ArrayList<USPItem> USPList) {
+    public USPAdapter(Context context, ArrayList<USPItem> USPList, SwipeRefreshLayout swipeRefreshLayout) {
         this.mContext = context;
         this.mUSPList = USPList;
+        this.swipeRefreshLayout = swipeRefreshLayout;
         this.expandable = false;
     }
 
@@ -140,7 +144,6 @@ public class USPAdapter extends RecyclerView.Adapter<USPAdapter.USPViewHolder> {
     }
 
     public class USPViewHolder extends RecyclerView.ViewHolder {
-        public SwipeRefreshLayout swipeRefreshLayout;
         public TextView mNamaDaerah,mModal,mPerguliranOrang,mPerguliranDana,mSisaPiutangOrang
                 ,mSisaPiutangDana,mTotalDanaUsp,mTotalDanaDud,mKasUed,mInventaris,mPengapusanCadangan
                 ,mSitaanJaminan,mTotalAset,mTunggakanOrang,mTunggakanDana,mPengembalianOrang
@@ -207,6 +210,21 @@ public class USPAdapter extends RecyclerView.Adapter<USPAdapter.USPViewHolder> {
                     USPItem USPItem = mUSPList.get(getBindingAdapterPosition());
                     USPItem.setmExpandable(!USPItem.ismExpandable());
                     notifyDataSetChanged();
+                }
+            });
+
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    swipeRefreshLayout.setRefreshing(false);
+                    FragmentActivity activity = (FragmentActivity) (mContext);
+                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    Fragment fragment = new USPFragment();
+                    fragmentTransaction.replace(R.id.fragment_container,fragment);
+                    fragmentTransaction.commit();
+                    notifyDataSetChanged();
+
                 }
             });
 

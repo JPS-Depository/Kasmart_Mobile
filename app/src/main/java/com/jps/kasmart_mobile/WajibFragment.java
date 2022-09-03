@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class WajibFragment extends Fragment {
 
@@ -30,6 +31,7 @@ public class WajibFragment extends Fragment {
     ArrayList<WajibItem> mWajibList;
     RequestQueue mRequestQueue;
     WajibAdapter wajibAdapter;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -38,6 +40,7 @@ public class WajibFragment extends Fragment {
         mWajibList = new ArrayList<>();
         mRequestQueue = Volley.newRequestQueue(this.getContext());
         recyclerView = view.findViewById(R.id.wajib_card);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefresh_wajib);
         ParseJSON();
         return view;
     }
@@ -70,7 +73,7 @@ public class WajibFragment extends Fragment {
                                 lokasi, detail, sasaran, realisasi, createdBy));
                     }
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    wajibAdapter = new WajibAdapter(getContext(), mWajibList);
+                    wajibAdapter = new WajibAdapter(getContext(), mWajibList,swipeRefreshLayout);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setAdapter(wajibAdapter);
                     wajibAdapter.notifyDataSetChanged();

@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class USPFragment extends Fragment {
 
@@ -30,6 +31,7 @@ public class USPFragment extends Fragment {
     ArrayList<USPItem> mUSPList;
     RequestQueue mRequestQueue;
     USPAdapter USPAdapter;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -39,6 +41,7 @@ public class USPFragment extends Fragment {
         mUSPList = new ArrayList<>();
         mRequestQueue = Volley.newRequestQueue(this.getContext());
         recyclerView = view.findViewById(R.id.usp_uek_card);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefresh_usp_uek);
         ParseJSON();
         return view;
     }
@@ -108,7 +111,7 @@ public class USPFragment extends Fragment {
                         pades,pengembalianUsaha,labaBersih,status));
                     }
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    USPAdapter = new USPAdapter(getContext(), mUSPList);
+                    USPAdapter = new USPAdapter(getContext(), mUSPList,swipeRefreshLayout);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setAdapter(USPAdapter);
                     USPAdapter.notifyDataSetChanged();

@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class PendampingFragment extends Fragment {
 
@@ -30,6 +31,7 @@ public class PendampingFragment extends Fragment {
     ArrayList<PendampingItem> mPendampingList;
     RequestQueue mRequestQueue;
     PendampingAdapter pendampingAdapter;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -38,6 +40,7 @@ public class PendampingFragment extends Fragment {
         mPendampingList = new ArrayList<>();
         mRequestQueue = Volley.newRequestQueue(this.getContext());
         recyclerView = view.findViewById(R.id.pendamping_card);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefresh_pendamping);
         ParseJSON();
         return view;
     }
@@ -79,7 +82,7 @@ public class PendampingFragment extends Fragment {
                                 jabatan, noReg, email, ktp, bpjs, noRek, npwp, statusPernikahan, jenisKelamin, agama));
                     }
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    pendampingAdapter = new PendampingAdapter(getContext(), mPendampingList);
+                    pendampingAdapter = new PendampingAdapter(getContext(), mPendampingList, swipeRefreshLayout);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setAdapter(pendampingAdapter);
                     pendampingAdapter.notifyDataSetChanged();

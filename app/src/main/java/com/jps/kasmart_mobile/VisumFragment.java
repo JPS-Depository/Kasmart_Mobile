@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class VisumFragment extends Fragment {
 
@@ -30,6 +31,7 @@ public class VisumFragment extends Fragment {
     ArrayList<VisumItem> mVisumList;
     RequestQueue mRequestQueue;
     VisumAdapter visumAdapter;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -38,6 +40,7 @@ public class VisumFragment extends Fragment {
         mVisumList = new ArrayList<>();
         mRequestQueue = Volley.newRequestQueue(this.getContext());
         recyclerView = view.findViewById(R.id.visum_card);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefresh_usp_visum);
         ParseJSON();
         return view;
     }
@@ -65,7 +68,7 @@ public class VisumFragment extends Fragment {
                                 kabupaten, kecamatan, kelDes, hasilKegiatan));
                     }
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    visumAdapter = new VisumAdapter(getContext(), mVisumList);
+                    visumAdapter = new VisumAdapter(getContext(), mVisumList, swipeRefreshLayout);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setAdapter(visumAdapter);
                     visumAdapter.notifyDataSetChanged();

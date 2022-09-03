@@ -13,8 +13,10 @@ import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -22,10 +24,12 @@ public class BumdesAdapter extends RecyclerView.Adapter<BumdesAdapter.BumdesView
     private Context mContext;
     private ArrayList<BumdesItem> mBumdesList;
     private boolean expandable;
+    public SwipeRefreshLayout swipeRefreshLayout;
 
-    public BumdesAdapter(Context context, ArrayList<BumdesItem> bumdesList) {
+    public BumdesAdapter(Context context, ArrayList<BumdesItem> bumdesList, SwipeRefreshLayout swiperefreshlayout) {
         this.mContext = context;
         this.mBumdesList = bumdesList;
+        this.swipeRefreshLayout = swiperefreshlayout;
         this.expandable = false;
     }
 
@@ -41,7 +45,6 @@ public class BumdesAdapter extends RecyclerView.Adapter<BumdesAdapter.BumdesView
     public void onBindViewHolder(@NonNull BumdesViewHolder holder, int position) {
         BumdesItem currentItem = mBumdesList.get(position);
 
-        int id = currentItem.getId();
         String namaDaerah = currentItem.getNamaDaerah();
         String unitUsaha = currentItem.getUnitUsaha();
         String jenisUsaha = currentItem.getJenisUsaha();
@@ -100,6 +103,25 @@ public class BumdesAdapter extends RecyclerView.Adapter<BumdesAdapter.BumdesView
 
         boolean isExpandable = mBumdesList.get(position).ismExpandable();
         holder.expandableLayout.setVisibility(isExpandable? View.VISIBLE:View.GONE);
+
+        holder.itemView.findViewById(R.id.button_edit_bumdes).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Button Press","Pressed Edit");
+            }
+        });
+        holder.itemView.findViewById(R.id.button_delete_bumdes).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int id = mBumdesList.get(position).getId();
+                Log.d("Button Press","Pressed Delete");
+                FragmentActivity activity = (FragmentActivity) (mContext);
+                FragmentManager confirmManager = activity.getSupportFragmentManager();
+                DialogFragment dialog = new ConfirmationDelete();
+                dialog.show(confirmManager,"Alert");
+                Log.d("Button Id", String.valueOf(id));
+            }
+        });
     }
 
     @Override
@@ -108,7 +130,6 @@ public class BumdesAdapter extends RecyclerView.Adapter<BumdesAdapter.BumdesView
     }
 
     public class BumdesViewHolder extends RecyclerView.ViewHolder {
-        public SwipeRefreshLayout swipeRefreshLayout;
         public TextView mNamaDaerah, mUnitUsaha, mJenisUsaha, mSumberDana, mTahunPenyertaanModal, mStatus,
                 mPenyertaanModal,mPiutangUsaha, mPiutangGajiKaryawan, mTotalDanaRekening, mInventaris, mPengalihanAset, mPenghapusanPiutang, mKasHarian,
                 mBarangDagang, mTotalKekayaan, mCashOpname, mShu, mPades, mPengembalianUsaha, mBungaBankUsp, mBiayaPromosi, mBiayaRapat, mTunjanganKinerja,
@@ -148,6 +169,21 @@ public class BumdesAdapter extends RecyclerView.Adapter<BumdesAdapter.BumdesView
 
             linearLayout = itemView.findViewById(R.id.header_bumdes);
             expandableLayout = itemView.findViewById(R.id.extended_bumdes);
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    swipeRefreshLayout.setRefreshing(false);
+
+                    FragmentActivity activity = (FragmentActivity) (mContext);
+                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    Fragment fragment = new BumdesFragment();
+                    fragmentTransaction.replace(R.id.fragment_container,fragment);
+                    fragmentTransaction.commit();
+                    notifyDataSetChanged();
+
+                }
+            });
 
             linearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -155,23 +191,6 @@ public class BumdesAdapter extends RecyclerView.Adapter<BumdesAdapter.BumdesView
                     BumdesItem bumdesItem = mBumdesList.get(getBindingAdapterPosition());
                     bumdesItem.setmExpandable(!bumdesItem.ismExpandable());
                     notifyDataSetChanged();
-                }
-            });
-
-            itemView.findViewById(R.id.button_edit_bumdes).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d("Button Press","Pressed Edit");
-                }
-            });
-            itemView.findViewById(R.id.button_delete_bumdes).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d("Button Press","Pressed Delete");
-                    FragmentActivity activity = (FragmentActivity) (mContext);
-                    FragmentManager confirmManager = activity.getSupportFragmentManager();
-                    DialogFragment dialog = new ConfirmationDelete();
-                    dialog.show(confirmManager,"Alert");
                 }
             });
         }

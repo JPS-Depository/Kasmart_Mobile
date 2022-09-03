@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class BumdesFragment extends Fragment {
 
@@ -30,6 +31,7 @@ public class BumdesFragment extends Fragment {
     ArrayList<BumdesItem> mBumdesList;
     RequestQueue mRequestQueue;
     BumdesAdapter bumdesAdapter;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -38,6 +40,7 @@ public class BumdesFragment extends Fragment {
         mBumdesList = new ArrayList<>();
         mRequestQueue = Volley.newRequestQueue(this.getContext());
         recyclerView = view.findViewById(R.id.bumdes_card);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefresh_bumdes);
         ParseJSON();
         return view;
     }
@@ -88,7 +91,7 @@ public class BumdesFragment extends Fragment {
                                 labaBulanLalu, labaBulanIni, labaTotal, status));
                     }
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    bumdesAdapter = new BumdesAdapter(getContext(), mBumdesList);
+                    bumdesAdapter = new BumdesAdapter(getContext(), mBumdesList, swipeRefreshLayout);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setAdapter(bumdesAdapter);
                     bumdesAdapter.notifyDataSetChanged();

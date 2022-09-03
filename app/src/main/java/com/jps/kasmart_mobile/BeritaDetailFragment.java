@@ -20,6 +20,8 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class BeritaDetailFragment extends Fragment{
     String judul, isi_berita, tanggal_berita, mpenulis;
@@ -49,23 +51,6 @@ public class BeritaDetailFragment extends Fragment{
 
         isiBerita.setMovementMethod(new ScrollingMovementMethod());
 
-
-        view.findViewById(R.id.edit_berita).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("Button Press","Pressed Edit");
-            }
-        });
-        view.findViewById(R.id.delete_berita).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("Button Press","Pressed Delete");
-                FragmentActivity activity = (FragmentActivity) (getContext());
-                FragmentManager confirmManager = activity.getSupportFragmentManager();
-                DialogFragment dialog = new ConfirmationDelete();
-                dialog.show(confirmManager,"Alert");
-            }
-        });
         return view;
     }
 
