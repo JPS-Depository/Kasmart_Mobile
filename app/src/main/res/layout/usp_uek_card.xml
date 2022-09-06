@@ -885,30 +885,5 @@
                 </LinearLayout>
             </RelativeLayout>
         </ScrollView>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="20sp"
-            android:orientation="horizontal"
-            android:layout_marginTop="5sp"
-            android:gravity="right"
-            android:layout_below="@id/linear_extended_uek">
-            <Button
-                android:id="@+id/button_edit_uek"
-                android:layout_width="40sp"
-                android:layout_height="20sp"
-                android:layout_marginRight="5sp"
-                android:background="@drawable/button"
-                android:text="Edit"
-                android:textColor="@color/white"
-                android:textSize="7sp" />
-            <Button
-                android:id="@+id/button_delete_uek"
-                android:layout_width="40sp"
-                android:layout_height="match_parent"
-                android:background="#D9534F"
-                android:text="Delete"
-                android:textColor="@color/white"
-                android:textSize="7sp" />
-        </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

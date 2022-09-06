@@ -133,7 +133,31 @@ public class RutinAdapter extends RecyclerView.Adapter<RutinAdapter.RutinViewHol
             itemView.findViewById(R.id.button_edit_rutin).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("Button Press","Pressed Edit");
+                    FragmentActivity activity = (FragmentActivity) (mContext);
+                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    Fragment fragment = new RutinEditFragment();
+                    fragmentTransaction.replace(R.id.fragment_container,fragment);
+                    Bundle bundle = new Bundle();
+
+                    final int id = mRutinList.get(getAbsoluteAdapterPosition()).getId();
+                    final String tipe = mRutinList.get(getAbsoluteAdapterPosition()).getJenis();
+                    final String kegiatan = mRutinList.get(getAbsoluteAdapterPosition()).getKegiatan();
+                    final String tanggalkegiatan = mRutinList.get(getAbsoluteAdapterPosition()).getTanggalKegiatan();
+                    final String sasaran = mRutinList.get(getAbsoluteAdapterPosition()).getSasaran();
+                    final String detail = mRutinList.get(getAbsoluteAdapterPosition()).getDetail();
+                    final String lokasi = mRutinList.get(getAbsoluteAdapterPosition()).getLokasi();
+
+                    bundle.putInt("id",id);
+                    bundle.putString("tipe",tipe);
+                    bundle.putString("kegiatan",kegiatan);
+                    bundle.putString("tanggalkegiatan",tanggalkegiatan);
+                    bundle.putString("sasaran",sasaran);
+                    bundle.putString("detail",detail);
+                    bundle.putString("lokasi",lokasi);
+                    fragment.setArguments(bundle);
+                    fragmentTransaction.addToBackStack(null).commit();
+                    notifyDataSetChanged();
                 }
             });
             itemView.findViewById(R.id.button_delete_rutin).setOnClickListener(new View.OnClickListener() {

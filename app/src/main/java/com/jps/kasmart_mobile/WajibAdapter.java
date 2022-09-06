@@ -133,7 +133,31 @@ public class WajibAdapter extends RecyclerView.Adapter<WajibAdapter.WajibViewHol
             itemView.findViewById(R.id.button_edit_wajib).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("Button Press","Pressed Edit");
+                    FragmentActivity activity = (FragmentActivity) (mContext);
+                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    Fragment fragment = new WajibEditFragment();
+                    fragmentTransaction.replace(R.id.fragment_container,fragment);
+                    Bundle bundle = new Bundle();
+
+                    final int id = mWajibList.get(getAbsoluteAdapterPosition()).getId();
+                    final String tipe = mWajibList.get(getAbsoluteAdapterPosition()).getJenis();
+                    final String kegiatan = mWajibList.get(getAbsoluteAdapterPosition()).getKegiatan();
+                    final String tanggalkegiatan = mWajibList.get(getAbsoluteAdapterPosition()).getTanggalKegiatan();
+                    final String sasaran = mWajibList.get(getAbsoluteAdapterPosition()).getSasaran();
+                    final String detail = mWajibList.get(getAbsoluteAdapterPosition()).getDetail();
+                    final String lokasi = mWajibList.get(getAbsoluteAdapterPosition()).getLokasi();
+
+                    bundle.putInt("id",id);
+                    bundle.putString("tipe",tipe);
+                    bundle.putString("kegiatan",kegiatan);
+                    bundle.putString("tanggalkegiatan",tanggalkegiatan);
+                    bundle.putString("sasaran",sasaran);
+                    bundle.putString("detail",detail);
+                    bundle.putString("lokasi",lokasi);
+                    fragment.setArguments(bundle);
+                    fragmentTransaction.addToBackStack(null).commit();
+                    notifyDataSetChanged();
                 }
             });
             itemView.findViewById(R.id.button_delete_wajib).setOnClickListener(new View.OnClickListener() {

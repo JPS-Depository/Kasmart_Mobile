@@ -41,6 +41,7 @@ public class BumdesAdapter extends RecyclerView.Adapter<BumdesAdapter.BumdesView
         return bumdesViewHolder;
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull BumdesViewHolder holder, int position) {
         BumdesItem currentItem = mBumdesList.get(position);
@@ -104,24 +105,24 @@ public class BumdesAdapter extends RecyclerView.Adapter<BumdesAdapter.BumdesView
         boolean isExpandable = mBumdesList.get(position).ismExpandable();
         holder.expandableLayout.setVisibility(isExpandable? View.VISIBLE:View.GONE);
 
-        holder.itemView.findViewById(R.id.button_edit_bumdes).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("Button Press","Pressed Edit");
-            }
-        });
-        holder.itemView.findViewById(R.id.button_delete_bumdes).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int id = mBumdesList.get(position).getId();
-                Log.d("Button Press","Pressed Delete");
-                FragmentActivity activity = (FragmentActivity) (mContext);
-                FragmentManager confirmManager = activity.getSupportFragmentManager();
-                DialogFragment dialog = new ConfirmationDelete();
-                dialog.show(confirmManager,"Alert");
-                Log.d("Button Id", String.valueOf(id));
-            }
-        });
+//        holder.itemView.findViewById(R.id.button_edit_bumdes).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d("Button Press","Pressed Edit");
+//            }
+//        });
+//        holder.itemView.findViewById(R.id.button_delete_bumdes).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int id = mBumdesList.get(position).getId();
+//                Log.d("Button Press","Pressed Delete");
+//                FragmentActivity activity = (FragmentActivity) (mContext);
+//                FragmentManager confirmManager = activity.getSupportFragmentManager();
+//                DialogFragment dialog = new ConfirmationDelete();
+//                dialog.show(confirmManager,"Alert");
+//                Log.d("Button Id", String.valueOf(id));
+//            }
+//        });
     }
 
     @Override

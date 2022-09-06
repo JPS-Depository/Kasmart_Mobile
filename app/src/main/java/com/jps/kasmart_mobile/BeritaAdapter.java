@@ -78,7 +78,27 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
         holder.itemView.findViewById(R.id.button_edit_berita).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Button Press","Pressed Edit");
+                FragmentActivity activity = (FragmentActivity) (mContext);
+                FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                Fragment fragment = new BeritaEditFragment();
+                fragmentTransaction.replace(R.id.fragment_container,fragment);
+                Bundle bundle = new Bundle();
+
+                final int id = currentItem.getId();
+                final String judul = currentItem.getJudul();
+                final String isi_berita = currentItem.getIsiBerita();
+                final String tanggal_berita = currentItem.getTanggalBerita();
+                final String createdBy = currentItem.getCreatedBy();
+
+                bundle.putInt("id",id);
+                bundle.putString("judul",judul);
+                bundle.putString("isiberita",isi_berita);
+                bundle.putString("tanggalberita",tanggal_berita);
+                bundle.putString("createdby",createdBy);
+                fragment.setArguments(bundle);
+                fragmentTransaction.addToBackStack(null).commit();
+                notifyDataSetChanged();
             }
         });
         holder.itemView.findViewById(R.id.button_delete_berita).setOnClickListener(new View.OnClickListener() {

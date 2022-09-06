@@ -93,7 +93,6 @@ public class AbsensiAdapter extends RecyclerView.Adapter<AbsensiAdapter.AbsensiV
                     fragmentTransaction.replace(R.id.fragment_container,fragment);
                     fragmentTransaction.commit();
                     notifyDataSetChanged();
-
                 }
             });
 
@@ -109,7 +108,27 @@ public class AbsensiAdapter extends RecyclerView.Adapter<AbsensiAdapter.AbsensiV
             itemView.findViewById(R.id.button_edit_absen).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("Button Press","Pressed Edit");
+                    FragmentActivity activity = (FragmentActivity) (mContext);
+                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    Fragment fragment = new AbsenEditFragment();
+                    fragmentTransaction.replace(R.id.fragment_container,fragment);
+                    Bundle bundle = new Bundle();
+
+                    int id = mAbsensiList.get(getAbsoluteAdapterPosition()).getId();
+                    final String kegiatan = mAbsensiList.get(getAbsoluteAdapterPosition()).getKegiatan();
+                    final String lokasi = mAbsensiList.get(getAbsoluteAdapterPosition()).getLokasi();
+                    final String keterangan = mAbsensiList.get(getAbsoluteAdapterPosition()).getKeterangan();
+                    final String tanggalAbsen = mAbsensiList.get(getAbsoluteAdapterPosition()).getTanggalAbsen();
+
+                    bundle.putInt("id",id);
+                    bundle.putString("kegiatan",kegiatan);
+                    bundle.putString("lokasi",lokasi);
+                    bundle.putString("keterangan",keterangan);
+                    bundle.putString("tanggalabsen",tanggalAbsen);
+                    fragment.setArguments(bundle);
+                    fragmentTransaction.addToBackStack(null).commit();
+                    notifyDataSetChanged();
                 }
             });
             itemView.findViewById(R.id.button_delete_absen).setOnClickListener(new View.OnClickListener() {

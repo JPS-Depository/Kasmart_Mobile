@@ -227,23 +227,23 @@ public class USPAdapter extends RecyclerView.Adapter<USPAdapter.USPViewHolder> {
 
                 }
             });
-
-            itemView.findViewById(R.id.button_edit_uek).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d("Button Press","Pressed Edit");
-                }
-            });
-            itemView.findViewById(R.id.button_delete_uek).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d("Button Press","Pressed Delete");
-                    FragmentActivity activity = (FragmentActivity) (mContext);
-                    FragmentManager confirmManager = activity.getSupportFragmentManager();
-                    DialogFragment dialog = new ConfirmationDelete();
-                    dialog.show(confirmManager,"Alert");
-                }
-            });
+//
+//            itemView.findViewById(R.id.button_edit_uek).setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Log.d("Button Press","Pressed Edit");
+//                }
+//            });
+//            itemView.findViewById(R.id.button_delete_uek).setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Log.d("Button Press","Pressed Delete");
+//                    FragmentActivity activity = (FragmentActivity) (mContext);
+//                    FragmentManager confirmManager = activity.getSupportFragmentManager();
+//                    DialogFragment dialog = new ConfirmationDelete();
+//                    dialog.show(confirmManager,"Alert");
+//                }
+//            });
         }
     }
 }

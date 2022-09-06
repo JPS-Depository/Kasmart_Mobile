@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="3dp"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/header_masalah">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10sp"
+                    android:text="Oleh : "
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textStyle="bold"
+                    android:textSize="14sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10sp"
+                    android:text="Nama"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textStyle="bold"
+                    android:textSize="14sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right">
+                    <Button
+                        android:id="@+id/button_input_edit_masalah"
+                        android:layout_width="80sp"
+                        android:layout_height="20sp"
+                        android:layout_marginRight="5sp"
+                        android:background="@drawable/button"
+                        android:text="Edit"
+                        android:textColor="@color/white"
+                        android:textSize="7sp" />
+                </LinearLayout>
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/extended_masalah">
+
+            <TextView
+                android:id="@+id/masalah_pendamping_text_masalah"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/source_sans_pro"
+                android:text="Masalah Pendampingan"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/input_text_masalah_masalah"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/masalah_pendamping_text_masalah"
+                android:layout_marginBottom="10sp"
+                android:fontFamily="@font/source_sans_pro"
+                android:inputType="textMultiLine"
+                android:text="Insert Masalah Here"
+                android:textSize="12sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/header_text_pembinaan_masalah"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/input_text_masalah_masalah"
+                android:text="Pembinaan Masalah"
+                android:textColor="@color/black"
+                android:fontFamily="@font/source_sans_pro"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/input_text_pembinaan_masalah"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/header_text_pembinaan_masalah"
+                android:layout_marginBottom="10sp"
+                android:fontFamily="@font/source_sans_pro"
+                android:inputType="textMultiLine"
+                android:text="Insert Masalah Here"
+                android:textSize="12sp"
+                android:textStyle="normal" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

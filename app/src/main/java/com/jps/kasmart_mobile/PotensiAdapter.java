@@ -80,7 +80,30 @@ public class PotensiAdapter extends RecyclerView.Adapter<PotensiAdapter.PotensiV
             itemView.findViewById(R.id.button_edit_potensi).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("Button Press","Pressed Edit");
+                    FragmentActivity activity = (FragmentActivity) (mContext);
+                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    Fragment fragment = new PotensiEditFragment();
+                    fragmentTransaction.replace(R.id.fragment_container,fragment);
+                    Bundle bundle = new Bundle();
+                    final int id = mPotensiList.get(getAbsoluteAdapterPosition()).getId();
+                    final String jenis = mPotensiList.get(getAbsoluteAdapterPosition()).getJenis();
+                    final String nama = mPotensiList.get(getAbsoluteAdapterPosition()).getNama();
+                    final String sumberDayaAlam = mPotensiList.get(getAbsoluteAdapterPosition()).getSumberDayaAlam();
+                    final String sumberDayaManusia = mPotensiList.get(getAbsoluteAdapterPosition()).getSumberDayaManusia();
+                    final String asetDesa = mPotensiList.get(getAbsoluteAdapterPosition()).getAsetDesa();
+                    final String budayaDesa = mPotensiList.get(getAbsoluteAdapterPosition()).getBudayaDesa();
+
+                    bundle.putInt("id",id);
+                    bundle.putString("jenis",jenis);
+                    bundle.putString("nama",nama);
+                    bundle.putString("sumberdayaalam",sumberDayaAlam);
+                    bundle.putString("sumberdayamanusia",sumberDayaManusia);
+                    bundle.putString("asetDesa",asetDesa);
+                    bundle.putString("budayaDesa",budayaDesa);
+                    fragment.setArguments(bundle);
+                    fragmentTransaction.addToBackStack(null).commit();
+                    notifyDataSetChanged();
                 }
             });
             itemView.findViewById(R.id.button_delete_potensi).setOnClickListener(new View.OnClickListener() {

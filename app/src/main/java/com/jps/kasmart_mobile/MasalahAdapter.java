@@ -106,13 +106,26 @@ public class MasalahAdapter extends RecyclerView.Adapter<MasalahAdapter.MasalahV
             itemView.findViewById(R.id.button_edit_masalah).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("Button Press","Pressed Edit");
+                    FragmentActivity activity = (FragmentActivity) (mContext);
+                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    Fragment fragment = new MasalahEditFragment();
+                    fragmentTransaction.replace(R.id.fragment_container,fragment);
+                    Bundle bundle = new Bundle();
+                    final int id = mMasalahList.get(getAbsoluteAdapterPosition()).getId();
+                    final String masalah = mMasalahList.get(getAbsoluteAdapterPosition()).getMasalah();
+                    final String pembinaan = mMasalahList.get(getAbsoluteAdapterPosition()).getPembinaan();
+                    bundle.putInt("id",id);
+                    bundle.putString("masalah",masalah);
+                    bundle.putString("pembinaan",pembinaan);
+                    fragment.setArguments(bundle);
+                    fragmentTransaction.addToBackStack(null).commit();
+                    notifyDataSetChanged();
                 }
             });
             itemView.findViewById(R.id.button_delete_masalah).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("Button Press","Pressed Delete");
                     FragmentActivity activity = (FragmentActivity) (mContext);
                     FragmentManager confirmManager = activity.getSupportFragmentManager();
                     DialogFragment dialog = new ConfirmationDelete();

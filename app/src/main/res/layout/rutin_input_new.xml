@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardBackgroundColor="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="40dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_marginBottom="15dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/header_rutin"
+            android:elevation="40dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nama Kegiatan"
+                    android:layout_marginEnd="10sp"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+                <EditText
+                    android:id="@+id/input_nama_kegiatan_rutin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Masukkan Nama Kegiatan"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/source_sans_pro"/>
+            </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="right">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <Button
+                            android:id="@+id/button_input_new_kegiatan"
+                            android:layout_width="85sp"
+                            android:layout_height="20sp"
+                            android:background="@drawable/button"
+                            android:text="Simpan"
+                            android:textColor="@color/white"
+                            android:textSize="7sp" />
+                    </LinearLayout>
+                </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/layout_jenis_kegiatan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout_status"
+                android:layout_marginBottom="3sp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5sp"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:text="Jenis Kegiatan :"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:id="@+id/jenis_radio_kegiatan">
+                    <RadioButton
+                        android:id="@+id/radio_wajib_kegiatan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10sp"
+                        android:text="Wajib"
+                        android:textSize="11sp" />
+                    <RadioButton
+                        android:id="@+id/radio_bermasa_kegiatan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10sp"
+                        android:text="Bermasa"
+                        android:textSize="11sp" />
+                    <RadioButton
+                        android:id="@+id/radio_rutin_kegiatan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10sp"
+                        android:text="Rutin"
+                        android:textSize="11sp" />
+                    <RadioButton
+                        android:id="@+id/radio_harian_kegiatan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10sp"
+                        android:text="Harian"
+                        android:textSize="11sp" />
+                </RadioGroup>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/tanggal_kegiatan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/source_sans_pro"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:layout_marginEnd="5sp"
+                android:textColor="@color/black"
+                android:text="Tanggal :"/>
+            <EditText
+                android:id="@+id/input_new_tanggal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Masukkan Tanggal"
+                android:inputType="date"
+                android:textSize="11sp"
+                android:fontFamily="@font/source_sans_pro"/>
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/extended_rutin">
+            <LinearLayout
+                android:id="@+id/layout_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:layout_marginEnd="5sp"
+                    android:textColor="@color/black"
+                    android:text="Sasaran :"/>
+                <EditText
+                    android:id="@+id/input_new_sasaran"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Masukkan sasaran"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/source_sans_pro"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_sasaran"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout_status"
+                android:layout_marginBottom="3sp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5sp"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:text="Status :"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:layout_width="131dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:id="@+id/status_radio_rutin">
+
+                    <RadioButton
+                        android:id="@+id/radio_dalam_proses_kegiatan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dalam Proses"
+                        android:textSize="11sp" />
+
+                    <RadioButton
+                        android:id="@+id/radio_terealisasi_kegiatan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Terealisasi"
+                        android:textSize="11sp" />
+
+                    <RadioButton
+                        android:id="@+id/radio_belum_terealisasi_kegiatan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Belum Terealisasi"
+                        android:textSize="11sp"/>
+                </RadioGroup>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/judul_detail_rutin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout_sasaran"
+                android:fontFamily="@font/source_sans_pro"
+                android:text="Detail"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/input_detail_new_kegiatan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/judul_detail_rutin"
+                android:fontFamily="@font/source_sans_pro"
+                android:hint="Masukkan Detil Kegiatan"
+                android:inputType="textMultiLine"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/header_lokasi_rutin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/input_detail_new_kegiatan"
+                android:fontFamily="@font/source_sans_pro"
+                android:text="Lokasi"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/input_lokasi_new_kegiatan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/header_lokasi_rutin"
+                android:fontFamily="@font/source_sans_pro"
+                android:hint="Masukkan Lokasi Kegiatan"
+                android:inputType="textMultiLine"
+                android:textSize="11sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="1"
+                android:id="@+id/spinner_1"
+                android:layout_below="@id/input_lokasi_new_kegiatan"
+                android:layout_marginBottom="10dp">
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:id="@+id/spinner_kabupaten"/>
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:id="@+id/spinner_kecamatan"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/spinner_1"
+                android:weightSum="1">
+                <Spinner
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:id="@+id/spinner_keldes">
+                </Spinner>
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

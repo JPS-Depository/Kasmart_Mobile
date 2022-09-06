@@ -96,7 +96,33 @@ public class VisumAdapter extends RecyclerView.Adapter<VisumAdapter.VisumViewHol
             itemView.findViewById(R.id.button_edit_visum).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("Button Press","Pressed Edit");
+                    FragmentActivity activity = (FragmentActivity) (mContext);
+                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    Fragment fragment = new VisumEditFragment();
+                    fragmentTransaction.replace(R.id.fragment_container,fragment);
+                    Bundle bundle = new Bundle();
+
+                    final int id = mVisumList.get(getAbsoluteAdapterPosition()).getId();
+                    final String kegiatan = mVisumList.get(getAbsoluteAdapterPosition()).getKegiatan();
+                    final String tanggalVisum = mVisumList.get(getAbsoluteAdapterPosition()).getTanggalVisum();
+                    final String tanggalKegiatan = mVisumList.get(getAbsoluteAdapterPosition()).getTanggalKegiatan();
+                    final String kabupaten = mVisumList.get(getAbsoluteAdapterPosition()).getKabupaten();
+                    final String kecamatan = mVisumList.get(getAbsoluteAdapterPosition()).getKecamatan();
+                    final String keldes = mVisumList.get(getAbsoluteAdapterPosition()).getKelDes();
+                    final String hasilKegiatan = mVisumList.get(getAbsoluteAdapterPosition()).getHasilKegiatan();
+
+                    bundle.putInt("id",id);
+                    bundle.putString("kegiatan",kegiatan);
+                    bundle.putString("tanggalvisum",tanggalVisum);
+                    bundle.putString("tanggalkegiatan",tanggalKegiatan);
+                    bundle.putString("kabupaten",kabupaten);
+                    bundle.putString("kecamatan",kecamatan);
+                    bundle.putString("keldes",keldes);
+                    bundle.putString("hasilkegiatan",hasilKegiatan);
+                    fragment.setArguments(bundle);
+                    fragmentTransaction.addToBackStack(null).commit();
+                    notifyDataSetChanged();
                 }
             });
             itemView.findViewById(R.id.button_delete_visum).setOnClickListener(new View.OnClickListener() {
