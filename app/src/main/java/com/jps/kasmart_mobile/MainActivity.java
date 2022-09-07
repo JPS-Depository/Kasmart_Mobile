@@ -33,11 +33,11 @@ public class MainActivity extends AppCompatActivity {
     SessionManager sessionManager;
 
     private Button login;
-    private EditText username, password;
+    private EditText inputUsername, inputPassword;
     private ProgressBar loading;
     private static String URL_LOGIN="http://192.168.100.12/kasmart_mobile/login.php";
 
-    private String name,email;
+    private String name,email,username,role;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
         sessionManager = new SessionManager(this);
 
-        username=(EditText) findViewById(R.id.username);
-        password=(EditText) findViewById(R.id.password);
+        inputUsername=(EditText) findViewById(R.id.username);
+        inputPassword=(EditText) findViewById(R.id.password);
 
         loading=(ProgressBar)findViewById(R.id.loading);
 
@@ -56,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String storedUsername = username.getText().toString().trim();
-                String storedPassword = password.getText().toString();
+                String storedUsername = inputUsername.getText().toString().trim();
+                String storedPassword = inputPassword.getText().toString();
                 checkInput(storedUsername,storedPassword);
             }
         });
@@ -88,7 +88,9 @@ public class MainActivity extends AppCompatActivity {
                             if(success.equals("1")) {
                                 for(int i=0;i<jsonArray.length();i++){
                                     JSONObject object = jsonArray.getJSONObject(i);
-                                    name = object.getString("name").trim();
+                                    name = object.getString("fullname").trim();
+                                    role = object.getString("name").trim();
+                                    username = object.getString("username").trim();
                                     email = object.getString("email").trim();
                                     loading.setVisibility(View.GONE);
                                     openScreen2();
@@ -125,9 +127,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openScreen2() {
-        sessionManager.createSession(name, email);
+        sessionManager.createSession(name, role, email);
         Intent intent = new Intent(this, MainScreen.class);
         intent.putExtra("NAME", name);
+        intent.putExtra("ROLE", role);
         intent.putExtra("EMAIL",email);
         startActivity(intent);
     }

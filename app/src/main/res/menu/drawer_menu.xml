@@ -11,21 +11,25 @@
             android:icon="@drawable/ic_baseline_newspaper_24"
             android:title="Berita" />
     </group>
-    <item android:title="Data Ekonomi"
-        android:checkableBehavior="single">
+    <item
+        android:title="Data Ekonomi"
+        android:id="@+id/group_dataEkonomi">
         <menu>
-            <item
-                android:id="@+id/nav_Bulanan_bumdes"
-                android:icon="@drawable/ic_baseline_payments_24"
-                android:title="Bulanan Data Bumdesa" />
-            <item
-                android:id="@+id/nav_usp_uek"
-                android:icon="@drawable/ic_baseline_payments_24"
-                android:title="USP dan UEK" />
-            <item
-                android:id="@+id/nav_shu"
-                android:icon="@drawable/ic_baseline_payments_24"
-                android:title="Data SHU khusus UEK" />
+            <group
+                android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_Bulanan_bumdes"
+                    android:icon="@drawable/ic_baseline_payments_24"
+                    android:title="Bulanan Data Bumdesa" />
+                <item
+                    android:id="@+id/nav_usp_uek"
+                    android:icon="@drawable/ic_baseline_payments_24"
+                    android:title="USP dan UEK" />
+                <item
+                    android:id="@+id/nav_shu"
+                    android:icon="@drawable/ic_baseline_payments_24"
+                    android:title="Data SHU khusus UEK" />
+            </group>
         </menu>
     </item>
     <group
@@ -52,17 +56,19 @@
             android:icon="@drawable/ic_baseline_bar_chart_24"
             android:title="Data Potensi Desa"/>
     </group>
-    <item android:title="Data Kegiatan"
-        android:checkableBehavior="single">
+    <item android:title="Data Kegiatan">
         <menu>
-            <item
-                android:id="@+id/nav_kegiatan_harian"
-                android:icon="@drawable/ic_baseline_payments_24"
-                android:title="Kegiatan Rutin / Harian" />
-            <item
-                android:id="@+id/nav_wajib_bermasa"
-                android:icon="@drawable/ic_baseline_payments_24"
-                android:title="Kegiatan Wajib / Bermasa" />
+            <group
+                android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_kegiatan_harian"
+                    android:icon="@drawable/ic_baseline_payments_24"
+                    android:title="Kegiatan Rutin / Harian" />
+                <item
+                    android:id="@+id/nav_wajib_bermasa"
+                    android:icon="@drawable/ic_baseline_payments_24"
+                    android:title="Kegiatan Wajib / Bermasa" />
+            </group>
         </menu>
     </item>
     <group

@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -25,6 +26,8 @@ public class BumdesAdapter extends RecyclerView.Adapter<BumdesAdapter.BumdesView
     private ArrayList<BumdesItem> mBumdesList;
     private boolean expandable;
     public SwipeRefreshLayout swipeRefreshLayout;
+    public String role;
+    public LinearLayout buttonLayout;
 
     public BumdesAdapter(Context context, ArrayList<BumdesItem> bumdesList, SwipeRefreshLayout swiperefreshlayout) {
         this.mContext = context;
@@ -45,6 +48,11 @@ public class BumdesAdapter extends RecyclerView.Adapter<BumdesAdapter.BumdesView
     @Override
     public void onBindViewHolder(@NonNull BumdesViewHolder holder, int position) {
         BumdesItem currentItem = mBumdesList.get(position);
+
+        SessionManager sessionManager = new SessionManager(mContext);
+        sessionManager.checkLogin();
+        HashMap<String, String> user = sessionManager.getUserDetail();
+        role = user.get(sessionManager.ROLE);
 
         String namaDaerah = currentItem.getNamaDaerah();
         String unitUsaha = currentItem.getUnitUsaha();
@@ -105,24 +113,22 @@ public class BumdesAdapter extends RecyclerView.Adapter<BumdesAdapter.BumdesView
         boolean isExpandable = mBumdesList.get(position).ismExpandable();
         holder.expandableLayout.setVisibility(isExpandable? View.VISIBLE:View.GONE);
 
-//        holder.itemView.findViewById(R.id.button_edit_bumdes).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d("Button Press","Pressed Edit");
-//            }
-//        });
-//        holder.itemView.findViewById(R.id.button_delete_bumdes).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int id = mBumdesList.get(position).getId();
-//                Log.d("Button Press","Pressed Delete");
-//                FragmentActivity activity = (FragmentActivity) (mContext);
-//                FragmentManager confirmManager = activity.getSupportFragmentManager();
-//                DialogFragment dialog = new ConfirmationDelete();
-//                dialog.show(confirmManager,"Alert");
-//                Log.d("Button Id", String.valueOf(id));
-//            }
-//        });
+        holder.itemView.findViewById(R.id.button_edit_bumdes).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Button Press","Pressed Edit");
+            }
+        });
+        holder.itemView.findViewById(R.id.button_delete_bumdes).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int id = mBumdesList.get(holder.getAbsoluteAdapterPosition()).getId();
+                FragmentActivity activity = (FragmentActivity) (mContext);
+                FragmentManager confirmManager = activity.getSupportFragmentManager();
+                DialogFragment dialog = new ConfirmationDelete();
+                dialog.show(confirmManager,"Alert");
+            }
+        });
     }
 
     @Override
@@ -168,6 +174,8 @@ public class BumdesAdapter extends RecyclerView.Adapter<BumdesAdapter.BumdesView
             mLabaTotal = itemView.findViewById(R.id.laba_sd_bulan_ini_bumdes);
             mStatus = itemView.findViewById(R.id.status_bumdes);
 
+            buttonLayout = itemView.findViewById(R.id.button_edit_delete_bumdes);
+
             linearLayout = itemView.findViewById(R.id.header_bumdes);
             expandableLayout = itemView.findViewById(R.id.extended_bumdes);
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -191,6 +199,12 @@ public class BumdesAdapter extends RecyclerView.Adapter<BumdesAdapter.BumdesView
                 public void onClick(View v) {
                     BumdesItem bumdesItem = mBumdesList.get(getBindingAdapterPosition());
                     bumdesItem.setmExpandable(!bumdesItem.ismExpandable());
+                    switch(role){
+                        case "Super User":
+                        buttonLayout.setVisibility(v.GONE);
+                            Log.d("check role", String.valueOf(buttonLayout));
+                        break;
+                    }
                     notifyDataSetChanged();
                 }
             });

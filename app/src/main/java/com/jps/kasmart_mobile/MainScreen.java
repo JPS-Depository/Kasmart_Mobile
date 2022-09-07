@@ -32,7 +32,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
     private DrawerLayout drawer;
     SessionManager sessionManager;
-    int menuClicked=0;
+    int menuClicked = 0;
+    String fullname,role,email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +48,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         getSupportActionBar().setTitle("Berita");
 
         HashMap<String, String> user = sessionManager.getUserDetail();
-        String name = user.get(sessionManager.NAME);
-        String email = user.get(sessionManager.EMAIL);
+        fullname = user.get(sessionManager.NAME);
+        role = user.get(sessionManager.ROLE);
+        email = user.get(sessionManager.EMAIL);
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -56,12 +58,21 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         View headerView = navigationView.getHeaderView(0);
 
         TextView nav_name = (TextView) headerView.findViewById(R.id.nama_pengguna);
+        TextView nav_role = (TextView) headerView.findViewById(R.id.role_pengguna);
         TextView nav_email = (TextView) headerView.findViewById(R.id.email_pengguna);
 
-        nav_name.setText(name);
+        nav_name.setText(fullname);
+        nav_role.setText(role);
         nav_email.setText(email);
 
         navigationView.setNavigationItemSelectedListener(this);
+
+        switch(role){
+            case "User":
+                navigationView.getMenu().findItem(R.id.group_dataEkonomi).setVisible(false);
+                Log.d("role check","true");
+                break;
+        }
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar,
                 R.string.navigation_drawer_open,R.string.navigation_drawer_close);
@@ -197,7 +208,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                         getSupportActionBar().setTitle("Input Kegiatan");
                         break;
                     case 11:
-                        replaceFragment(new AbsensiFragment());
+                        replaceFragment(new InputAbsenFragment());
                         getSupportActionBar().setTitle("Absensi Kegiatan");
                         break;
                     case 12:
