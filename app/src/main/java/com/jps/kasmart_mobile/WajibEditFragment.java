@@ -3,6 +3,8 @@ package com.jps.kasmart_mobile;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -24,6 +26,7 @@ import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -45,6 +48,7 @@ public class WajibEditFragment extends Fragment {
         View view = inflater.inflate(R.layout.wajib_input, container,false);
         Bundle bundle = this.getArguments();
 
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Edit Kegiatan");
 
         id = bundle.getInt("id");
         tipe = bundle.getString("tipe");
@@ -102,6 +106,18 @@ public class WajibEditFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
     }
 
     private void insertItem(int id, String storedSasaran, String storedDetil, int radioId){

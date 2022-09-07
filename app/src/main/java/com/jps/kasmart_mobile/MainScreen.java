@@ -81,7 +81,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         switch(item.getItemId()){
             case R.id.nav_berita:
                 replaceFragment(new BeritaFragment());
-                getSupportActionBar().setTitle("Berita");
                 menuClicked=0;
                 break;
             case R.id.nav_Bulanan_bumdes:
@@ -101,47 +100,38 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 break;
             case R.id.nav_masalah_pendamping:
                 replaceFragment(new MasalahFragment());
-                getSupportActionBar().setTitle("Masalah Pendampingan");
                 menuClicked=4;
                 break;
             case R.id.nav_pendamping:
                 replaceFragment(new PendampingFragment());
-                getSupportActionBar().setTitle("List Pendamping");
                 menuClicked=5;
                 break;
             case R.id.nav_daerah:
                 replaceFragment(new DaerahFragment());
-                getSupportActionBar().setTitle("Daftar Daerah");
                 menuClicked=6;
                 break;
             case R.id.nav_desa:
                 replaceFragment(new DesaFragment());
-                getSupportActionBar().setTitle("Daftar Desa / Kelurahan");
                 menuClicked=7;
                 break;
             case R.id.nav_potensi:
                 replaceFragment(new PotensiFragment());
-                getSupportActionBar().setTitle("Potensi Daerah");
                 menuClicked=8;
                 break;
             case R.id.nav_kegiatan_harian:
                 replaceFragment(new RutinFragment());
-                getSupportActionBar().setTitle("Kegiatan Rutin");
                 menuClicked=9;
                 break;
             case R.id.nav_wajib_bermasa:
                 replaceFragment(new WajibFragment());
-                getSupportActionBar().setTitle("Kegiatan Wajib");
                 menuClicked=10;
                 break;
             case R.id.nav_absen:
                 replaceFragment(new AbsensiFragment());
-                getSupportActionBar().setTitle("Absensi Kegiatan");
                 menuClicked=11;
                 break;
             case R.id.nav_visum:
-                replaceFragment(new VisumFragment());
-                getSupportActionBar().setTitle("Visum Kegiatan");
+                replaceFragment(new VisumFragment());;
                 menuClicked=12;
                 break;
             case R.id.nav_logout:
@@ -183,36 +173,19 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 Log.d("Click","add clicked");
                 switch(menuClicked){
                     case 0:
-                        replaceFragment(new BeritaFragment());
-                        getSupportActionBar().setTitle("Berita");
-                        break;
-                    case 1:
-                        replaceFragment(new BumdesFragment());
-                        getSupportActionBar().setTitle("Pendamping Data BUMDESA");
-                        break;
-                    case 2:
-                        replaceFragment(new USPFragment());
-                        getSupportActionBar().setTitle("Data USP dan UEK");
-                        break;
-                    case 3:
-                        replaceFragment(new SHUFragment());
-                        getSupportActionBar().setTitle("Data SHU Khusus UEK");
+                        replaceFragment(new InputBeritaFragment());
                         break;
                     case 4:
-                        replaceFragment(new MasalahFragment());
-                        getSupportActionBar().setTitle("Masalah Pendampingan");
+                        replaceFragment(new InputMasalahFragment());
+                        getSupportActionBar().setTitle("Input Masalah Pendampingan");
                         break;
                     case 5:
                         replaceFragment(new PendampingFragment());
                         getSupportActionBar().setTitle("List Pendamping");
                         break;
-                    case 6:
-                        replaceFragment(new DaerahFragment());
-                        getSupportActionBar().setTitle("Daftar Daerah");
-                        break;
                     case 7:
-                        replaceFragment(new DesaFragment());
-                        getSupportActionBar().setTitle("Daftar Desa / Kelurahan");
+                        replaceFragment(new InputDesaFragment());
+                        getSupportActionBar().setTitle("Input Data Desa / Kelurahan");
                         break;
                     case 8:
                         replaceFragment(new InputPotensiFragment());

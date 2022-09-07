@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -23,6 +25,7 @@ import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -31,24 +34,32 @@ import androidx.fragment.app.FragmentTransaction;
 
 public class MasalahEditFragment extends Fragment {
     int id;
-    String  masalah, pembinaan;
+    String  masalah, pembinaan,createdBy;
     EditText inputMasalah, inputPembinaan;
     Button edit;
+    TextView namaDisplay;
     MasalahAdapter masalahAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.masalah_input, container,false);
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Edit Masalah Pendampingan");
+
         Bundle bundle = this.getArguments();
 
         id = bundle.getInt("id");
         masalah = bundle.getString("masalah");
         pembinaan = bundle.getString("pembinaan");
+        createdBy = bundle.getString("createdby");
 
         inputMasalah = (EditText) view.findViewById(R.id.input_text_masalah_masalah);
         inputPembinaan = (EditText) view.findViewById(R.id.input_text_pembinaan_masalah);
 
+        namaDisplay = (TextView)view.findViewById(R.id.nama_masalah);
+
+        namaDisplay.setText(createdBy);
         inputMasalah.setText(masalah);
         inputPembinaan.setText(pembinaan);
 
@@ -65,6 +76,18 @@ public class MasalahEditFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
     }
 
     private void insertItem(int id,String storedMasalah, String storedPembinaan ){

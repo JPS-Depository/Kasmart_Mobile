@@ -38,12 +38,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-public class InputPotensiFragment extends Fragment implements AdapterView.OnItemSelectedListener {
-    int id;
-    String  jenis, nama, sumberDayaAlam, sumberDayaManusia, asetDesa, budayaDesa;
-    EditText inputSDA, inputSDM, inputAsetDesa, inputBudayaDesa;
+public class InputDesaFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+    EditText inputKades,inputTelp,inputJumlahkk,inputJumlahDusun,inputJumlahSuku,inputJumlahRt,inputJumlahRw;
     Button edit;
-    TextView displayJenis, displayNama;
     Spinner spinnerKeldes;
     PotensiAdapter potensiAdapter;
     ArrayList<String> keldesList = new ArrayList<>();
@@ -54,24 +51,23 @@ public class InputPotensiFragment extends Fragment implements AdapterView.OnItem
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.potensi_input_new, container,false);
-
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Input Potensi Daerah");
+        View view = inflater.inflate(R.layout.desa_input_new, container,false);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Input Data Desa / Kelurahan");
 
         SessionManager sessionManager = new SessionManager(getContext());
         sessionManager.checkLogin();
         HashMap<String, String> user = sessionManager.getUserDetail();
 
-
-        inputSDA = (EditText)  view.findViewById(R.id.input_sda_potensi);
-        inputSDM = (EditText) view.findViewById(R.id.input_sdm_potensi);
-        inputAsetDesa = (EditText) view.findViewById(R.id.input_aset_desa_potensi);
-        inputBudayaDesa = (EditText) view.findViewById(R.id.input_budaya_potensi);
-        displayJenis = (TextView) view.findViewById(R.id.tipe_daerah_potensi);
-        displayNama = (TextView) view.findViewById(R.id.nama_daerah_potensi);
+        inputKades = (EditText)view.findViewById(R.id.input_nama_kades_desa);
+        inputTelp = (EditText)view.findViewById(R.id.input_telepon_kades);
+        inputJumlahkk = (EditText) view.findViewById(R.id.input_jumlah_kk_desa);
+        inputJumlahDusun = (EditText) view.findViewById(R.id.input_jumlah_dusun_desa);
+        inputJumlahSuku = (EditText) view.findViewById(R.id.input_jumlah_suku_desa);
+        inputJumlahRt = (EditText) view.findViewById(R.id.input_jumlah_rt_desa);
+        inputJumlahRw = (EditText) view.findViewById(R.id.input_jumlah_rw_desa);
         spinnerKeldes = (Spinner) view.findViewById(R.id.spinner_keldes);
 
-        edit = (Button) view.findViewById(R.id.button_input_edit_potensi);
+        edit = (Button) view.findViewById(R.id.button_input_new_desa);
 
         requestQueue = Volley.newRequestQueue(getContext());
         String url="http://192.168.100.12/kasmart_mobile/get_daerah_dropdown.php";
@@ -87,7 +83,6 @@ public class InputPotensiFragment extends Fragment implements AdapterView.OnItem
                         switch (jenis){
                             case "Kelurahan":
                             case "Desa":
-                                id = data.getInt("id");
                                 namaKeldes = data.optString("nama");
                                 keldesList.add(namaKeldes);
                                 break;
@@ -113,13 +108,17 @@ public class InputPotensiFragment extends Fragment implements AdapterView.OnItem
             @Override
             public void onClick(View v) {
                 String storedCreatedBy = user.get(sessionManager.NAME);
-                String storedSDA = inputSDA.getText().toString().trim();
-                String storedSDM = inputSDM.getText().toString().trim();
-                String storedAset = inputAsetDesa.getText().toString().trim();
-                String storedBudaya = inputBudayaDesa.getText().toString().trim();
+                String storedKades = inputKades.getText().toString().trim();
+                String storedTelp = inputTelp.getText().toString().trim();
+                String storedKK = inputJumlahkk.getText().toString().trim();
+                String storedDusun = inputJumlahDusun.getText().toString().trim();
+                String storedSuku = inputJumlahSuku.getText().toString().trim();
+                String storedRT = inputJumlahRt.getText().toString().trim();
+                String storedRW = inputJumlahRw.getText().toString().trim();
                 String storedKeldes = spinnerKeldes.getSelectedItem().toString();
 
-                insertItem(storedSDA,storedKeldes,storedSDM,storedAset,storedBudaya,storedCreatedBy);
+                insertItem(storedKades,storedTelp, storedKK, storedDusun, storedSuku,
+                        storedRT,storedRW,storedKeldes,storedCreatedBy);
                 Toast.makeText(getActivity(),"Data telah di ubah",Toast.LENGTH_SHORT).show();
             }
         });
@@ -139,9 +138,10 @@ public class InputPotensiFragment extends Fragment implements AdapterView.OnItem
         menu.clear();
     }
 
-
-    private void insertItem(String storedSDA,String storedKeldes, String storedSDM, String storedAset, String storedBudaya, String storedCreatedBy){
-        String url = "http://192.168.100.12/kasmart_mobile/input_potensi.php";
+    private void insertItem(String storedKades, String storedTelp, String storedKK,
+                            String storedDusun, String storedSuku, String storedRT,
+                            String storedRW, String storedKeldes, String storedCreatedBy){
+        String url = "http://192.168.100.12/kasmart_mobile/input_desa.php";
         requestQueue = Volley.newRequestQueue(this.getContext());
         Log.d("Url",url);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -157,11 +157,14 @@ public class InputPotensiFragment extends Fragment implements AdapterView.OnItem
         }){
             protected HashMap<String,String> getParams() throws AuthFailureError {
                 HashMap<String,String> map = new HashMap<>();
+                map.put("kades",storedKades);
+                map.put("telp",storedTelp);
+                map.put("kk",storedKK);
+                map.put("dusun",storedDusun);
+                map.put("suku",storedSuku);
+                map.put("rt",storedRT);
+                map.put("rw",storedRW);
                 map.put("keldes",storedKeldes);
-                map.put("sda",storedSDA);
-                map.put("sdm",storedSDM);
-                map.put("aset",storedAset);
-                map.put("budaya",storedBudaya);
                 map.put("createdby",storedCreatedBy);
                 return map;
             }
@@ -170,7 +173,7 @@ public class InputPotensiFragment extends Fragment implements AdapterView.OnItem
 
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Fragment fragment = new PotensiFragment();
+        Fragment fragment = new DesaFragment();
         fragmentTransaction.replace(R.id.fragment_container,fragment);
         fragmentTransaction.commit();
     }

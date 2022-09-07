@@ -3,6 +3,8 @@ package com.jps.kasmart_mobile;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -36,6 +38,7 @@ import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -57,6 +60,8 @@ public class InputVisumFragment extends Fragment implements AdapterView.OnItemSe
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.visum_input_new, container,false);
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Input Visum Kegiatan");
 
         SessionManager sessionManager = new SessionManager(getContext());
         sessionManager.checkLogin();
@@ -117,6 +122,18 @@ public class InputVisumFragment extends Fragment implements AdapterView.OnItemSe
             }
         });
         return view;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
     }
 
     private void insertItem(int storedKegiatanID, String storedTanggalVisum,

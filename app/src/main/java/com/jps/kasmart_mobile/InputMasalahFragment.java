@@ -29,52 +29,47 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-public class BeritaEditFragment extends Fragment {
-    int id;
-    String  judul,berita,tanggal,createby;
-    EditText inputBerita, inputTanggal;
+public class InputMasalahFragment extends Fragment {
+    String  nama;
+    EditText inputMasalah, inputPembinaan;
     Button edit;
-    TextView displayJudul, displayCreate;
-    BeritaAdapter beritaAdapter;
+    TextView namaDisplay;
+    MasalahAdapter masalahAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.berita_edit, container,false);
-        Bundle bundle = this.getArguments();
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Edit Berita");
+        View view = inflater.inflate(R.layout.masalah_input_new, container,false);
 
-        id = bundle.getInt("id");
-        berita = bundle.getString("isiberita");
-        tanggal = bundle.getString("tanggalberita");
-        judul = bundle.getString("judul");
-        createby = bundle.getString("createdby",createby);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Input Masalah Pendampingan");
+        SessionManager sessionManager = new SessionManager(getContext());
+        sessionManager.checkLogin();
+        HashMap<String, String> user = sessionManager.getUserDetail();
 
-        inputBerita = (EditText) view.findViewById(R.id.input_berita);
-        inputTanggal = (EditText) view.findViewById(R.id.input_tanggal_berita);
+        nama = user.get(sessionManager.NAME);
 
-        displayCreate = (TextView) view.findViewById(R.id.penulis);
-        displayJudul = (TextView) view.findViewById(R.id.berita_detail_judul);
+        inputMasalah = (EditText) view.findViewById(R.id.input_text_masalah_masalah);
+        inputPembinaan = (EditText) view.findViewById(R.id.input_text_pembinaan_masalah);
 
-        displayCreate.setText(createby);
-        displayJudul.setText(judul);
-        inputBerita.setText(berita);
-        inputTanggal.setText(tanggal);
+        namaDisplay = (TextView)view.findViewById(R.id.nama_masalah);
 
-        edit = (Button) view.findViewById(R.id.button_input_edit_berita);
+        namaDisplay.setText(nama);
+
+        edit = (Button) view.findViewById(R.id.button_input_edit_masalah);
 
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String storedTanggal = inputTanggal.getText().toString().trim();
-                String storedBerita = inputBerita.getText().toString();
-                insertItem(id,storedTanggal,storedBerita);
+                String storedMasalah = inputMasalah.getText().toString().trim();
+                String storedPembinaan = inputPembinaan.getText().toString();
+                String storedCreated = nama;
+                insertItem(storedMasalah,storedPembinaan, storedCreated);
+
                 Toast.makeText(getActivity(),"Data telah di ubah",Toast.LENGTH_SHORT).show();
             }
         });
         return view;
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -88,9 +83,9 @@ public class BeritaEditFragment extends Fragment {
         menu.clear();
     }
 
-    private void insertItem(int id,String storedTanggal, String storedBerita ){
+    private void insertItem(String storedMasalah, String storedPembinaan, String storedCreated){
         Log.d("Masuk","masuk");
-        String url = "http://192.168.100.12/kasmart_mobile/edit_berita.php";
+        String url = "http://192.168.100.12/kasmart_mobile/input_masalah.php";
         RequestQueue requestQueue = Volley.newRequestQueue(this.getContext());
         Log.d("Url",url);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -106,9 +101,9 @@ public class BeritaEditFragment extends Fragment {
         }){
             protected HashMap<String,String> getParams() throws AuthFailureError {
                 HashMap<String,String> map = new HashMap<>();
-                map.put("id",String.valueOf(id));
-                map.put("tanggal",storedTanggal);
-                map.put("berita",storedBerita);
+                map.put("masalah",storedMasalah);
+                map.put("pembinaan",storedPembinaan);
+                map.put("createdby",storedCreated);
                 return map;
             }
         };
@@ -116,8 +111,9 @@ public class BeritaEditFragment extends Fragment {
 
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Fragment fragment = new BeritaFragment();
+        Fragment fragment = new MasalahFragment();
         fragmentTransaction.replace(R.id.fragment_container,fragment);
         fragmentTransaction.commit();
     }
 }
+

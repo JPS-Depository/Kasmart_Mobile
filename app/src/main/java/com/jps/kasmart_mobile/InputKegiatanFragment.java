@@ -3,6 +3,8 @@ package com.jps.kasmart_mobile;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -36,6 +38,7 @@ import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -61,6 +64,8 @@ public class InputKegiatanFragment extends Fragment implements AdapterView.OnIte
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.rutin_input_new, container,false);
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Input Kegiatan");
 
         SessionManager sessionManager = new SessionManager(getContext());
         sessionManager.checkLogin();
@@ -185,6 +190,18 @@ public class InputKegiatanFragment extends Fragment implements AdapterView.OnIte
             }
         });
         return view;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
     }
 
     private void insertItem(String storedKegiatan, String storedTanggal,

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardBackgroundColor="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="40dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_marginBottom="15dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/header_rutin"
+            android:elevation="40dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/nama_desa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nama Daerah"
+                    android:layout_marginEnd="10sp"
+                    android:fontFamily="@font/source_sans_pro"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5sp"
+                    android:layout_below="@id/spinner_1"/>
+            </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="right">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <Button
+                            android:id="@+id/button_input_new_desa"
+                            android:layout_width="85sp"
+                            android:layout_height="20sp"
+                            android:background="@drawable/button"
+                            android:text="Simpan"
+                            android:textColor="@color/white"
+                            android:textSize="7sp" />
+                    </LinearLayout>
+                </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/source_sans_pro"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:layout_marginEnd="5sp"
+                android:textColor="@color/black"
+                android:text="Nama Kades :"/>
+            <EditText
+                android:id="@+id/input_nama_kades_desa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Masukkan Kades"
+                android:textSize="11sp"
+                android:fontFamily="@font/source_sans_pro"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/source_sans_pro"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:layout_marginEnd="5sp"
+                android:textColor="@color/black"
+                android:text="No. Telp Kades :"/>
+            <EditText
+                android:id="@+id/input_telepon_kades"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Masukkan Nomor Telepon Kades"
+                android:textSize="11sp"
+                android:fontFamily="@font/source_sans_pro"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/source_sans_pro"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:layout_marginEnd="5sp"
+                android:textColor="@color/black"
+                android:text="Jumlah KK :"/>
+            <EditText
+                android:id="@+id/input_jumlah_kk_desa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Masukkan Jumlah KK"
+                android:textSize="11sp"
+                android:fontFamily="@font/source_sans_pro"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/source_sans_pro"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:layout_marginEnd="5sp"
+                android:textColor="@color/black"
+                android:text="Jumlah Dusun :"/>
+            <EditText
+                android:id="@+id/input_jumlah_dusun_desa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Masukkan Jumlah Dusun"
+                android:textSize="11sp"
+                android:fontFamily="@font/source_sans_pro"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/source_sans_pro"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:layout_marginEnd="5sp"
+                android:textColor="@color/black"
+                android:text="Jumlah Suku :"/>
+            <EditText
+                android:id="@+id/input_jumlah_suku_desa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Masukkan Jumlah Suku"
+                android:textSize="11sp"
+                android:fontFamily="@font/source_sans_pro"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/source_sans_pro"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:layout_marginEnd="5sp"
+                android:textColor="@color/black"
+                android:text="Jumlah RT :"/>
+            <EditText
+                android:id="@+id/input_jumlah_rt_desa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Masukkan Jumlah RT"
+                android:textSize="11sp"
+                android:fontFamily="@font/source_sans_pro"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/source_sans_pro"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:layout_marginEnd="5sp"
+                android:textColor="@color/black"
+                android:text="Jumlah RW :"/>
+            <EditText
+                android:id="@+id/input_jumlah_rw_desa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Masukkan Jumlah RW"
+                android:textSize="11sp"
+                android:fontFamily="@font/source_sans_pro"/>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

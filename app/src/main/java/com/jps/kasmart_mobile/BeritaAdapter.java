@@ -36,6 +36,7 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
     public BeritaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.berita_card, parent, false);
         BeritaViewHolder beritaViewHolder = new BeritaViewHolder(v);
+
         return beritaViewHolder;
     }
 

@@ -115,9 +115,11 @@ public class MasalahAdapter extends RecyclerView.Adapter<MasalahAdapter.MasalahV
                     final int id = mMasalahList.get(getAbsoluteAdapterPosition()).getId();
                     final String masalah = mMasalahList.get(getAbsoluteAdapterPosition()).getMasalah();
                     final String pembinaan = mMasalahList.get(getAbsoluteAdapterPosition()).getPembinaan();
+                    final String createdBy = mMasalahList.get(getAbsoluteAdapterPosition()).getCreatedBy();
                     bundle.putInt("id",id);
                     bundle.putString("masalah",masalah);
                     bundle.putString("pembinaan",pembinaan);
+                    bundle.putString("createdby",createdBy);
                     fragment.setArguments(bundle);
                     fragmentTransaction.addToBackStack(null).commit();
                     notifyDataSetChanged();

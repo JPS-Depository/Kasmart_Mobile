@@ -1,20 +1,12 @@
 package com.jps.kasmart_mobile;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.volley.Response;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -109,7 +101,36 @@ public class DesaAdapter extends RecyclerView.Adapter<DesaAdapter.DesaViewHolder
             itemView.findViewById(R.id.button_edit_desa).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("Button Press","Pressed Edit");
+                    FragmentActivity activity = (FragmentActivity) (mContext);
+                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    Fragment fragment = new DesaEditFragment();
+                    fragmentTransaction.replace(R.id.fragment_container,fragment);
+                    Bundle bundle = new Bundle();
+
+                    final int id = mDesaList.get(getAbsoluteAdapterPosition()).getId();
+                    final String namaDesa = mDesaList.get(getAbsoluteAdapterPosition()).getNamaDesa();
+                    final String namaKades = mDesaList.get(getAbsoluteAdapterPosition()).getNamaKades();
+                    final int telepon = mDesaList.get(getAbsoluteAdapterPosition()).getNomor();
+                    final int kk = mDesaList.get(getAbsoluteAdapterPosition()).getkK();
+                    final int dusun = mDesaList.get(getAbsoluteAdapterPosition()).getDusun();
+                    final int rw = mDesaList.get(getAbsoluteAdapterPosition()).getRW();
+                    final int rt = mDesaList.get(getAbsoluteAdapterPosition()).getRT();
+                    final int suku = mDesaList.get(getAbsoluteAdapterPosition()).getSuku();
+
+                    bundle.putInt("id",id);
+                    bundle.putString("namaDesa",namaDesa);
+                    bundle.putString("namaKades",namaKades);
+                    bundle.putInt("telepon",telepon);
+                    bundle.putInt("kk",kk);
+                    bundle.putInt("dusun",dusun);
+                    bundle.putInt("rw",rw);
+                    bundle.putInt("rt",rt);
+                    bundle.putInt("suku",suku);
+
+                    fragment.setArguments(bundle);
+                    fragmentTransaction.addToBackStack(null).commit();
+                    notifyDataSetChanged();
                 }
             });
             itemView.findViewById(R.id.button_delete_desa).setOnClickListener(new View.OnClickListener() {

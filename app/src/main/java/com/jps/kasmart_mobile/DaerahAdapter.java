@@ -79,30 +79,30 @@ public class DaerahAdapter extends RecyclerView.Adapter<DaerahAdapter.DaerahView
                 }
             });
 
-            itemView.findViewById(R.id.button_edit_daerah).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d("Button Press","Pressed Edit");
-                }
-            });
-            itemView.findViewById(R.id.button_delete_daerah).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d("Button Press","Pressed Delete");
-                    FragmentActivity activity = (FragmentActivity) (mContext);
-                    FragmentManager confirmManager = activity.getSupportFragmentManager();
-                    DialogFragment dialog = new ConfirmationDelete();
-                    Bundle bundle = new Bundle();
-                    final int id = mDaerahList.get(getAbsoluteAdapterPosition()).getId();
-                    final String menu = "daerah";
-                    bundle.putInt("id",id);
-                    Log.d("id", String.valueOf(id));
-                    bundle.putString("menu",menu);
-                    dialog.setArguments(bundle);
-                    dialog.show(confirmManager,"Alert");
-                    notifyDataSetChanged();
-                }
-            });
+//            itemView.findViewById(R.id.button_edit_daerah).setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Log.d("Button Press","Pressed Edit");
+//                }
+//            });
+//            itemView.findViewById(R.id.button_delete_daerah).setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Log.d("Button Press","Pressed Delete");
+//                    FragmentActivity activity = (FragmentActivity) (mContext);
+//                    FragmentManager confirmManager = activity.getSupportFragmentManager();
+//                    DialogFragment dialog = new ConfirmationDelete();
+//                    Bundle bundle = new Bundle();
+//                    final int id = mDaerahList.get(getAbsoluteAdapterPosition()).getId();
+//                    final String menu = "daerah";
+//                    bundle.putInt("id",id);
+//                    Log.d("id", String.valueOf(id));
+//                    bundle.putString("menu",menu);
+//                    dialog.setArguments(bundle);
+//                    dialog.show(confirmManager,"Alert");
+//                    notifyDataSetChanged();
+//                }
+//            });
         }
     }
 }
