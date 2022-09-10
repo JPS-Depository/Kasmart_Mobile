@@ -4,7 +4,7 @@ public class PendampingItem {
     private int mId;
     private String mNama, mTelepon, mAlamatTugas, mAlamatPribadi, mBidang, mJabatan, mNoReg, mEmail, mKTP, mBPJS, mNoRek, mNpwp, mTanggalLahir,
     mStatusPernikahan, mJenisKelamin, mAgama;
-    /*insert image assignment here*/
+    private String mImageURL;
     private boolean mExpandable;
 
     public boolean ismExpandable() {
@@ -17,7 +17,7 @@ public class PendampingItem {
 
     public PendampingItem(int id, String nama, String telepon, String alamatTugas, String alamatPribadi,
             String bidang, String jabatan, String noReg, String email, String ktp, String bpjs, String noRek,
-            String npwp, String statusPernikahan, String jenisKelamin, String agama/*, Image Gambar Berita */){
+            String npwp, String statusPernikahan, String jenisKelamin, String agama, String imageURL){
         mId = id;
         mNama = nama;
         mTelepon = telepon;
@@ -34,6 +34,7 @@ public class PendampingItem {
         mStatusPernikahan = statusPernikahan;
         mJenisKelamin = jenisKelamin;
         mAgama = agama;
+        mImageURL = imageURL;
     }
 
     public int getId(){
@@ -54,5 +55,7 @@ public class PendampingItem {
     public String getStatusPernikahan(){return mStatusPernikahan;}
     public String getJenisKelamin(){return mJenisKelamin;}
     public String getAgama(){return mAgama;}
-    /* insert image getter here */
+    public String getImageUrl(){
+        return mImageURL;
+    }
 }

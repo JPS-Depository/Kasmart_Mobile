@@ -175,10 +175,10 @@
                 android:textStyle="bold" />
 
             <ImageView
+                android:id="@+id/edit_image_wajib"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_alignParentRight="true"
-                android:background="@drawable/avatar_square_blue_512dp"
                 android:contentDescription="Gambar Kegiatan Wajib" />
 
             <EditText

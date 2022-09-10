@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -26,6 +27,11 @@ public class SHUAdapter extends RecyclerView.Adapter<SHUAdapter.SHUViewHolder> {
     private ArrayList<SHUItem> mSHUList;
     private boolean expandable;
     public SwipeRefreshLayout swipeRefreshLayout;
+    SessionManager sessionManager;
+    HashMap<String, String> user;
+    String role;
+    LinearLayout linearLayout;
+
 
     public SHUAdapter(Context context, ArrayList<SHUItem> shuList, SwipeRefreshLayout swipeRefreshLayout) {
         this.mContext = context;
@@ -39,6 +45,21 @@ public class SHUAdapter extends RecyclerView.Adapter<SHUAdapter.SHUViewHolder> {
     public SHUViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.shu_card, parent, false);
         SHUViewHolder shuViewHolder = new SHUViewHolder(v);
+        sessionManager = new SessionManager(mContext);
+        sessionManager.checkLogin();
+
+        linearLayout = (LinearLayout)v.findViewById(R.id.button_edit_delete_shu);
+
+        user = sessionManager.getUserDetail();
+        role = user.get(sessionManager.ROLE);
+
+        switch(role){
+            case "Guest":
+            case "Super User":
+                linearLayout.setVisibility(v.GONE);
+                break;
+        }
+
         return shuViewHolder;
     }
 
@@ -123,22 +144,22 @@ public class SHUAdapter extends RecyclerView.Adapter<SHUAdapter.SHUViewHolder> {
                 }
             });
 
-//            itemView.findViewById(R.id.button_edit_shu).setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Log.d("Button Press","Pressed Edit");
-//                }
-//            });
-//            itemView.findViewById(R.id.button_delete_shu).setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Log.d("Button Press","Pressed Delete");
-//                    FragmentActivity activity = (FragmentActivity) (mContext);
-//                    FragmentManager confirmManager = activity.getSupportFragmentManager();
-//                    DialogFragment dialog = new ConfirmationDelete();
-//                    dialog.show(confirmManager,"Alert");
-//                }
-//            });
+            itemView.findViewById(R.id.button_edit_shu).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("Button Press","Pressed Edit");
+                }
+            });
+            itemView.findViewById(R.id.button_delete_shu).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("Button Press","Pressed Delete");
+                    FragmentActivity activity = (FragmentActivity) (mContext);
+                    FragmentManager confirmManager = activity.getSupportFragmentManager();
+                    DialogFragment dialog = new ConfirmationDelete();
+                    dialog.show(confirmManager,"Alert");
+                }
+            });
         }
 
     }

@@ -1,16 +1,24 @@
 package com.jps.kasmart_mobile;
 
 import android.content.Context;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -26,6 +34,11 @@ public class WajibAdapter extends RecyclerView.Adapter<WajibAdapter.WajibViewHol
     private ArrayList<WajibItem> mWajibList;
     private boolean expandable;
     public SwipeRefreshLayout swipeRefreshLayout;
+    SessionManager sessionManager;
+    HashMap<String, String> user;
+    String role;
+    Button editButton, deleteButton;
+    ImageView wajibPicture;
 
     public WajibAdapter(Context context, ArrayList<WajibItem> wajibList, SwipeRefreshLayout swipeRefreshLayout) {
         this.mContext = context;
@@ -39,6 +52,21 @@ public class WajibAdapter extends RecyclerView.Adapter<WajibAdapter.WajibViewHol
     public WajibViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.wajib_card, parent, false);
         WajibAdapter.WajibViewHolder wajibViewHolder = new WajibAdapter.WajibViewHolder(v);
+
+        sessionManager = new SessionManager(mContext);
+        sessionManager.checkLogin();
+        user = sessionManager.getUserDetail();
+        role = user.get(sessionManager.ROLE);
+
+        editButton = v.findViewById(R.id.button_edit_wajib);
+        deleteButton = v.findViewById(R.id.button_delete_wajib);
+
+        switch(role){
+            case "Guest":
+                editButton.setVisibility(v.GONE);
+                deleteButton.setVisibility(v.GONE);
+                break;
+        }
         return wajibViewHolder;
     }
 
@@ -55,6 +83,9 @@ public class WajibAdapter extends RecyclerView.Adapter<WajibAdapter.WajibViewHol
         String sasaran = currentItem.getSasaran();
         String realisasi = currentItem.getRealisasi();
         String createdBy = currentItem.getCreatedBy();
+        String imgUrl = currentItem.getImg();
+
+        Picasso.get().load(imgUrl).placeholder(R.drawable.ic_baseline_image_24).fit().centerInside().networkPolicy(NetworkPolicy.NO_CACHE).memoryPolicy(MemoryPolicy.NO_CACHE).into(wajibPicture);
 
         switch (realisasi){
             case "0":
@@ -77,8 +108,8 @@ public class WajibAdapter extends RecyclerView.Adapter<WajibAdapter.WajibViewHol
         holder.mRealisasi.setText(realisasi);
         holder.mCreatedBy.setText(createdBy);
 
-        boolean isExpandable = mWajibList.get(position).ismExpandable();
-        holder.expandableLayout.setVisibility(isExpandable? View.VISIBLE:View.GONE);
+//        boolean isExpandable = mWajibList.get(position).ismExpandable();
+//        holder.expandableLayout.setVisibility(isExpandable? View.VISIBLE:View.GONE);
     }
 
     @Override
@@ -94,6 +125,8 @@ public class WajibAdapter extends RecyclerView.Adapter<WajibAdapter.WajibViewHol
         public WajibViewHolder(View itemView) {
             super(itemView);
 
+            wajibPicture = itemView.findViewById(R.id.gambar_kegiatan);
+
             mTanggalKegiatan = itemView.findViewById(R.id.tanggal_wajib);
             mKegiatan = itemView.findViewById(R.id.nama_kegiatan_wajib);
             mJenis = itemView.findViewById(R.id.tipe_kegiatan_wajib);
@@ -106,14 +139,14 @@ public class WajibAdapter extends RecyclerView.Adapter<WajibAdapter.WajibViewHol
             linearLayout = itemView.findViewById(R.id.header_wajib);
             expandableLayout = itemView.findViewById(R.id.extended_wajib);
 
-            linearLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    WajibItem wajibItem = mWajibList.get(getBindingAdapterPosition());
-                    wajibItem.setmExpandable(!wajibItem.ismExpandable());
-                    notifyDataSetChanged();
-                }
-            });
+//            linearLayout.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    WajibItem wajibItem = mWajibList.get(getBindingAdapterPosition());
+//                    wajibItem.setmExpandable(!wajibItem.ismExpandable());
+//                    notifyDataSetChanged();
+//                }
+//            });
 
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
@@ -147,6 +180,7 @@ public class WajibAdapter extends RecyclerView.Adapter<WajibAdapter.WajibViewHol
                     final String sasaran = mWajibList.get(getAbsoluteAdapterPosition()).getSasaran();
                     final String detail = mWajibList.get(getAbsoluteAdapterPosition()).getDetail();
                     final String lokasi = mWajibList.get(getAbsoluteAdapterPosition()).getLokasi();
+                    final String img = mWajibList.get(getAbsoluteAdapterPosition()).getImg();
 
                     bundle.putInt("id",id);
                     bundle.putString("tipe",tipe);
@@ -155,6 +189,7 @@ public class WajibAdapter extends RecyclerView.Adapter<WajibAdapter.WajibViewHol
                     bundle.putString("sasaran",sasaran);
                     bundle.putString("detail",detail);
                     bundle.putString("lokasi",lokasi);
+                    bundle.putString("img",img);
                     fragment.setArguments(bundle);
                     fragmentTransaction.addToBackStack(null).commit();
                     notifyDataSetChanged();

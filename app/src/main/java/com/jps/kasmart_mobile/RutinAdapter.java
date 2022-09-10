@@ -6,11 +6,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -26,6 +33,12 @@ public class RutinAdapter extends RecyclerView.Adapter<RutinAdapter.RutinViewHol
     private ArrayList<RutinItem> mRutinList;
     private boolean expandable;
     public SwipeRefreshLayout swipeRefreshLayout;
+    SessionManager sessionManager;
+    HashMap<String, String> user;
+    String role;
+    Button editButton,deleteButton;
+    String imgUrl;
+    public ImageView rutinPicture;
 
     public RutinAdapter(Context context, ArrayList<RutinItem> rutinList, SwipeRefreshLayout swipeRefreshLayout) {
         this.mContext = context;
@@ -39,6 +52,20 @@ public class RutinAdapter extends RecyclerView.Adapter<RutinAdapter.RutinViewHol
     public RutinViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.rutin_card, parent, false);
         RutinAdapter.RutinViewHolder rutinViewHolder = new RutinAdapter.RutinViewHolder(v);
+
+        sessionManager = new SessionManager(mContext);
+        sessionManager.checkLogin();
+        user = sessionManager.getUserDetail();
+        role = user.get(sessionManager.ROLE);
+        editButton = v.findViewById(R.id.button_edit_rutin);
+        deleteButton = v.findViewById(R.id.button_delete_rutin);
+
+        switch(role){
+            case "Guest":
+                editButton.setVisibility(v.GONE);
+                deleteButton.setVisibility(v.GONE);
+                break;
+        }
         return rutinViewHolder;
     }
 
@@ -55,6 +82,8 @@ public class RutinAdapter extends RecyclerView.Adapter<RutinAdapter.RutinViewHol
         String sasaran = currentItem.getSasaran();
         String realisasi = currentItem.getRealisasi();
         String createdBy = currentItem.getCreatedBy();
+        imgUrl = currentItem.getImg();
+        Picasso.get().load(imgUrl).placeholder(R.drawable.ic_baseline_image_24).fit().centerInside().networkPolicy(NetworkPolicy.NO_CACHE).memoryPolicy(MemoryPolicy.NO_CACHE).into(rutinPicture);
 
         switch (realisasi){
             case "0":
@@ -77,8 +106,8 @@ public class RutinAdapter extends RecyclerView.Adapter<RutinAdapter.RutinViewHol
         holder.mRealisasi.setText(realisasi);
         holder.mCreatedBy.setText(createdBy);
 
-        boolean isExpandable = mRutinList.get(position).ismExpandable();
-        holder.expandableLayout.setVisibility(isExpandable? View.VISIBLE:View.GONE);
+//        boolean isExpandable = mRutinList.get(position).ismExpandable();
+//        holder.expandableLayout.setVisibility(isExpandable? View.VISIBLE:View.GONE);
     }
 
     @Override
@@ -93,6 +122,8 @@ public class RutinAdapter extends RecyclerView.Adapter<RutinAdapter.RutinViewHol
 
         public RutinViewHolder(View itemView) {
             super(itemView);
+
+            rutinPicture = itemView.findViewById(R.id.gambar_kegiatan);
 
             mTanggalKegiatan = itemView.findViewById(R.id.tanggal_rutin);
             mKegiatan = itemView.findViewById(R.id.nama_kegiatan_rutin);
@@ -121,15 +152,6 @@ public class RutinAdapter extends RecyclerView.Adapter<RutinAdapter.RutinViewHol
                 }
             });
 
-            linearLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    RutinItem rutinItem = mRutinList.get(getBindingAdapterPosition());
-                    rutinItem.setmExpandable(!rutinItem.ismExpandable());
-                    notifyDataSetChanged();
-                }
-            });
-
             itemView.findViewById(R.id.button_edit_rutin).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -147,6 +169,7 @@ public class RutinAdapter extends RecyclerView.Adapter<RutinAdapter.RutinViewHol
                     final String sasaran = mRutinList.get(getAbsoluteAdapterPosition()).getSasaran();
                     final String detail = mRutinList.get(getAbsoluteAdapterPosition()).getDetail();
                     final String lokasi = mRutinList.get(getAbsoluteAdapterPosition()).getLokasi();
+                    final String url = mRutinList.get(getAbsoluteAdapterPosition()).getImg();
 
                     bundle.putInt("id",id);
                     bundle.putString("tipe",tipe);
@@ -155,6 +178,7 @@ public class RutinAdapter extends RecyclerView.Adapter<RutinAdapter.RutinViewHol
                     bundle.putString("sasaran",sasaran);
                     bundle.putString("detail",detail);
                     bundle.putString("lokasi",lokasi);
+                    bundle.putString("url",url);
                     fragment.setArguments(bundle);
                     fragmentTransaction.addToBackStack(null).commit();
                     notifyDataSetChanged();

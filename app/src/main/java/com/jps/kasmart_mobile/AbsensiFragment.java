@@ -2,6 +2,8 @@ package com.jps.kasmart_mobile;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,6 +36,10 @@ public class AbsensiFragment extends Fragment {
     RequestQueue mRequestQueue;
     AbsensiAdapter absensiAdapter;
     SwipeRefreshLayout swipeRefreshLayout;
+    SessionManager sessionManager;
+    HashMap<String, String> user;
+    String role;
+
 
     @Nullable
     @Override
@@ -45,8 +52,28 @@ public class AbsensiFragment extends Fragment {
         mRequestQueue = Volley.newRequestQueue(this.getContext());
         recyclerView = view.findViewById(R.id.absen_card);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefresh_absen);
+        sessionManager = new SessionManager(getContext());
+        sessionManager.checkLogin();
+        user = sessionManager.getUserDetail();
+        role = user.get(sessionManager.ROLE);
         ParseJSON();
         return view;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        switch(role){
+            case "Guest":
+                menu.clear();
+                break;
+        }
     }
 
     public void ParseJSON(){

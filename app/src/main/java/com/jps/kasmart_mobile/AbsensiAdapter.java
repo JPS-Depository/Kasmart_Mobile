@@ -6,11 +6,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -26,6 +28,10 @@ public class AbsensiAdapter extends RecyclerView.Adapter<AbsensiAdapter.AbsensiV
     private ArrayList<AbsensiItem> mAbsensiList;
     private boolean expandable;
     public SwipeRefreshLayout swipeRefreshLayout;
+    SessionManager sessionManager;
+    HashMap<String, String> user;
+    Button editButton, deleteButton;
+    String role;
 
     public AbsensiAdapter(Context context, ArrayList<AbsensiItem> absensiList,SwipeRefreshLayout swiperefreshlayout) {
         this.mContext = context;
@@ -39,6 +45,22 @@ public class AbsensiAdapter extends RecyclerView.Adapter<AbsensiAdapter.AbsensiV
     public AbsensiViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.absen_card, parent, false);
         AbsensiAdapter.AbsensiViewHolder absensiViewHolder = new AbsensiAdapter.AbsensiViewHolder(v);
+
+        sessionManager = new SessionManager(mContext);
+        sessionManager.checkLogin();
+        user = sessionManager.getUserDetail();
+        role = user.get(SessionManager.ROLE);
+
+        editButton = v.findViewById(R.id.button_edit_absen);
+        deleteButton = v.findViewById(R.id.button_delete_absen);
+
+        switch(role){
+            case "Guest":
+                editButton.setVisibility(v.GONE);
+                deleteButton.setVisibility(v.GONE);
+                break;
+        }
+
         return absensiViewHolder;
     }
 

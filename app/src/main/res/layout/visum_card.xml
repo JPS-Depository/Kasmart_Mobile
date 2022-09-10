@@ -200,9 +200,9 @@
                 </LinearLayout>
             </LinearLayout>
             <ImageView
+                android:id="@+id/gambar_kegiatan"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@mipmap/ic_launcher"
                 android:contentDescription="@string/gambar_berita" />
         </LinearLayout>
     </LinearLayout>

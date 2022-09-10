@@ -1,6 +1,12 @@
 package com.jps.kasmart_mobile;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,6 +25,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
@@ -32,8 +42,8 @@ import androidx.fragment.app.FragmentTransaction;
 public class InputBeritaFragment extends Fragment {
     String createby;
     EditText inputBerita, inputTanggal, inputJudul;
-    Button edit;
-    TextView displayCreate;
+    Button edit, inputGambar;
+    TextView displayCreate, namaFile;
     BeritaAdapter beritaAdapter;
 
     @Nullable
@@ -48,16 +58,17 @@ public class InputBeritaFragment extends Fragment {
         HashMap<String, String> user = sessionManager.getUserDetail();
 
         displayCreate = (TextView) view.findViewById(R.id.penulis);
+        namaFile = (TextView)view.findViewById(R.id.file_gambar);
 
         inputJudul = (EditText)view.findViewById(R.id.judul_berita);
         inputBerita = (EditText) view.findViewById(R.id.input_berita);
         inputTanggal = (EditText) view.findViewById(R.id.input_tanggal_berita);
 
         displayCreate = (TextView) view.findViewById(R.id.penulis);
-
         displayCreate.setText(user.get(sessionManager.NAME));
 
         edit = (Button) view.findViewById(R.id.button_input_edit_berita);
+        inputGambar = (Button) view.findViewById(R.id.button_input_gambar_berita);
 
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +82,50 @@ public class InputBeritaFragment extends Fragment {
                 Toast.makeText(getActivity(),"Data telah di ubah",Toast.LENGTH_SHORT).show();
             }
         });
+        inputGambar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImagePicker.Companion.with(getActivity())
+                        .compress(1024)
+                        .maxResultSize(1080, 1080)
+                        .start();
+            }
+        });
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Uri uri = data.getData();
+        Log.d("uri", String.valueOf(uri));
+        namaFile.setText(getFileName(uri,getContext()));
+    }
+
+    @SuppressLint("Range")
+    String getFileName(Uri uri, Context context){
+        String res = null;
+        if(uri.getScheme().equals("content")){
+            Cursor cursor = context.getContentResolver().query(uri,null, null,null,null);
+            try{
+                if(cursor != null && cursor.moveToFirst()){
+                    res = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            }
+            finally {
+                cursor.close();
+            }
+            if(res == null){
+                res = uri.getPath();
+                int cutt = res.lastIndexOf('/');
+                if(cutt != -1){
+                    res = res.substring(cutt+1);
+                }
+            }
+        }else{
+            res = "Gambar dari Kamera";
+        }
+        return res;
     }
 
     @Override

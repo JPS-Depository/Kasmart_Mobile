@@ -1,14 +1,22 @@
 package com.jps.kasmart_mobile;
 
 import android.content.Context;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -23,6 +31,11 @@ public class VisumAdapter extends RecyclerView.Adapter<VisumAdapter.VisumViewHol
     private Context mContext;
     private ArrayList<VisumItem> mVisumList;
     public SwipeRefreshLayout swipeRefreshLayout;
+    SessionManager sessionManager;
+    HashMap<String, String> user;
+    String role, imgUrl;
+    Button deleteButton, editButton;
+    public ImageView displayImage;
 
     public VisumAdapter(Context context, ArrayList<VisumItem> visumList, SwipeRefreshLayout swipeRefreshLayout) {
         this.mContext = context;
@@ -35,6 +48,22 @@ public class VisumAdapter extends RecyclerView.Adapter<VisumAdapter.VisumViewHol
     public VisumViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.visum_card, parent, false);
         VisumAdapter.VisumViewHolder visumViewHolder = new VisumAdapter.VisumViewHolder(v);
+
+        sessionManager = new SessionManager(mContext);
+        sessionManager.checkLogin();
+        user = sessionManager.getUserDetail();
+        role = user.get(sessionManager.ROLE);
+
+        deleteButton = v.findViewById(R.id.button_delete_visum);
+        editButton = v.findViewById(R.id.button_edit_visum);
+
+        switch(role){
+            case "Guest":
+                deleteButton.setVisibility(v.GONE);
+                editButton.setVisibility(v.GONE);
+                break;
+        }
+
         return visumViewHolder;
     }
 
@@ -50,6 +79,9 @@ public class VisumAdapter extends RecyclerView.Adapter<VisumAdapter.VisumViewHol
         String kecamatan = currentItem.getKecamatan();
         String kelDes = currentItem.getKelDes();
         String hasilKegiatan = currentItem.getHasilKegiatan();
+
+        imgUrl = currentItem.getImage();
+        Picasso.get().load(imgUrl).placeholder(R.drawable.ic_baseline_image_24).fit().centerInside().networkPolicy(NetworkPolicy.NO_CACHE).memoryPolicy(MemoryPolicy.NO_CACHE).into(displayImage);
 
         holder.mKegiatan.setText(kegiatan);
         holder.mTanggalVisum.setText(tanggalVisum);
@@ -78,6 +110,7 @@ public class VisumAdapter extends RecyclerView.Adapter<VisumAdapter.VisumViewHol
             mKecamatan = itemView.findViewById(R.id.kecamatan_kegiatan_visum);
             mKelDes = itemView.findViewById(R.id.kelurahan_desa_visum);
             mHasilKegiatan = itemView.findViewById(R.id.hasil_kegiatan_visum);
+            displayImage = itemView.findViewById(R.id.gambar_kegiatan);
 
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
@@ -111,6 +144,7 @@ public class VisumAdapter extends RecyclerView.Adapter<VisumAdapter.VisumViewHol
                     final String kecamatan = mVisumList.get(getAbsoluteAdapterPosition()).getKecamatan();
                     final String keldes = mVisumList.get(getAbsoluteAdapterPosition()).getKelDes();
                     final String hasilKegiatan = mVisumList.get(getAbsoluteAdapterPosition()).getHasilKegiatan();
+                    final String image = mVisumList.get(getAbsoluteAdapterPosition()).getImage();
 
                     bundle.putInt("id",id);
                     bundle.putString("kegiatan",kegiatan);
@@ -120,6 +154,7 @@ public class VisumAdapter extends RecyclerView.Adapter<VisumAdapter.VisumViewHol
                     bundle.putString("kecamatan",kecamatan);
                     bundle.putString("keldes",keldes);
                     bundle.putString("hasilkegiatan",hasilKegiatan);
+                    bundle.putString("img",image);
                     fragment.setArguments(bundle);
                     fragmentTransaction.addToBackStack(null).commit();
                     notifyDataSetChanged();

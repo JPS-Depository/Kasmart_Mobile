@@ -1,5 +1,11 @@
 package com.jps.kasmart_mobile;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,23 +26,31 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 public class BeritaEditFragment extends Fragment {
     int id;
-    String  judul,berita,tanggal,createby;
+    String  judul,berita,tanggal,createby,url;
     EditText inputBerita, inputTanggal;
     Button edit;
     TextView displayJudul, displayCreate;
-    BeritaAdapter beritaAdapter;
+    SessionManager sessionManager;
+    HashMap<String, String> user;
+    ImageView detailImage;
 
     @Nullable
     @Override
@@ -44,11 +59,19 @@ public class BeritaEditFragment extends Fragment {
         Bundle bundle = this.getArguments();
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Edit Berita");
 
+        sessionManager = new SessionManager(getContext());
+        sessionManager.checkLogin();
+        user = sessionManager.getUserDetail();
+
         id = bundle.getInt("id");
         berita = bundle.getString("isiberita");
         tanggal = bundle.getString("tanggalberita");
         judul = bundle.getString("judul");
         createby = bundle.getString("createdby",createby);
+        url = "http://192.168.100.12/kasmart_mobile/image/berita/foto_berita_id_"+id+".jpg";
+
+        detailImage = (ImageView) view.findViewById(R.id.berita_detail_gambar);
+        Picasso.get().load(url).placeholder(R.drawable.ic_baseline_image_24).resize(1000,0).networkPolicy(NetworkPolicy.NO_CACHE).memoryPolicy(MemoryPolicy.NO_CACHE).into(detailImage);
 
         inputBerita = (EditText) view.findViewById(R.id.input_berita);
         inputTanggal = (EditText) view.findViewById(R.id.input_tanggal_berita);
@@ -72,9 +95,25 @@ public class BeritaEditFragment extends Fragment {
                 Toast.makeText(getActivity(),"Data telah di ubah",Toast.LENGTH_SHORT).show();
             }
         });
+
+        detailImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImagePicker.Companion.with(getActivity())
+                        .compress(1024)
+                        .maxResultSize(1080, 1080)
+                        .start();
+            }
+        });
         return view;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+            Uri uri = data.getData();
+            Picasso.get().load(uri).placeholder(R.drawable.ic_baseline_image_24).resize(1000,1000).networkPolicy(NetworkPolicy.NO_CACHE).memoryPolicy(MemoryPolicy.NO_CACHE).into(detailImage);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,7 +124,12 @@ public class BeritaEditFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        menu.clear();
+        switch(user.get(sessionManager.ROLE)){
+            case "Guest":
+                Log.d("role",user.get(sessionManager.ROLE));
+                menu.clear();
+                break;
+        }
     }
 
     private void insertItem(int id,String storedTanggal, String storedBerita ){

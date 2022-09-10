@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -26,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DesaFragment extends Fragment {
 
@@ -34,21 +37,45 @@ public class DesaFragment extends Fragment {
     RequestQueue mRequestQueue;
     DesaAdapter desaAdapter;
     SwipeRefreshLayout swipeRefreshLayout;
+    SessionManager sessionManager;
+    HashMap<String, String> user;
+    String role;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_desa,container,false);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Daftar Desa / Kelurahan");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Profil Desa / Kelurahan");
 
         mDesaList = new ArrayList<>();
         mRequestQueue = Volley.newRequestQueue(this.getContext());
         recyclerView = view.findViewById(R.id.desa_card);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefresh_Desa);
+        sessionManager = new SessionManager(getContext());
+        sessionManager.checkLogin();
+        user = sessionManager.getUserDetail();
+        role = user.get(sessionManager.ROLE);
         ParseJSON();
         return view;
     }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        switch(role){
+            case "Guest":
+                menu.clear();
+                break;
+        }
+    }
+
 
     public void ParseJSON() {
         String url = "http://192.168.100.12/kasmart_mobile/get_desa.php";
@@ -61,6 +88,7 @@ public class DesaFragment extends Fragment {
                     for(int i=0;i< jsonArray.length();i++){
                         JSONObject data = jsonArray.getJSONObject(i);
                         int id = data.getInt("id");
+                        int daerah_id = data.getInt("id");
                         String namaDesa = data.getString("nama");
                         String namaKades = data.getString("nama_kades");
                         int kK = data.getInt("jumlah_kk");
@@ -71,8 +99,9 @@ public class DesaFragment extends Fragment {
                         int nomor = data.getInt("telp_kades");
                         String createAt = data.getString("created_at");
                         String updateAt = data.getString("updated_at");
+                        String url = "http://192.168.100.12/kasmart_mobile/image/daerah/daerah_id_"+daerah_id+".jpg";
 
-                        mDesaList.add(new DesaItem(id,namaDesa,namaKades,kK,dusun,rt,rw,suku,nomor,createAt,updateAt));
+                        mDesaList.add(new DesaItem(id,namaDesa,namaKades,kK,dusun,rt,rw,suku,nomor,createAt,updateAt, url));
                     }
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                     desaAdapter = new DesaAdapter(getContext(), mDesaList, swipeRefreshLayout);

@@ -1,5 +1,7 @@
 package com.jps.kasmart_mobile;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -21,6 +24,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
@@ -35,10 +42,11 @@ public class WajibEditFragment extends Fragment {
     int id, radioId;
     RadioGroup statusGroup;
     RadioButton statusRadioButton;
-    String tipe, kegiatan, tanggalkegiatan, sasaran, detail, lokasi;
+    String tipe, kegiatan, tanggalkegiatan, sasaran, detail, lokasi,img;
     EditText inputSasaran, inputDetail;
     Button edit;
     TextView displayKegiatan,displayTipe, displayTanggal, displayLokasi;
+    ImageView displayImage;
     WajibAdapter wajibAdapter;
     View view;
 
@@ -57,9 +65,13 @@ public class WajibEditFragment extends Fragment {
         sasaran = bundle.getString("sasaran");
         detail = bundle.getString("detail");
         lokasi = bundle.getString("lokasi");
+        img = bundle.getString("img");
 
         inputDetail = (EditText) view.findViewById(R.id.input_detail_wajib);
         inputSasaran = (EditText) view.findViewById(R.id.input_sasaran_wajib);
+
+        displayImage = (ImageView) view.findViewById(R.id.edit_image_wajib);
+        Picasso.get().load(img).fit().centerInside().placeholder(R.drawable.ic_baseline_image_24).networkPolicy(NetworkPolicy.NO_CACHE).memoryPolicy(MemoryPolicy.NO_CACHE).into(displayImage);
 
         displayKegiatan = (TextView) view.findViewById(R.id.nama_kegiatan_wajib);
         displayTipe = (TextView) view.findViewById(R.id.tipe_kegiatan_wajib);
@@ -87,6 +99,16 @@ public class WajibEditFragment extends Fragment {
             }
         });
 
+        displayImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImagePicker.Companion.with(getActivity())
+                        .compress(1024)
+                        .maxResultSize(1080, 1080)
+                        .start();
+            }
+        });
+
         statusGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -106,6 +128,13 @@ public class WajibEditFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Uri uri = data.getData();
+        Picasso.get().load(uri).placeholder(R.drawable.ic_baseline_image_24).resize(1000,1000).networkPolicy(NetworkPolicy.NO_CACHE).memoryPolicy(MemoryPolicy.NO_CACHE).into(displayImage);
     }
 
     @Override

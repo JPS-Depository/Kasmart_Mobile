@@ -1,7 +1,10 @@
 package com.jps.kasmart_mobile;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,6 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,6 +37,10 @@ public class WajibFragment extends Fragment {
     RequestQueue mRequestQueue;
     WajibAdapter wajibAdapter;
     SwipeRefreshLayout swipeRefreshLayout;
+    SessionManager sessionManager;
+    HashMap<String, String> user;
+    String role;
+    String baseUrl = "http://192.168.100.12/kasmart_mobile/image/kegiatan/wajib_bermasa/";
 
     @Nullable
     @Override
@@ -45,6 +53,12 @@ public class WajibFragment extends Fragment {
         mRequestQueue = Volley.newRequestQueue(this.getContext());
         recyclerView = view.findViewById(R.id.wajib_card);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefresh_wajib);
+
+        sessionManager = new SessionManager(getContext());
+        sessionManager.checkLogin();
+        user = sessionManager.getUserDetail();
+        role = user.get(sessionManager.ROLE);
+
         ParseJSON();
         return view;
     }
@@ -72,9 +86,11 @@ public class WajibFragment extends Fragment {
                         String sasaran = data.getString("sasaran");
                         String realisasi = data.getString("status");
                         String createdBy = data.getString("fullname");
+                        String image = data.getString("image");
+                        String imgurl = baseUrl+image;
 
                         mWajibList.add(new WajibItem(id, tanggalKegiatan, kegiatan, jenis,
-                                lokasi, detail, sasaran, realisasi, createdBy));
+                                lokasi, detail, sasaran, realisasi, createdBy, imgurl));
                     }
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                     wajibAdapter = new WajibAdapter(getContext(), mWajibList,swipeRefreshLayout);
@@ -92,6 +108,22 @@ public class WajibFragment extends Fragment {
             }
         });
         mRequestQueue.add(request);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        switch(role){
+            case "Guest":
+                menu.clear();
+                break;
+        }
     }
 
     @Override

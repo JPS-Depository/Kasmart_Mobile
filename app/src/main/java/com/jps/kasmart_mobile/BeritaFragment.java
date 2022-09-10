@@ -2,6 +2,8 @@ package com.jps.kasmart_mobile;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,6 +36,8 @@ public class BeritaFragment extends Fragment {
     RequestQueue mRequestQueue;
     BeritaAdapter beritaAdapter;
     SwipeRefreshLayout swipeRefreshLayout;
+    SessionManager sessionManager;
+    HashMap<String, String> user;
 
     @Nullable
     @Override
@@ -43,6 +48,9 @@ public class BeritaFragment extends Fragment {
         mRequestQueue = Volley.newRequestQueue(this.getContext());
         recyclerView = view.findViewById(R.id.berita_card);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefresh_Berita);
+        sessionManager = new SessionManager(getContext());
+        sessionManager.checkLogin();
+        user = sessionManager.getUserDetail();
         ParseJSON();
         return view;
     }
@@ -61,10 +69,9 @@ public class BeritaFragment extends Fragment {
                         String judul = data.getString("judul");
                         String isiBerita = data.getString("isi_berita");
                         String tanggalBerita = data.getString("tanggal_berita");
-                        /*insert data.getImage*/
                         String createBy = data.getString("created_by");
-
-                        mBeritaList.add(new BeritaItem(id,judul,isiBerita,tanggalBerita,createBy));
+                        String imgURL = "http://192.168.100.12/kasmart_mobile/image/berita/foto_berita_id_"+id+".jpg";
+                        mBeritaList.add(new BeritaItem(id,judul,isiBerita,tanggalBerita,createBy,imgURL));
                     }
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                     beritaAdapter = new BeritaAdapter(getContext(), mBeritaList,swipeRefreshLayout);
@@ -87,5 +94,20 @@ public class BeritaFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        switch(user.get(sessionManager.ROLE)){
+            case "Guest":
+                menu.clear();
+                break;
+        }
     }
 }

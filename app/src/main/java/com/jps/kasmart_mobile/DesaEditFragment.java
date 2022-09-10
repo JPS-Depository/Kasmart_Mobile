@@ -1,6 +1,12 @@
 package com.jps.kasmart_mobile;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.dhaval2404.imagepicker.ImagePicker;
 
 import java.util.HashMap;
 
@@ -33,8 +40,8 @@ public class DesaEditFragment extends Fragment {
     EditText inputKades,inputTelp,inputJumlahkk,inputJumlahDusun,inputJumlahSuku,inputJumlahRt,inputJumlahRw;
     int id, telepon, kk, dusun, rw, rt, suku;
     String namaDesa, namaKades;
-    Button edit;
-    TextView displayNama;
+    Button edit,inputGambar;
+    TextView displayNama, namaFile;
 
     @Nullable
     @Override
@@ -61,6 +68,8 @@ public class DesaEditFragment extends Fragment {
 
         displayNama = (TextView)view.findViewById(R.id.nama_desa);
 
+        namaFile = (TextView)view.findViewById(R.id.file_gambar);
+
         inputKades = (EditText)view.findViewById(R.id.input_nama_kades_desa);
         inputTelp = (EditText)view.findViewById(R.id.input_telepon_kades);
         inputJumlahkk = (EditText) view.findViewById(R.id.input_jumlah_kk_desa);
@@ -68,6 +77,7 @@ public class DesaEditFragment extends Fragment {
         inputJumlahSuku = (EditText) view.findViewById(R.id.input_jumlah_suku_desa);
         inputJumlahRt = (EditText) view.findViewById(R.id.input_jumlah_rt_desa);
         inputJumlahRw = (EditText) view.findViewById(R.id.input_jumlah_rw_desa);
+        inputGambar = (Button) view.findViewById(R.id.button_input_gambar);
 
         displayNama.setText(namaDesa);
         inputKades.setText(namaKades);
@@ -97,7 +107,50 @@ public class DesaEditFragment extends Fragment {
             }
         });
 
+        inputGambar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImagePicker.Companion.with(getActivity())
+                        .compress(1024)
+                        .maxResultSize(1080, 1080)
+                        .start();
+            }
+        });
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Uri uri = data.getData();
+        Log.d("uri", String.valueOf(uri));
+        namaFile.setText(getFileName(uri,getContext()));
+    }
+
+    @SuppressLint("Range")
+    String getFileName(Uri uri, Context context){
+        String res = null;
+        if(uri.getScheme().equals("content")){
+            Cursor cursor = context.getContentResolver().query(uri,null, null,null,null);
+            try{
+                if(cursor != null && cursor.moveToFirst()){
+                    res = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            }
+            finally {
+                cursor.close();
+            }
+            if(res == null){
+                res = uri.getPath();
+                int cutt = res.lastIndexOf('/');
+                if(cutt != -1){
+                    res = res.substring(cutt+1);
+                }
+            }
+        }else{
+            res = "Gambar dari Kamera";
+        }
+        return res;
     }
 
     @Override

@@ -12,6 +12,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.se.omapi.Session;
 import android.util.Log;
@@ -19,10 +21,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -33,7 +39,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private DrawerLayout drawer;
     SessionManager sessionManager;
     int menuClicked = 0;
-    String fullname,role,email;
+    String fullname,role,email,id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +57,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         fullname = user.get(sessionManager.NAME);
         role = user.get(sessionManager.ROLE);
         email = user.get(sessionManager.EMAIL);
+        id = user.get(sessionManager.ID);
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -60,6 +67,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         TextView nav_name = (TextView) headerView.findViewById(R.id.nama_pengguna);
         TextView nav_role = (TextView) headerView.findViewById(R.id.role_pengguna);
         TextView nav_email = (TextView) headerView.findViewById(R.id.email_pengguna);
+        ImageView nav_picture = (ImageView) headerView.findViewById(R.id.nav_picture);
+        String imageUrl = "http://192.168.100.12/kasmart_mobile/image/user/foto_user_id_"+id+".jpg";
+        Picasso.get().load(imageUrl).fit().networkPolicy(NetworkPolicy.NO_CACHE).memoryPolicy(MemoryPolicy.NO_CACHE).centerInside().into(nav_picture);
 
         nav_name.setText(fullname);
         nav_role.setText(role);
@@ -70,7 +80,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         switch(role){
             case "User":
                 navigationView.getMenu().findItem(R.id.group_dataEkonomi).setVisible(false);
-                Log.d("role check","true");
                 break;
         }
 
@@ -181,7 +190,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()){
             case R.id.add_option:
-                Log.d("Click","add clicked");
                 switch(menuClicked){
                     case 0:
                         replaceFragment(new InputBeritaFragment());
@@ -223,5 +231,12 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        fragment.onActivityResult(requestCode, resultCode, data);
     }
 }

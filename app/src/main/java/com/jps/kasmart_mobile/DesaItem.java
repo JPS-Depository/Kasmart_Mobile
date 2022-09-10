@@ -12,9 +12,10 @@ public class DesaItem {
     private int mNomor;
     private String mCreated_at;
     private String mUpdated_at;
+    private String mImageUrl;
 
     public DesaItem(int id, String namaDesa, String namaKades,int kK,int dusun, int rt,
-                    int rw, int suku,int nomor, String createAt, String updateAt){
+                    int rw, int suku,int nomor, String createAt, String updateAt, String imageUrl){
         mId = id;
         mNamaDesa = namaDesa;
         mNamaKades = namaKades;
@@ -26,6 +27,7 @@ public class DesaItem {
         mNomor = nomor;
         mCreated_at = createAt;
         mUpdated_at = updateAt;
+        mImageUrl = imageUrl;
     }
 
     public int getId(){
@@ -53,4 +55,5 @@ public class DesaItem {
     public int getNomor(){return mNomor;}
     public String getCreatedAt(){ return mCreated_at;}
     public String getUpdatedAt(){ return mUpdated_at;}
+    public String getURL(){return mImageUrl;}
 }

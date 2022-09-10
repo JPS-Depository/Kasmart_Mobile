@@ -6,11 +6,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -26,6 +28,10 @@ public class MasalahAdapter extends RecyclerView.Adapter<MasalahAdapter.MasalahV
     private ArrayList<MasalahItem> mMasalahList;
     private boolean expandable;
     public SwipeRefreshLayout swipeRefreshLayout;
+    SessionManager sessionManager;
+    HashMap<String, String> user;
+    String role;
+    public Button editButton, deleteButton;
 
     public MasalahAdapter(Context context, ArrayList<MasalahItem> masalahList,SwipeRefreshLayout swipeRefreshLayout) {
         this.mContext = context;
@@ -39,6 +45,21 @@ public class MasalahAdapter extends RecyclerView.Adapter<MasalahAdapter.MasalahV
     public MasalahViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.masalah_card, parent, false);
         MasalahAdapter.MasalahViewHolder masalahViewHolder = new MasalahAdapter.MasalahViewHolder(v);
+        sessionManager = new SessionManager(mContext);
+        sessionManager.checkLogin();
+        user = sessionManager.getUserDetail();
+        role = user.get(sessionManager.ROLE);
+
+        editButton = v.findViewById(R.id.button_edit_masalah);
+        deleteButton = v.findViewById(R.id.button_delete_masalah);
+
+        switch(role){
+            case "Guest":
+                editButton.setVisibility(v.GONE);
+                deleteButton.setVisibility(v.GONE);
+                break;
+        }
+
         return masalahViewHolder;
     }
 

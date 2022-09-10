@@ -19,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,6 +36,9 @@ public class PotensiFragment extends Fragment {
     RequestQueue mRequestQueue;
     PotensiAdapter potensiAdapter;
     SwipeRefreshLayout swipeRefreshLayout;
+    SessionManager sessionManager;
+    HashMap<String, String> user;
+    String role;
 
     @Nullable
     @Override
@@ -42,6 +46,11 @@ public class PotensiFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_potensi, container,false);
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Potensi Daerah");
+
+        sessionManager = new SessionManager(getContext());
+        sessionManager.checkLogin();
+        user = sessionManager.getUserDetail();
+        role = user.get(sessionManager.ROLE);
 
         mPotensiList = new ArrayList<>();
         mRequestQueue = Volley.newRequestQueue(this.getContext());
@@ -93,4 +102,21 @@ public class PotensiFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        switch(role){
+            case "Guest":
+                menu.clear();
+                break;
+        }
+    }
+
 }

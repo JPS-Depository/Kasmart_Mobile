@@ -26,7 +26,9 @@ public class BumdesAdapter extends RecyclerView.Adapter<BumdesAdapter.BumdesView
     private ArrayList<BumdesItem> mBumdesList;
     private boolean expandable;
     public SwipeRefreshLayout swipeRefreshLayout;
-    public String role;
+    SessionManager sessionManager;
+    HashMap<String, String> user;
+    String role;
     public LinearLayout buttonLayout;
 
     public BumdesAdapter(Context context, ArrayList<BumdesItem> bumdesList, SwipeRefreshLayout swiperefreshlayout) {
@@ -41,6 +43,19 @@ public class BumdesAdapter extends RecyclerView.Adapter<BumdesAdapter.BumdesView
     public BumdesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.bumdes_card, parent, false);
         BumdesViewHolder bumdesViewHolder = new BumdesViewHolder(v);
+        sessionManager = new SessionManager(mContext);
+        sessionManager.checkLogin();
+        user = sessionManager.getUserDetail();
+        role = user.get(sessionManager.ROLE);
+        buttonLayout = (LinearLayout) v.findViewById(R.id.button_edit_delete_bumdes);
+
+        switch(role){
+            case "Guest":
+            case "Super User":
+                buttonLayout.setVisibility(v.GONE);
+                break;
+        }
+
         return bumdesViewHolder;
     }
 

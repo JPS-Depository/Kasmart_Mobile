@@ -1,7 +1,10 @@
 package com.jps.kasmart_mobile;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,6 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,6 +38,12 @@ public class RutinFragment extends Fragment {
     RutinAdapter rutinAdapter;
     SwipeRefreshLayout swipeRefreshLayout;
 
+    SessionManager sessionManager;
+    HashMap<String, String> user;
+    String role;
+    String baseUrl = "http://192.168.100.12/kasmart_mobile/image/kegiatan/rutin_harian/";
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -43,6 +53,12 @@ public class RutinFragment extends Fragment {
         mRequestQueue = Volley.newRequestQueue(this.getContext());
         recyclerView = view.findViewById(R.id.rutin_card);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefresh_rutin);
+
+        sessionManager = new SessionManager(getContext());
+        sessionManager.checkLogin();
+        user = sessionManager.getUserDetail();
+        role = user.get(sessionManager.ROLE);
+
         ParseJSON();
         return view;
     }
@@ -70,9 +86,11 @@ public class RutinFragment extends Fragment {
                         String sasaran = data.getString("sasaran");
                         String realisasi = data.getString("status");
                         String createdBy = data.getString("fullname");
+                        String url = data.getString("image");
+                        String imgurl = baseUrl+url;
 
                         mRutinList.add(new RutinItem(id, tanggalKegiatan, kegiatan, jenis,
-                                lokasi, detail, sasaran, realisasi, createdBy));
+                                lokasi, detail, sasaran, realisasi, createdBy,imgurl));
                     }
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                     rutinAdapter = new RutinAdapter(getContext(), mRutinList, swipeRefreshLayout);
@@ -95,5 +113,21 @@ public class RutinFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        switch(user.get(sessionManager.ROLE)){
+            case "Guest":
+                menu.clear();
+                break;
+        }
     }
 }

@@ -2,6 +2,8 @@ package com.jps.kasmart_mobile;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,6 +36,9 @@ public class PendampingFragment extends Fragment {
     RequestQueue mRequestQueue;
     PendampingAdapter pendampingAdapter;
     SwipeRefreshLayout swipeRefreshLayout;
+    SessionManager sessionManager;
+    HashMap<String, String> user;
+    String role;
 
     @Nullable
     @Override
@@ -45,8 +51,30 @@ public class PendampingFragment extends Fragment {
         mRequestQueue = Volley.newRequestQueue(this.getContext());
         recyclerView = view.findViewById(R.id.pendamping_card);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefresh_pendamping);
+
+        sessionManager = new SessionManager(getContext());
+        sessionManager.checkLogin();
+        user = sessionManager.getUserDetail();
+        role = user.get(sessionManager.ROLE);
+
         ParseJSON();
         return view;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        switch(user.get(sessionManager.ROLE)){
+            case "Guest":
+                menu.clear();
+                break;
+        }
     }
 
     public void ParseJSON() {
@@ -81,9 +109,9 @@ public class PendampingFragment extends Fragment {
                         String statusPernikahan = data.getString("status");
                         String jenisKelamin = data.getString("jenis_kelamin");
                         String agama = data.getString("agama");
-
+                        String imgURL = "http://192.168.100.12/kasmart_mobile/image/pendamping/foto_pendamping_id_"+id+".jpg";
                         mPendampingList.add(new PendampingItem(id, nama, telepon, alamatTugas, alamatPribadi, bidang,
-                                jabatan, noReg, email, ktp, bpjs, noRek, npwp, statusPernikahan, jenisKelamin, agama));
+                                jabatan, noReg, email, ktp, bpjs, noRek, npwp, statusPernikahan, jenisKelamin, agama, imgURL));
                     }
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                     pendampingAdapter = new PendampingAdapter(getContext(), mPendampingList, swipeRefreshLayout);

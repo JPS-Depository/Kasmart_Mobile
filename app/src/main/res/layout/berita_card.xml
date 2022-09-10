@@ -79,9 +79,9 @@
                 </LinearLayout>
             </LinearLayout>
             <ImageView
+                android:id="@+id/gambar_berita"
                 android:layout_width="89dp"
                 android:layout_height="match_parent"
-                android:background="@mipmap/ic_launcher"
                 android:contentDescription="@string/gambar_berita" />
 
         </LinearLayout>

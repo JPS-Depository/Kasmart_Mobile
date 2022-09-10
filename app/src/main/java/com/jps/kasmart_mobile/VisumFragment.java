@@ -2,6 +2,8 @@ package com.jps.kasmart_mobile;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,6 +36,10 @@ public class VisumFragment extends Fragment {
     RequestQueue mRequestQueue;
     VisumAdapter visumAdapter;
     SwipeRefreshLayout swipeRefreshLayout;
+    SessionManager sessionManager;
+    HashMap<String, String> user;
+    String role;
+    String baseURL = "http://192.168.100.12/kasmart_mobile/image/visum/";
 
     @Nullable
     @Override
@@ -45,8 +52,29 @@ public class VisumFragment extends Fragment {
         mRequestQueue = Volley.newRequestQueue(this.getContext());
         recyclerView = view.findViewById(R.id.visum_card);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefresh_usp_visum);
+
+        sessionManager = new SessionManager(getContext());
+        sessionManager.checkLogin();
+        user = sessionManager.getUserDetail();
+        role = user.get(sessionManager.ROLE);
         ParseJSON();
         return view;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        switch(role){
+            case "Guest":
+                menu.clear();
+                break;
+        }
     }
 
     public void ParseJSON(){
@@ -67,9 +95,10 @@ public class VisumFragment extends Fragment {
                         String kecamatan = data.getString("Kecamatan");
                         String kelDes = data.getString("Kelurahan");
                         String hasilKegiatan = data.getString("hasil_kegiatan");
-
+                        String image = data.getString("image");
+                        String imgUrl = baseURL+image;
                         mVisumList.add(new VisumItem(id, kegiatan, tanggalVisum, tanggalKegiatan,
-                                kabupaten, kecamatan, kelDes, hasilKegiatan));
+                                kabupaten, kecamatan, kelDes, hasilKegiatan, imgUrl));
                     }
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                     visumAdapter = new VisumAdapter(getContext(), mVisumList, swipeRefreshLayout);

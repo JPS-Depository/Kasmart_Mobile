@@ -1,9 +1,14 @@
 package com.jps.kasmart_mobile;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -37,7 +42,11 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar loading;
     private static String URL_LOGIN="http://192.168.100.12/kasmart_mobile/login.php";
 
-    private String name,email,username,role;
+    private String name,email,role,username,id;
+    private String[] PERMISSIONS = new String[]{
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,8 +101,13 @@ public class MainActivity extends AppCompatActivity {
                                     role = object.getString("name").trim();
                                     username = object.getString("username").trim();
                                     email = object.getString("email").trim();
+                                    id = object.getString("id");
                                     loading.setVisibility(View.GONE);
-                                    openScreen2();
+                                    if(!hasPermissions(MainActivity.this,PERMISSIONS)){
+                                        ActivityCompat.requestPermissions(MainActivity.this,PERMISSIONS,1);
+                                    }else{
+                                        openScreen2();
+                                    }
                                 }
                             }else{
                                 Toast.makeText(MainActivity.this,
@@ -126,9 +140,40 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+
+    private boolean hasPermissions(Context context, String... PERMISSIONS){
+        if(context !=null && PERMISSIONS !=null){
+            for(String permission: PERMISSIONS){
+                if(ActivityCompat.checkSelfPermission(context, permission)!= PackageManager.PERMISSION_GRANTED){
+                    return false;
+                }
+            }
+        }
+        return  true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == 1){
+            if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                Toast.makeText(this,"Storage Permission is granted", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this,"Storage Permission is denied", Toast.LENGTH_SHORT).show();
+            }
+            if(grantResults[1]==PackageManager.PERMISSION_GRANTED){
+                Toast.makeText(this,"Camera Permission is granted", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this,"Camera Permission is denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+    }
+
     private void openScreen2() {
-        sessionManager.createSession(name, role, email);
+        sessionManager.createSession(name, role, email,id);
         Intent intent = new Intent(this, MainScreen.class);
+        intent.putExtra("ID",id);
         intent.putExtra("NAME", name);
         intent.putExtra("ROLE", role);
         intent.putExtra("EMAIL",email);

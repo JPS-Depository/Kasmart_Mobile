@@ -6,11 +6,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -25,6 +27,10 @@ public class PotensiAdapter extends RecyclerView.Adapter<PotensiAdapter.PotensiV
     private Context mContext;
     private ArrayList<PotensiItem> mPotensiList;
     SwipeRefreshLayout swipeRefreshLayout;
+    SessionManager sessionManager;
+    HashMap<String, String> user;
+    String role;
+    Button editButton, deleteButton;
 
     public PotensiAdapter(Context context, ArrayList<PotensiItem> potensiList, SwipeRefreshLayout swipeRefreshLayout) {
         this.mContext = context;
@@ -37,6 +43,22 @@ public class PotensiAdapter extends RecyclerView.Adapter<PotensiAdapter.PotensiV
     public PotensiViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.potensi_card, parent, false);
         PotensiAdapter.PotensiViewHolder potensiViewHolder = new PotensiAdapter.PotensiViewHolder(v);
+
+        sessionManager = new SessionManager(mContext);
+        sessionManager.checkLogin();
+        user = sessionManager.getUserDetail();
+        role = user.get(sessionManager.ROLE);
+
+        editButton = v.findViewById(R.id.button_edit_potensi);
+        deleteButton = v.findViewById(R.id.button_delete_potensi);
+
+        switch(role){
+            case "Guest":
+                deleteButton.setVisibility(v.GONE);
+                editButton.setVisibility(v.GONE);
+                break;
+        }
+
         return potensiViewHolder;
     }
 

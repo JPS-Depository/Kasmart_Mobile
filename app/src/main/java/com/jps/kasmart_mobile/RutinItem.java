@@ -3,20 +3,19 @@ package com.jps.kasmart_mobile;
 public class RutinItem {
     private int mId;
     private String mTanggalKegiatan, mKegiatan, mJenis, mLokasi,
-    mDetail, mSasaran, mRealisasi, mCreatedBy;
-    private boolean mExpandable;
-    /*photo*/
-
-    public boolean ismExpandable() {
-        return mExpandable;
-    }
-
-    public void setmExpandable(boolean mExpandable) {
-        this.mExpandable = mExpandable;
-    }
+    mDetail, mSasaran, mRealisasi, mCreatedBy, mUrl;
+//    private boolean mExpandable;
+//
+//    public boolean ismExpandable() {
+//        return mExpandable;
+//    }
+//
+//    public void setmExpandable(boolean mExpandable) {
+//        this.mExpandable = mExpandable;
+//    }
 
     public RutinItem(int id, String tanggalKegiatan, String kegiatan, String jenis,
-                     String lokasi, String detail, String sasaran, String realisasi, String createdBy){
+                     String lokasi, String detail, String sasaran, String realisasi, String createdBy, String url){
         mId = id;
         mTanggalKegiatan = tanggalKegiatan;
         mKegiatan = kegiatan;
@@ -26,7 +25,8 @@ public class RutinItem {
         mSasaran = sasaran;
         mRealisasi = realisasi;
         mCreatedBy = createdBy;
-        this.mExpandable = false;
+        mUrl = url;
+//        this.mExpandable = false;
     }
 
     public int getId(){
@@ -40,4 +40,5 @@ public class RutinItem {
     public String getSasaran(){return mSasaran;}
     public String getRealisasi(){return mRealisasi;}
     public String getCreatedBy(){return mCreatedBy;}
+    public String getImg(){return mUrl;}
 }

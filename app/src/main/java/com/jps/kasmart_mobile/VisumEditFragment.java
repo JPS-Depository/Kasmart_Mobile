@@ -1,5 +1,8 @@
 package com.jps.kasmart_mobile;
 
+import android.content.Intent;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +23,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -33,13 +41,13 @@ import androidx.fragment.app.FragmentTransaction;
 
 public class VisumEditFragment extends Fragment {
     int id;
-    String  kegiatan, tanggalVisumS, tanggalKegiatanS, kabupaten, kecamatan, keldes, hasilKegiatanS;
+    String  kegiatan, tanggalVisumS, tanggalKegiatanS, kabupaten, kecamatan, keldes, hasilKegiatanS, imgUrl;
     EditText tanggalVisum, hasilKegiatan;
     Button edit;
     TextView displayKegiatan, displayTanggalKegiatan, displayKabupaten,
     displayKecamatan, displayKeldes;
     VisumAdapter visumAdapter;
-    /* gambar */
+    ImageView displayGambar;
 
     @Nullable
     @Override
@@ -57,6 +65,11 @@ public class VisumEditFragment extends Fragment {
         kecamatan = bundle.getString("kecamatan");
         keldes = bundle.getString("keldes");
         hasilKegiatanS = bundle.getString("hasilkegiatan");
+        imgUrl = bundle.getString("img");
+
+        displayGambar = (ImageView) view.findViewById(R.id.gambar_kegiatan);
+
+        Picasso.get().load(imgUrl).fit().centerInside().placeholder(R.drawable.ic_baseline_image_24).networkPolicy(NetworkPolicy.NO_CACHE).memoryPolicy(MemoryPolicy.NO_CACHE).into(displayGambar);
 
         displayKegiatan = (TextView) view.findViewById(R.id.nama_kegiatan_visum);
         displayTanggalKegiatan = (TextView)view.findViewById(R.id.tanggal_kegiatan_visum);
@@ -87,7 +100,23 @@ public class VisumEditFragment extends Fragment {
                 Toast.makeText(getActivity(),"Data telah di ubah",Toast.LENGTH_SHORT).show();
             }
         });
+        displayGambar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImagePicker.Companion.with(getActivity())
+                        .compress(1024)
+                        .maxResultSize(1080, 1080)
+                        .start();
+            }
+        });
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Uri uri = data.getData();
+        Picasso.get().load(uri).placeholder(R.drawable.ic_baseline_image_24).resize(1000,1000).networkPolicy(NetworkPolicy.NO_CACHE).memoryPolicy(MemoryPolicy.NO_CACHE).into(displayGambar);
     }
 
     @Override

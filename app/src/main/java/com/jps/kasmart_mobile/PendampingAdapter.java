@@ -7,11 +7,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -27,6 +34,10 @@ public class PendampingAdapter extends RecyclerView.Adapter<PendampingAdapter.Pe
     private ArrayList<PendampingItem> mPendampingList;
     private boolean expandable;
     public SwipeRefreshLayout swipeRefreshLayout;
+    SessionManager sessionManager;
+    HashMap<String, String> user;
+    String role;
+    Button editButton, deleteButton;
 
     public PendampingAdapter(Context context, ArrayList<PendampingItem> pendampingList, SwipeRefreshLayout swipeRefreshLayout) {
         this.mContext = context;
@@ -40,10 +51,25 @@ public class PendampingAdapter extends RecyclerView.Adapter<PendampingAdapter.Pe
     public PendampingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.pendamping_card, parent, false);
         PendampingViewHolder pendampingViewHolder = new PendampingViewHolder(v);
+
+        sessionManager = new SessionManager(mContext);
+        sessionManager.checkLogin();
+        user = sessionManager.getUserDetail();
+        role = user.get(sessionManager.ROLE);
+
+        editButton = v.findViewById(R.id.button_edit_pendamping);
+        deleteButton = v.findViewById(R.id.button_delete_pendamping);
+
+        switch(role){
+            case "Guest":
+                editButton.setVisibility(v.GONE);
+                deleteButton.setVisibility(v.GONE);
+                break;
+        }
+
         return pendampingViewHolder;
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull PendampingViewHolder holder, int position) {
         PendampingItem currentItem = mPendampingList.get(position);
@@ -64,6 +90,7 @@ public class PendampingAdapter extends RecyclerView.Adapter<PendampingAdapter.Pe
         String statusPernikahan = currentItem.getStatusPernikahan();
         String jenisKelamin = currentItem.getJenisKelamin();
         String agama = currentItem.getAgama();
+        String imageURL = currentItem.getImageUrl();
 
         holder.mNama.setText(nama);
         holder.mTelepon.setText(telepon);
@@ -80,6 +107,7 @@ public class PendampingAdapter extends RecyclerView.Adapter<PendampingAdapter.Pe
         holder.mStatusPernikahan.setText(statusPernikahan);
         holder.mJenisKelamin.setText(jenisKelamin);
         holder.mAgama.setText(agama);
+        Picasso.get().load(imageURL).placeholder(R.drawable.ic_baseline_image_24).fit().centerInside().networkPolicy(NetworkPolicy.NO_CACHE).memoryPolicy(MemoryPolicy.NO_CACHE).into(holder.pendampingPicture);
 
         boolean isExpandable = mPendampingList.get(position).ismExpandable();
         holder.expandableLayout.setVisibility(isExpandable? View.VISIBLE:View.GONE);
@@ -95,9 +123,11 @@ public class PendampingAdapter extends RecyclerView.Adapter<PendampingAdapter.Pe
         mBPJS, mNoRek, mNpwp, mStatusPernikahan, mJenisKelamin, mAgama;
         public LinearLayout linearLayout;
         public RelativeLayout expandableLayout;
+        public ImageView pendampingPicture;
         public PendampingViewHolder(View itemView) {
             super(itemView);
 
+            pendampingPicture = itemView.findViewById(R.id.pendamping_picture);
             mNama = itemView.findViewById(R.id.nama_pendamping_pendamping);
             mTelepon = itemView.findViewById(R.id.nomor_pendamping);
             mAlamatTugas = itemView.findViewById(R.id.alamat_tugas_header_pendamping);

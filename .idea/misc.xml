@@ -8,11 +8,13 @@
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/drawable/container.xml" value="0.2225" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/drawable/delete_small.xml" value="0.1" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/drawable/header.xml" value="0.2225" />
+        <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/drawable/ic_baseline_image_24.xml" value="0.1" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/drawable/ic_baseline_list_alt_24.xml" value="0.1815" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/drawable/ic_baseline_payments_24.xml" value="0.125" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.2225" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.2225" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/drawable/ic_baseline_subject_24.xml" value="0.2225" />
+        <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1875" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/drawable/textbox.xml" value="0.2225" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/font/font.xml" value="0.29270833333333335" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/font/source_sans_pro.xml" value="0.214453125" />
@@ -28,12 +30,12 @@
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/berita_card.xml" value="0.264" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/berita_detail.xml" value="0.3148148148148148" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/berita_edit.xml" value="0.4" />
-        <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/berita_input_new.xml" value="0.2625" />
+        <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/berita_input_new.xml" value="0.25970873786407767" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/bumdes_card.xml" value="0.2" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/bumdes_card_1.xml" value="0.13958333333333334" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/daerah_card.xml" value="0.4" />
-        <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/desa_card.xml" value="0.5260504201680672" />
-        <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/desa_input.xml" value="0.1" />
+        <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/desa_card.xml" value="0.29158512720156554" />
+        <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/desa_input.xml" value="0.264" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/desa_input_new.xml" value="0.2625" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/fragment_absen.xml" value="0.2625" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/fragment_berita.xml" value="0.16" />
@@ -58,17 +60,17 @@
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/masalah_input.xml" value="0.1" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/masalah_input_new.xml" value="0.1" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/nav_header.xml" value="0.264" />
-        <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/pendamping_card.xml" value="0.4" />
+        <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/pendamping_card.xml" value="0.17417417417417416" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/potensi_card.xml" value="0.23618090452261306" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/potensi_input.xml" value="0.4" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/potensi_input_new.xml" value="0.4" />
-        <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/rutin_card.xml" value="0.1" />
+        <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/rutin_card.xml" value="0.264" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/rutin_input.xml" value="0.264" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/rutin_input_new.xml" value="0.2" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/shu_card.xml" value="0.23148148148148148" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/toolbar.xml" value="0.2557291666666667" />
-        <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/usp_uek_card.xml" value="0.4" />
-        <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/visum_card.xml" value="0.4" />
+        <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/usp_uek_card.xml" value="0.2422680412371134" />
+        <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/visum_card.xml" value="0.27184466019417475" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/visum_input.xml" value="0.4" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/visum_input_new.xml" value="0.15824915824915825" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/wajib_card.xml" value="0.264" />
@@ -76,6 +78,7 @@
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/layout/wajib_input1.xml" value="0.24635416666666668" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/menu/drawer_menu.xml" value="0.264" />
         <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/menu/main_menu.xml" value="0.264" />
+        <entry key="..\:/JPS_Repo/Kasmart_Mobile/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1875" />
       </map>
     </option>
   </component>

@@ -19,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,6 +35,9 @@ public class BumdesFragment extends Fragment {
     RequestQueue mRequestQueue;
     BumdesAdapter bumdesAdapter;
     SwipeRefreshLayout swipeRefreshLayout;
+    SessionManager sessionManager;
+    HashMap<String, String> user;
+    String role;
 
     @Nullable
     @Override
@@ -44,6 +48,9 @@ public class BumdesFragment extends Fragment {
         recyclerView = view.findViewById(R.id.bumdes_card);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefresh_bumdes);
         ParseJSON();
+        sessionManager = new SessionManager(getContext());
+        sessionManager.checkLogin();
+        user = sessionManager.getUserDetail();
         return view;
     }
 
@@ -56,7 +63,12 @@ public class BumdesFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        menu.clear();
+        switch(user.get(sessionManager.ROLE)){
+            case "Guest":
+            case "Super User":
+                menu.clear();
+                break;
+        }
     }
 
 

@@ -1,5 +1,7 @@
 package com.jps.kasmart_mobile;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -25,6 +28,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,6 +58,7 @@ public class InputVisumFragment extends Fragment implements AdapterView.OnItemSe
     Button edit;
     TextView kabupaten, kecamatan, keldes, displayTanggalKegiatan;
     Spinner spinnerKegiatan;
+    ImageView displayGambar;
     ArrayList<String> kegiatanList = new ArrayList<>();
     ArrayAdapter<String> kegiatanAdapter;
     RequestQueue requestQueue;
@@ -75,6 +83,9 @@ public class InputVisumFragment extends Fragment implements AdapterView.OnItemSe
         kabupaten = (TextView)view.findViewById(R.id.kabupaten_kegiatan_visum);
         keldes = (TextView)view.findViewById(R.id.kelurahan_desa_visum);
 
+        displayGambar = (ImageView) view.findViewById(R.id.gambar_visum);
+
+        displayGambar.setBackgroundResource(R.drawable.ic_baseline_image_24);
         inputTanggal.setText(date);
 
         requestQueue = Volley.newRequestQueue(getContext());
@@ -121,7 +132,24 @@ public class InputVisumFragment extends Fragment implements AdapterView.OnItemSe
                 Toast.makeText(getActivity(),"Data telah di ubah",Toast.LENGTH_SHORT).show();
             }
         });
+
+        displayGambar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImagePicker.Companion.with(getActivity())
+                        .compress(1024)
+                        .maxResultSize(1080, 1080)
+                        .start();
+            }
+        });
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Uri uri = data.getData();
+        Picasso.get().load(uri).placeholder(R.drawable.ic_baseline_image_24).resize(1000,1000).networkPolicy(NetworkPolicy.NO_CACHE).memoryPolicy(MemoryPolicy.NO_CACHE).into(displayGambar);
     }
 
     @Override

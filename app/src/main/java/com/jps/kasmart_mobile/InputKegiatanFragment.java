@@ -1,6 +1,12 @@
 package com.jps.kasmart_mobile;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,6 +31,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.dhaval2404.imagepicker.ImagePicker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,7 +57,8 @@ public class InputKegiatanFragment extends Fragment implements AdapterView.OnIte
     RadioButton statusRadioButton, jenisRadioButton;
     String tipe, kegiatan, tanggalkegiatan, sasaran, detail, lokasi, kabupaten,kecamatan,keldes;
     EditText inputKegiatan,inputTanggal,inputSasaran, inputDetail, inputLokasi;
-    Button edit;
+    Button edit,inputGambar;
+    TextView namaFile;
     Spinner spinnerKabupaten, spinnerKecamatan, spinnerKeldes;
     ArrayList<String> kabupatenList = new ArrayList<>();
     ArrayList<String> kecamatanList = new ArrayList<>();
@@ -77,6 +85,9 @@ public class InputKegiatanFragment extends Fragment implements AdapterView.OnIte
         inputSasaran = (EditText) view.findViewById(R.id.input_new_sasaran);
         inputDetail = (EditText) view.findViewById(R.id.input_detail_new_kegiatan);
         inputLokasi = (EditText) view.findViewById(R.id.input_lokasi_new_kegiatan);
+
+        namaFile = (TextView)view.findViewById(R.id.file_gambar);
+        inputGambar = (Button) view.findViewById(R.id.button_input_gambar);
 
         jenisGroup = (RadioGroup) view.findViewById(R.id.jenis_radio_kegiatan);
         statusGroup = (RadioGroup) view.findViewById(R.id.status_radio_rutin);
@@ -189,7 +200,51 @@ public class InputKegiatanFragment extends Fragment implements AdapterView.OnIte
                 jenisRadioButton = (RadioButton)getView().findViewById(jenisId);
             }
         });
+
+        inputGambar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImagePicker.Companion.with(getActivity())
+                        .compress(1024)
+                        .maxResultSize(1080, 1080)
+                        .start();
+            }
+        });
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Uri uri = data.getData();
+        Log.d("uri", String.valueOf(uri));
+        namaFile.setText(getFileName(uri,getContext()));
+    }
+
+    @SuppressLint("Range")
+    String getFileName(Uri uri, Context context){
+        String res = null;
+        if(uri.getScheme().equals("content")){
+            Cursor cursor = context.getContentResolver().query(uri,null, null,null,null);
+            try{
+                if(cursor != null && cursor.moveToFirst()){
+                    res = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            }
+            finally {
+                cursor.close();
+            }
+            if(res == null){
+                res = uri.getPath();
+                int cutt = res.lastIndexOf('/');
+                if(cutt != -1){
+                    res = res.substring(cutt+1);
+                }
+            }
+        }else{
+            res = "Gambar dari Kamera";
+        }
+        return res;
     }
 
     @Override

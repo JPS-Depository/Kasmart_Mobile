@@ -6,9 +6,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -23,6 +30,11 @@ public class DesaAdapter extends RecyclerView.Adapter<DesaAdapter.DesaViewHolder
     private Context mContext;
     private ArrayList<DesaItem> mDesaList;
     public SwipeRefreshLayout swipeRefreshLayout;
+    SessionManager sessionManager;
+    HashMap<String, String> user;
+    String role;
+    Button editButton, deleteButton;
+    String imageURL;
 
     public DesaAdapter(Context context, ArrayList<DesaItem> desaList, SwipeRefreshLayout swipeRefreshLayout) {
         this.mContext = context;
@@ -35,6 +47,23 @@ public class DesaAdapter extends RecyclerView.Adapter<DesaAdapter.DesaViewHolder
     public DesaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.desa_card, parent, false);
         DesaViewHolder desaViewHolder = new DesaViewHolder(v);
+
+        sessionManager = new SessionManager(mContext);
+        sessionManager.checkLogin();
+        user = sessionManager.getUserDetail();
+        role = user.get(sessionManager.ROLE);
+
+        editButton = v.findViewById(R.id.button_edit_desa);
+        deleteButton = v.findViewById(R.id.button_delete_desa);
+
+        switch(role){
+            case "Guest":
+
+                editButton.setVisibility(v.GONE);
+                deleteButton.setVisibility(v.GONE);
+                break;
+        }
+
         return desaViewHolder;
     }
 
@@ -52,6 +81,10 @@ public class DesaAdapter extends RecyclerView.Adapter<DesaAdapter.DesaViewHolder
         int nomor = currentItem.getNomor();
         String createdAt = currentItem.getCreatedAt();
         String updatedAt = currentItem.getUpdatedAt();
+        imageURL = currentItem.getURL();
+        Log.d("url",imageURL);
+        Picasso.get().load(imageURL).placeholder(R.drawable.ic_baseline_image_24).fit().centerInside().networkPolicy(NetworkPolicy.NO_CACHE).memoryPolicy(MemoryPolicy.NO_CACHE).into(holder.gambarDesa);
+
 
         holder.mNamaKades.setText(namaKades);
         holder.mNamaDesa.setText(namaDesa);
@@ -72,6 +105,7 @@ public class DesaAdapter extends RecyclerView.Adapter<DesaAdapter.DesaViewHolder
 
     public class DesaViewHolder extends RecyclerView.ViewHolder {
         public TextView mNamaDesa,mNamaKades,mkK, mDusun, mRW, mRT, mSuku, mNomor, mCreated_at, mUpdated_at;
+        public ImageView gambarDesa;
         public DesaViewHolder(View itemView) {
             super(itemView);
             mNamaDesa = itemView.findViewById(R.id.nama_desa);
@@ -84,6 +118,7 @@ public class DesaAdapter extends RecyclerView.Adapter<DesaAdapter.DesaViewHolder
             mNomor = itemView.findViewById(R.id.nomor_kades);
             mCreated_at=itemView.findViewById(R.id.tanggal_dibuat);
             mUpdated_at=itemView.findViewById(R.id.tanggal_diupdate);
+            gambarDesa = itemView.findViewById(R.id.gambar_desa);
 
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override

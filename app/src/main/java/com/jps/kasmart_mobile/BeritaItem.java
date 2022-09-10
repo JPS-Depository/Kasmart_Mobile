@@ -6,14 +6,15 @@ public class BeritaItem {
     private String mIsiBerita;
     private String mTanggalBerita;
     private String mCreated_by;
-    /*insert image assignment here*/
+    private String mImage;
 
-    public BeritaItem(int id,String judul, String isiBerita, String tanggalBerita, String createBy /*, Image Gambar Berita */){
+    public BeritaItem(int id,String judul, String isiBerita, String tanggalBerita, String createBy, String image){
         mId = id;
         mJudul = judul;
         mIsiBerita = isiBerita;
         mTanggalBerita = tanggalBerita;
         mCreated_by = createBy;
+        mImage = image;
     }
 
     public int getId(){
@@ -23,5 +24,5 @@ public class BeritaItem {
     public String getIsiBerita(){ return mIsiBerita;}
     public String getTanggalBerita(){ return mTanggalBerita;}
     public String getCreatedBy(){return mCreated_by;}
-    /* insert image getter here */
+    public String getImage(){return mImage;}
 }
