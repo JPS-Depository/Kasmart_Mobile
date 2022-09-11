@@ -1,9 +1,11 @@
 package com.jps.kasmart_mobile;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,6 +32,8 @@ import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 
 import androidx.annotation.NonNull;
@@ -48,6 +52,8 @@ public class VisumEditFragment extends Fragment {
     displayKecamatan, displayKeldes;
     VisumAdapter visumAdapter;
     ImageView displayGambar;
+    Bitmap photo;
+    Uri uri;
 
     @Nullable
     @Override
@@ -115,7 +121,13 @@ public class VisumEditFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Uri uri = data.getData();
+        uri = data.getData();
+        try {
+            photo = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),uri );
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Picasso.get().load(uri).placeholder(R.drawable.ic_baseline_image_24).resize(1000,1000).networkPolicy(NetworkPolicy.NO_CACHE).memoryPolicy(MemoryPolicy.NO_CACHE).into(displayGambar);
     }
 
@@ -148,9 +160,11 @@ public class VisumEditFragment extends Fragment {
         }){
             protected HashMap<String,String> getParams() throws AuthFailureError {
                 HashMap<String,String> map = new HashMap<>();
+                String image = getStringImage(photo);
                 map.put("id",String.valueOf(id));
                 map.put("tanggal",storedTanggal);
                 map.put("hasil",storedHasil);
+                map.put("img",image);
                 return map;
             }
         };
@@ -161,6 +175,13 @@ public class VisumEditFragment extends Fragment {
         Fragment fragment = new VisumFragment();
         fragmentTransaction.replace(R.id.fragment_container,fragment);
         fragmentTransaction.commit();
+    }
+    private String getStringImage(Bitmap photo) {
+        ByteArrayOutputStream ba = new ByteArrayOutputStream();
+        photo.compress(Bitmap.CompressFormat.JPEG,100,ba);
+        byte[] imageByte = ba.toByteArray();
+        String encode = android.util.Base64.encodeToString(imageByte, android.util.Base64.DEFAULT);
+        return encode;
     }
 }
 

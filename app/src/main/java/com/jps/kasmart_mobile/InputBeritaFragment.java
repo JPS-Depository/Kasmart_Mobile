@@ -4,8 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,6 +32,8 @@ import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 
 import androidx.annotation.NonNull;
@@ -45,6 +49,7 @@ public class InputBeritaFragment extends Fragment {
     Button edit, inputGambar;
     TextView displayCreate, namaFile;
     BeritaAdapter beritaAdapter;
+    Bitmap photo;
 
     @Nullable
     @Override
@@ -98,8 +103,13 @@ public class InputBeritaFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Uri uri = data.getData();
-        Log.d("uri", String.valueOf(uri));
         namaFile.setText(getFileName(uri,getContext()));
+        try {
+            photo = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),uri );
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @SuppressLint("Range")
@@ -158,10 +168,12 @@ public class InputBeritaFragment extends Fragment {
         }){
             protected HashMap<String,String> getParams() throws AuthFailureError {
                 HashMap<String,String> map = new HashMap<>();
+                String image = getStringImage(photo);
                 map.put("penulis",storedPenulis);
                 map.put("judul",storedJudul);
                 map.put("tanggal",storedTanggal);
                 map.put("berita",storedBerita);
+                map.put("img",image);
                 return map;
             }
         };
@@ -172,5 +184,13 @@ public class InputBeritaFragment extends Fragment {
         Fragment fragment = new BeritaFragment();
         fragmentTransaction.replace(R.id.fragment_container,fragment);
         fragmentTransaction.commit();
+    }
+
+    private String getStringImage(Bitmap photo) {
+        ByteArrayOutputStream ba = new ByteArrayOutputStream();
+        photo.compress(Bitmap.CompressFormat.JPEG,100,ba);
+        byte[] imageByte = ba.toByteArray();
+        String encode = android.util.Base64.encodeToString(imageByte, android.util.Base64.DEFAULT);
+        return encode;
     }
 }

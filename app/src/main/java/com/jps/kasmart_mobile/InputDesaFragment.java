@@ -4,8 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,6 +37,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -54,6 +58,7 @@ public class InputDesaFragment extends Fragment implements AdapterView.OnItemSel
     ArrayList<String> keldesList = new ArrayList<>();
     ArrayAdapter<String> keldesAdapter;
     RequestQueue requestQueue;
+    Bitmap photo;
 
 
     @Nullable
@@ -153,8 +158,13 @@ public class InputDesaFragment extends Fragment implements AdapterView.OnItemSel
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Uri uri = data.getData();
-        Log.d("uri", String.valueOf(uri));
         namaFile.setText(getFileName(uri,getContext()));
+        try {
+            photo = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),uri );
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @SuppressLint("Range")
@@ -200,7 +210,6 @@ public class InputDesaFragment extends Fragment implements AdapterView.OnItemSel
                             String storedRW, String storedKeldes, String storedCreatedBy){
         String url = "http://192.168.100.12/kasmart_mobile/input_desa.php";
         requestQueue = Volley.newRequestQueue(this.getContext());
-        Log.d("Url",url);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -214,6 +223,7 @@ public class InputDesaFragment extends Fragment implements AdapterView.OnItemSel
         }){
             protected HashMap<String,String> getParams() throws AuthFailureError {
                 HashMap<String,String> map = new HashMap<>();
+                String image = getStringImage(photo);
                 map.put("kades",storedKades);
                 map.put("telp",storedTelp);
                 map.put("kk",storedKK);
@@ -223,6 +233,7 @@ public class InputDesaFragment extends Fragment implements AdapterView.OnItemSel
                 map.put("rw",storedRW);
                 map.put("keldes",storedKeldes);
                 map.put("createdby",storedCreatedBy);
+                map.put("img",image);
                 return map;
             }
         };
@@ -243,6 +254,14 @@ public class InputDesaFragment extends Fragment implements AdapterView.OnItemSel
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    private String getStringImage(Bitmap photo) {
+        ByteArrayOutputStream ba = new ByteArrayOutputStream();
+        photo.compress(Bitmap.CompressFormat.JPEG,100,ba);
+        byte[] imageByte = ba.toByteArray();
+        String encode = android.util.Base64.encodeToString(imageByte, android.util.Base64.DEFAULT);
+        return encode;
     }
 }
 

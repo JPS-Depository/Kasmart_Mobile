@@ -62,6 +62,7 @@ public class PendampingAdapter extends RecyclerView.Adapter<PendampingAdapter.Pe
 
         switch(role){
             case "Guest":
+            case "Super User":
                 editButton.setVisibility(v.GONE);
                 deleteButton.setVisibility(v.GONE);
                 break;
@@ -186,7 +187,6 @@ public class PendampingAdapter extends RecyclerView.Adapter<PendampingAdapter.Pe
                     final int id = mPendampingList.get(getAbsoluteAdapterPosition()).getId();
                     final String menu = "pendamping";
                     bundle.putInt("id",id);
-                    Log.d("id", String.valueOf(id));
                     bundle.putString("menu",menu);
                     dialog.setArguments(bundle);
                     dialog.show(confirmManager,"Alert");

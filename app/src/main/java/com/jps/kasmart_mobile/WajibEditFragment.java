@@ -1,8 +1,10 @@
 package com.jps.kasmart_mobile;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,6 +31,8 @@ import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 
 import androidx.annotation.NonNull;
@@ -48,6 +52,7 @@ public class WajibEditFragment extends Fragment {
     TextView displayKegiatan,displayTipe, displayTanggal, displayLokasi;
     ImageView displayImage;
     WajibAdapter wajibAdapter;
+    Bitmap photo;
     View view;
 
     @Nullable
@@ -134,6 +139,12 @@ public class WajibEditFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Uri uri = data.getData();
+        try {
+            photo = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),uri );
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Picasso.get().load(uri).placeholder(R.drawable.ic_baseline_image_24).resize(1000,1000).networkPolicy(NetworkPolicy.NO_CACHE).memoryPolicy(MemoryPolicy.NO_CACHE).into(displayImage);
     }
 
@@ -166,10 +177,12 @@ public class WajibEditFragment extends Fragment {
         }){
             protected HashMap<String,String> getParams() throws AuthFailureError {
                 HashMap<String,String> map = new HashMap<>();
+                String image = getStringImage(photo);
                 map.put("id",String.valueOf(id));
                 map.put("sasaran",storedSasaran);
                 map.put("detil",storedDetil);
                 map.put("status",String.valueOf(radioId));
+                map.put("img",image);
                 return map;
             }
         };
@@ -180,6 +193,14 @@ public class WajibEditFragment extends Fragment {
         Fragment fragment = new WajibFragment();
         fragmentTransaction.replace(R.id.fragment_container,fragment);
         fragmentTransaction.commit();
+    }
+
+    private String getStringImage(Bitmap photo) {
+        ByteArrayOutputStream ba = new ByteArrayOutputStream();
+        photo.compress(Bitmap.CompressFormat.JPEG,100,ba);
+        byte[] imageByte = ba.toByteArray();
+        String encode = android.util.Base64.encodeToString(imageByte, android.util.Base64.DEFAULT);
+        return encode;
     }
 
 }

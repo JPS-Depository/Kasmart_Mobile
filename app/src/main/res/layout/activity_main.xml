@@ -31,8 +31,8 @@
         android:layout_marginBottom="150dp"
         android:background="@drawable/container"
         android:elevation="3dp"
-        android:orientation="vertical"
         android:gravity="center_vertical"
+        android:orientation="vertical"
         android:paddingLeft="24dp"
         android:paddingTop="24dp"
         android:paddingRight="24dp">
@@ -41,39 +41,38 @@
             android:id="@+id/login_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:fontFamily="@font/source_sans_pro"
             android:text="@string/login_title"
             android:textAlignment="center"
-            android:fontFamily="@font/source_sans_pro"
-            android:textStyle="bold"
             android:textSize="30sp"
-            android:layout_marginBottom="40dp">
-        </TextView>
+            android:textStyle="bold"></TextView>
 
         <EditText
             android:id="@+id/username"
             android:layout_width="match_parent"
-            android:drawableEnd="@drawable/ic_baseline_person_24"
             android:layout_height="48dp"
             android:layout_marginTop="24dp"
+            android:autofillHints="Username"
             android:background="@drawable/textbox"
+            android:drawableEnd="@drawable/ic_baseline_person_24"
             android:hint="@string/username_hint"
             android:paddingStart="16dp"
-            android:paddingEnd="10dp"
-            android:autofillHints="Username"/>
+            android:paddingEnd="10dp" />
 
         <EditText
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="18dp"
-            android:drawableEnd="@drawable/ic_baseline_lock_24"
+            android:autofillHints="Password"
             android:background="@drawable/textbox"
-            android:hint="@string/password_hint"
+            android:drawableEnd="@drawable/ic_baseline_lock_24"
             android:ems="10"
+            android:hint="@string/password_hint"
             android:inputType="textPassword"
             android:paddingStart="16dp"
-            android:paddingEnd="10dp"
-            android:autofillHints="Password" />
+            android:paddingEnd="10dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -91,4 +90,14 @@
                 android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:fontFamily="@font/source_sans_pro"
+        android:text="Versi 1.0.0"
+        android:textSize="20sp" />
 </RelativeLayout>

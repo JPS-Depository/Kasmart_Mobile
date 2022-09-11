@@ -4,8 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +29,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 
 import androidx.annotation.NonNull;
@@ -42,6 +46,8 @@ public class DesaEditFragment extends Fragment {
     String namaDesa, namaKades;
     Button edit,inputGambar;
     TextView displayNama, namaFile;
+    Bitmap photo;
+    Uri uri;
 
     @Nullable
     @Override
@@ -122,8 +128,13 @@ public class DesaEditFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Uri uri = data.getData();
-        Log.d("uri", String.valueOf(uri));
+        uri = data.getData();
+        try {
+            photo = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),uri );
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         namaFile.setText(getFileName(uri,getContext()));
     }
 
@@ -184,6 +195,7 @@ public class DesaEditFragment extends Fragment {
         }){
             protected HashMap<String,String> getParams() throws AuthFailureError {
                 HashMap<String,String> map = new HashMap<>();
+                String image = getStringImage(photo);
                 map.put("id",String.valueOf(id));
                 map.put("kades",storedKades);
                 map.put("telp",storedTelp);
@@ -192,6 +204,7 @@ public class DesaEditFragment extends Fragment {
                 map.put("suku",storedSuku);
                 map.put("rt",storedRT);
                 map.put("rw",storedRW);
+                map.put("img",image);
                 return map;
             }
         };
@@ -202,6 +215,13 @@ public class DesaEditFragment extends Fragment {
         Fragment fragment = new DesaFragment();
         fragmentTransaction.replace(R.id.fragment_container,fragment);
         fragmentTransaction.commit();
+    }
+    private String getStringImage(Bitmap photo) {
+        ByteArrayOutputStream ba = new ByteArrayOutputStream();
+        photo.compress(Bitmap.CompressFormat.JPEG,100,ba);
+        byte[] imageByte = ba.toByteArray();
+        String encode = android.util.Base64.encodeToString(imageByte, android.util.Base64.DEFAULT);
+        return encode;
     }
 
 }

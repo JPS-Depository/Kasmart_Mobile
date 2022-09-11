@@ -4,8 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,6 +39,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,7 +59,7 @@ public class InputKegiatanFragment extends Fragment implements AdapterView.OnIte
     int radioId, radioJenisId;
     RadioGroup statusGroup, jenisGroup;
     RadioButton statusRadioButton, jenisRadioButton;
-    String tipe, kegiatan, tanggalkegiatan, sasaran, detail, lokasi, kabupaten,kecamatan,keldes;
+    String tipe, kegiatan, tanggalkegiatan, sasaran, detail, lokasi, kabupaten,kecamatan,keldes,storedJenis;
     EditText inputKegiatan,inputTanggal,inputSasaran, inputDetail, inputLokasi;
     Button edit,inputGambar;
     TextView namaFile;
@@ -67,6 +71,7 @@ public class InputKegiatanFragment extends Fragment implements AdapterView.OnIte
     ArrayAdapter<String> kecamatanAdapter;
     ArrayAdapter<String> keldesAdapter;
     RequestQueue requestQueue;
+    Bitmap photo;
 
     @Nullable
     @Override
@@ -157,7 +162,7 @@ public class InputKegiatanFragment extends Fragment implements AdapterView.OnIte
             @Override
             public void onClick(View v) {
                 String storedKegiatan = inputKegiatan.getText().toString().trim();
-                String storedJenis = jenisRadioButton.getText().toString().trim();
+                storedJenis = jenisRadioButton.getText().toString().trim();
                 String storedTanggal = inputTanggal.getText().toString().trim();
                 String storedSasaran = inputSasaran.getText().toString().trim();
                 String storedDetil = inputDetail.getText().toString().trim();
@@ -217,7 +222,12 @@ public class InputKegiatanFragment extends Fragment implements AdapterView.OnIte
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Uri uri = data.getData();
-        Log.d("uri", String.valueOf(uri));
+        try {
+            photo = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),uri );
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         namaFile.setText(getFileName(uri,getContext()));
     }
 
@@ -279,6 +289,7 @@ public class InputKegiatanFragment extends Fragment implements AdapterView.OnIte
         }){
             protected HashMap<String,String> getParams() throws AuthFailureError {
                 HashMap<String,String> map = new HashMap<>();
+                String image = getStringImage(photo);
                 map.put("kegiatan",storedKegiatan);
                 map.put("tanggal",storedTanggal);
                 map.put("sasaran",storedSasaran);
@@ -290,7 +301,7 @@ public class InputKegiatanFragment extends Fragment implements AdapterView.OnIte
                 map.put("keldes",storedKeldes);
                 map.put("createdby",storedCreatedBy);
                 map.put("jenis",storedJenis);
-                Log.d("data", String.valueOf(map));
+                map.put("img",image);
                 return map;
             }
         };
@@ -298,7 +309,12 @@ public class InputKegiatanFragment extends Fragment implements AdapterView.OnIte
 
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Fragment fragment = new RutinFragment();
+        Fragment fragment;
+        if(storedJenis == "Wajib" || storedJenis == "Bermasa"){
+            fragment = new WajibFragment();
+        }else{
+            fragment = new RutinFragment();
+        }
         fragmentTransaction.replace(R.id.fragment_container,fragment);
         fragmentTransaction.addToBackStack(null).commit();
     }
@@ -309,6 +325,14 @@ public class InputKegiatanFragment extends Fragment implements AdapterView.OnIte
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+    }
+
+    private String getStringImage(Bitmap photo) {
+        ByteArrayOutputStream ba = new ByteArrayOutputStream();
+        photo.compress(Bitmap.CompressFormat.JPEG,100,ba);
+        byte[] imageByte = ba.toByteArray();
+        String encode = android.util.Base64.encodeToString(imageByte, android.util.Base64.DEFAULT);
+        return encode;
     }
 }
 

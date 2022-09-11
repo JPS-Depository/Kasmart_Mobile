@@ -72,6 +72,7 @@ public class PendampingFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
         switch(user.get(sessionManager.ROLE)){
             case "Guest":
+            case "Super User":
                 menu.clear();
                 break;
         }

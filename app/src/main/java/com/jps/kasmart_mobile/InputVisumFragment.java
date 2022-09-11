@@ -1,8 +1,10 @@
 package com.jps.kasmart_mobile;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -37,6 +39,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -63,6 +67,7 @@ public class InputVisumFragment extends Fragment implements AdapterView.OnItemSe
     ArrayAdapter<String> kegiatanAdapter;
     RequestQueue requestQueue;
     JSONArray jsonArray;
+    Bitmap photo;
 
     @Nullable
     @Override
@@ -126,7 +131,6 @@ public class InputVisumFragment extends Fragment implements AdapterView.OnItemSe
                 String storedTanggalVisum = inputTanggal.getText().toString().trim();
                 String storedHasilKegiatan = inputHasil.getText().toString().trim();
                 String storedPendamping = user.get(sessionManager.NAME);
-                //image
                 insertItem(storedKegiatanID,storedTanggalVisum,storedHasilKegiatan,storedPendamping);
 
                 Toast.makeText(getActivity(),"Data telah di ubah",Toast.LENGTH_SHORT).show();
@@ -149,6 +153,12 @@ public class InputVisumFragment extends Fragment implements AdapterView.OnItemSe
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Uri uri = data.getData();
+        try {
+            photo = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),uri );
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Picasso.get().load(uri).placeholder(R.drawable.ic_baseline_image_24).resize(1000,1000).networkPolicy(NetworkPolicy.NO_CACHE).memoryPolicy(MemoryPolicy.NO_CACHE).into(displayGambar);
     }
 
@@ -182,10 +192,12 @@ public class InputVisumFragment extends Fragment implements AdapterView.OnItemSe
         }){
             protected HashMap<String,String> getParams() throws AuthFailureError {
                 HashMap<String,String> map = new HashMap<>();
+                String image = getStringImage(photo);
                 map.put("kegiatanID",String.valueOf(storedKegiatanID));
                 map.put("tanggal",storedTanggalVisum);
                 map.put("hasil",storedHasilKegiatan);
                 map.put("pendamping",storedPendamping);
+                map.put("img",image);
                 return map;
             }
         };
@@ -196,6 +208,14 @@ public class InputVisumFragment extends Fragment implements AdapterView.OnItemSe
         Fragment fragment = new VisumFragment();
         fragmentTransaction.replace(R.id.fragment_container,fragment);
         fragmentTransaction.addToBackStack(null).commit();
+    }
+
+    private String getStringImage(Bitmap photo) {
+        ByteArrayOutputStream ba = new ByteArrayOutputStream();
+        photo.compress(Bitmap.CompressFormat.JPEG,100,ba);
+        byte[] imageByte = ba.toByteArray();
+        String encode = android.util.Base64.encodeToString(imageByte, android.util.Base64.DEFAULT);
+        return encode;
     }
 
     @Override
@@ -210,7 +230,6 @@ public class InputVisumFragment extends Fragment implements AdapterView.OnItemSe
                     kecamatan.setText(data.getString("Kecamatan"));
                     keldes.setText(data.getString("Kelurahan"));
                     kegiatanId = data.getInt("id");
-                    Log.d("log", String.valueOf(data.getInt("id")));
                 }
             }
         } catch (JSONException e) {
